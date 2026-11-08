@@ -72,7 +72,7 @@ func (c *CleanRoomsML) CreateAudienceModelRequest(input *CreateAudienceModelInpu
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -163,7 +163,7 @@ func (c *CleanRoomsML) CreateConfiguredAudienceModelRequest(input *CreateConfigu
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -242,9 +242,9 @@ func (c *CleanRoomsML) CreateTrainingDatasetRequest(input *CreateTrainingDataset
 
 // CreateTrainingDataset API operation for AWS Clean Rooms ML.
 //
-// Defines the information necessary to create a training dataset, or seed audience.
-// In Clean Rooms ML, the TrainingDataset is metadata that points to a Glue
-// table, which is read only during AudienceModel creation.
+// Defines the information necessary to create a training dataset. In Clean
+// Rooms ML, the TrainingDataset is metadata that points to a Glue table, which
+// is read only during AudienceModel creation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -256,7 +256,7 @@ func (c *CleanRoomsML) CreateTrainingDatasetRequest(input *CreateTrainingDataset
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -343,7 +343,7 @@ func (c *CleanRoomsML) DeleteAudienceGenerationJobRequest(input *DeleteAudienceG
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -434,7 +434,7 @@ func (c *CleanRoomsML) DeleteAudienceModelRequest(input *DeleteAudienceModelInpu
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -526,7 +526,7 @@ func (c *CleanRoomsML) DeleteConfiguredAudienceModelRequest(input *DeleteConfigu
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -705,7 +705,7 @@ func (c *CleanRoomsML) DeleteTrainingDatasetRequest(input *DeleteTrainingDataset
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -2084,7 +2084,7 @@ func (c *CleanRoomsML) StartAudienceExportJobRequest(input *StartAudienceExportJ
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -2175,7 +2175,7 @@ func (c *CleanRoomsML) StartAudienceGenerationJobRequest(input *StartAudienceGen
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -2440,7 +2440,7 @@ func (c *CleanRoomsML) UpdateConfiguredAudienceModelRequest(input *UpdateConfigu
 // Returned Error Types:
 //
 //   - ConflictException
-//     A resource with that name already exists in this region.
+//     You can't complete this action because another resource depends on this resource.
 //
 //   - ValidationException
 //     The request parameters for this request are incorrect.
@@ -2706,22 +2706,33 @@ func (s *AudienceExportJobSummary) SetUpdateTime(v time.Time) *AudienceExportJob
 	return s
 }
 
-// Defines the Amazon S3 bucket where the training data for the configured audience
+// Defines the Amazon S3 bucket where the seed audience for the generating audience
 // is stored.
 type AudienceGenerationJobDataSource struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon S3 bucket where the training data for the configured audience
-	// is stored.
+	// Defines the Amazon S3 bucket where the seed audience for the generating audience
+	// is stored. A valid data source is a JSON line file in the following format:
 	//
-	// DataSource is a required field
-	DataSource *S3ConfigMap `locationName:"dataSource" type:"structure" required:"true"`
+	// {"user_id": "111111"}
+	//
+	// {"user_id": "222222"}
+	//
+	// ...
+	DataSource *S3ConfigMap `locationName:"dataSource" type:"structure"`
 
-	// The ARN of the IAM role that can read the Amazon S3 bucket where the training
-	// data is stored.
+	// The ARN of the IAM role that can read the Amazon S3 bucket where the seed
+	// audience is stored.
 	//
 	// RoleArn is a required field
 	RoleArn *string `locationName:"roleArn" min:"20" type:"string" required:"true"`
+
+	// The protected SQL query parameters.
+	//
+	// SqlParameters is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AudienceGenerationJobDataSource's
+	// String and GoString methods.
+	SqlParameters *ProtectedQuerySQLParameters `locationName:"sqlParameters" type:"structure" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -2745,9 +2756,6 @@ func (s AudienceGenerationJobDataSource) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AudienceGenerationJobDataSource) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AudienceGenerationJobDataSource"}
-	if s.DataSource == nil {
-		invalidParams.Add(request.NewErrParamRequired("DataSource"))
-	}
 	if s.RoleArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
 	}
@@ -2775,6 +2783,12 @@ func (s *AudienceGenerationJobDataSource) SetDataSource(v *S3ConfigMap) *Audienc
 // SetRoleArn sets the RoleArn field's value.
 func (s *AudienceGenerationJobDataSource) SetRoleArn(v string) *AudienceGenerationJobDataSource {
 	s.RoleArn = &v
+	return s
+}
+
+// SetSqlParameters sets the SqlParameters field's value.
+func (s *AudienceGenerationJobDataSource) SetSqlParameters(v *ProtectedQuerySQLParameters) *AudienceGenerationJobDataSource {
+	s.SqlParameters = v
 	return s
 }
 
@@ -2896,62 +2910,6 @@ func (s *AudienceGenerationJobSummary) SetUpdateTime(v time.Time) *AudienceGener
 	return s
 }
 
-// The audience model metrics.
-type AudienceModelMetric struct {
-	_ struct{} `type:"structure"`
-
-	// The number of users that were used to generate these model metrics.
-	//
-	// ForTopKItemPredictions is a required field
-	ForTopKItemPredictions *int64 `locationName:"forTopKItemPredictions" type:"integer" required:"true"`
-
-	// The audience model metric.
-	//
-	// Type is a required field
-	Type *string `locationName:"type" type:"string" required:"true" enum:"AudienceModelMetricType"`
-
-	// The value of the audience model metric
-	//
-	// Value is a required field
-	Value *float64 `locationName:"value" type:"double" required:"true"`
-}
-
-// String returns the string representation.
-//
-// API parameter values that are decorated as "sensitive" in the API will not
-// be included in the string output. The member name will be present, but the
-// value will be replaced with "sensitive".
-func (s AudienceModelMetric) String() string {
-	return awsutil.Prettify(s)
-}
-
-// GoString returns the string representation.
-//
-// API parameter values that are decorated as "sensitive" in the API will not
-// be included in the string output. The member name will be present, but the
-// value will be replaced with "sensitive".
-func (s AudienceModelMetric) GoString() string {
-	return s.String()
-}
-
-// SetForTopKItemPredictions sets the ForTopKItemPredictions field's value.
-func (s *AudienceModelMetric) SetForTopKItemPredictions(v int64) *AudienceModelMetric {
-	s.ForTopKItemPredictions = &v
-	return s
-}
-
-// SetType sets the Type field's value.
-func (s *AudienceModelMetric) SetType(v string) *AudienceModelMetric {
-	s.Type = &v
-	return s
-}
-
-// SetValue sets the Value field's value.
-func (s *AudienceModelMetric) SetValue(v float64) *AudienceModelMetric {
-	s.Value = &v
-	return s
-}
-
 // Information about the audience model.
 type AudienceModelSummary struct {
 	_ struct{} `type:"structure"`
@@ -3055,6 +3013,14 @@ func (s *AudienceModelSummary) SetUpdateTime(v time.Time) *AudienceModelSummary 
 type AudienceQualityMetrics struct {
 	_ struct{} `type:"structure"`
 
+	// The recall score of the generated audience. Recall is the percentage of the
+	// most similar users (by default, the most similar 20%) from a sample of the
+	// training data that are included in the seed audience by the audience generation
+	// job. Values range from 0-1, larger values indicate a better audience. A recall
+	// value approximately equal to the maximum bin size indicates that the audience
+	// model is equivalent to random selection.
+	RecallMetric *float64 `locationName:"recallMetric" type:"double"`
+
 	// The relevance scores of the generated audience.
 	//
 	// RelevanceMetrics is a required field
@@ -3077,6 +3043,12 @@ func (s AudienceQualityMetrics) String() string {
 // value will be replaced with "sensitive".
 func (s AudienceQualityMetrics) GoString() string {
 	return s.String()
+}
+
+// SetRecallMetric sets the RecallMetric field's value.
+func (s *AudienceQualityMetrics) SetRecallMetric(v float64) *AudienceQualityMetrics {
+	s.RecallMetric = &v
+	return s
 }
 
 // SetRelevanceMetrics sets the RelevanceMetrics field's value.
@@ -3153,10 +3125,12 @@ func (s *AudienceSize) SetValue(v int64) *AudienceSize {
 	return s
 }
 
-// Configure the list of audience output sizes that can be created. A request
-// to StartAudienceGenerationJob that uses this configured audience model must
-// have an audienceSize selected from this list. You can use the ABSOLUTE AudienceSize
-// to configure out audience sizes using the count of identifiers in the output.
+// Returns the relevance scores at these audience sizes when used in the GetAudienceGenerationJob
+// for a specified audience generation job and configured audience model.
+//
+// Specifies the list of allowed audienceSize values when used in the StartAudienceExportJob
+// for an audience generation job. You can use the ABSOLUTE AudienceSize to
+// configure out audience sizes using the count of identifiers in the output.
 // You can use the Percentage AudienceSize to configure sizes in the range 1-100
 // percent.
 type AudienceSizeConfig struct {
@@ -3470,7 +3444,7 @@ func (s *ConfiguredAudienceModelSummary) SetUpdateTime(v time.Time) *ConfiguredA
 	return s
 }
 
-// A resource with that name already exists in this region.
+// You can't complete this action because another resource depends on this resource.
 type ConflictException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -3575,10 +3549,10 @@ type CreateAudienceModelInput struct {
 	//    * Do not use aws:, AWS:, or any upper or lowercase combination of such
 	//    as a prefix for keys as it is reserved for AWS use. You cannot edit or
 	//    delete tag keys with this prefix. Values can have this prefix. If a tag
-	//    value has aws as its prefix but the key does not, then Forecast considers
-	//    it to be a user tag and will count against the limit of 50 tags. Tags
-	//    with only the key prefix of aws do not count against your tags per resource
-	//    limit.
+	//    value has aws as its prefix but the key does not, then Clean Rooms ML
+	//    considers it to be a user tag and will count against the limit of 50 tags.
+	//    Tags with only the key prefix of aws do not count against your tags per
+	//    resource limit.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 
 	// The end date and time of the training window.
@@ -3745,7 +3719,7 @@ type CreateConfiguredAudienceModelInput struct {
 	Description *string `locationName:"description" type:"string"`
 
 	// The minimum number of users from the seed audience that must match with users
-	// in the training data of the audience model.
+	// in the training data of the audience model. The default value is 500.
 	MinMatchingSeedSize *int64 `locationName:"minMatchingSeedSize" min:"25" type:"integer"`
 
 	// The name of the configured audience model.
@@ -3792,10 +3766,10 @@ type CreateConfiguredAudienceModelInput struct {
 	//    * Do not use aws:, AWS:, or any upper or lowercase combination of such
 	//    as a prefix for keys as it is reserved for AWS use. You cannot edit or
 	//    delete tag keys with this prefix. Values can have this prefix. If a tag
-	//    value has aws as its prefix but the key does not, then Forecast considers
-	//    it to be a user tag and will count against the limit of 50 tags. Tags
-	//    with only the key prefix of aws do not count against your tags per resource
-	//    limit.
+	//    value has aws as its prefix but the key does not, then Clean Rooms ML
+	//    considers it to be a user tag and will count against the limit of 50 tags.
+	//    Tags with only the key prefix of aws do not count against your tags per
+	//    resource limit.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
@@ -4770,13 +4744,18 @@ type GetAudienceGenerationJobOutput struct {
 	// from the seed.
 	IncludeSeedInOutput *bool `locationName:"includeSeedInOutput" type:"boolean"`
 
-	// The relevance scores for different audience sizes.
+	// The relevance scores for different audience sizes and the recall score of
+	// the generated audience.
 	Metrics *AudienceQualityMetrics `locationName:"metrics" type:"structure"`
 
 	// The name of the audience generation job.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+
+	// The unique identifier of the protected query for this audience generation
+	// job.
+	ProtectedQueryIdentifier *string `locationName:"protectedQueryIdentifier" type:"string"`
 
 	// The seed audience that was used for this audience generation job. This field
 	// will be null if the account calling the API is the account that started this
@@ -4866,6 +4845,12 @@ func (s *GetAudienceGenerationJobOutput) SetMetrics(v *AudienceQualityMetrics) *
 // SetName sets the Name field's value.
 func (s *GetAudienceGenerationJobOutput) SetName(v string) *GetAudienceGenerationJobOutput {
 	s.Name = &v
+	return s
+}
+
+// SetProtectedQueryIdentifier sets the ProtectedQueryIdentifier field's value.
+func (s *GetAudienceGenerationJobOutput) SetProtectedQueryIdentifier(v string) *GetAudienceGenerationJobOutput {
+	s.ProtectedQueryIdentifier = &v
 	return s
 }
 
@@ -4974,9 +4959,6 @@ type GetAudienceModelOutput struct {
 	// The KMS key ARN used for the audience model.
 	KmsKeyArn *string `locationName:"kmsKeyArn" min:"20" type:"string"`
 
-	// Accuracy metrics for the model.
-	Metrics []*AudienceModelMetric `locationName:"metrics" type:"list"`
-
 	// The name of the audience model.
 	//
 	// Name is a required field
@@ -5050,12 +5032,6 @@ func (s *GetAudienceModelOutput) SetDescription(v string) *GetAudienceModelOutpu
 // SetKmsKeyArn sets the KmsKeyArn field's value.
 func (s *GetAudienceModelOutput) SetKmsKeyArn(v string) *GetAudienceModelOutput {
 	s.KmsKeyArn = &v
-	return s
-}
-
-// SetMetrics sets the Metrics field's value.
-func (s *GetAudienceModelOutput) SetMetrics(v []*AudienceModelMetric) *GetAudienceModelOutput {
-	s.Metrics = v
 	return s
 }
 
@@ -6293,6 +6269,57 @@ func (s *ListTrainingDatasetsOutput) SetTrainingDatasets(v []*TrainingDatasetSum
 	return s
 }
 
+// The parameters for the SQL type Protected Query.
+type ProtectedQuerySQLParameters struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The Amazon Resource Name (ARN) associated with the analysis template within
+	// a collaboration.
+	AnalysisTemplateArn *string `locationName:"analysisTemplateArn" type:"string"`
+
+	// The protected query SQL parameters.
+	Parameters map[string]*string `locationName:"parameters" type:"map"`
+
+	// The query string to be submitted.
+	QueryString *string `locationName:"queryString" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProtectedQuerySQLParameters) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProtectedQuerySQLParameters) GoString() string {
+	return s.String()
+}
+
+// SetAnalysisTemplateArn sets the AnalysisTemplateArn field's value.
+func (s *ProtectedQuerySQLParameters) SetAnalysisTemplateArn(v string) *ProtectedQuerySQLParameters {
+	s.AnalysisTemplateArn = &v
+	return s
+}
+
+// SetParameters sets the Parameters field's value.
+func (s *ProtectedQuerySQLParameters) SetParameters(v map[string]*string) *ProtectedQuerySQLParameters {
+	s.Parameters = v
+	return s
+}
+
+// SetQueryString sets the QueryString field's value.
+func (s *ProtectedQuerySQLParameters) SetQueryString(v string) *ProtectedQuerySQLParameters {
+	s.QueryString = &v
+	return s
+}
+
 type PutConfiguredAudienceModelPolicyInput struct {
 	_ struct{} `type:"structure"`
 
@@ -6821,10 +6848,10 @@ type StartAudienceGenerationJobInput struct {
 	//    * Do not use aws:, AWS:, or any upper or lowercase combination of such
 	//    as a prefix for keys as it is reserved for AWS use. You cannot edit or
 	//    delete tag keys with this prefix. Values can have this prefix. If a tag
-	//    value has aws as its prefix but the key does not, then Forecast considers
-	//    it to be a user tag and will count against the limit of 50 tags. Tags
-	//    with only the key prefix of aws do not count against your tags per resource
-	//    limit.
+	//    value has aws as its prefix but the key does not, then Clean Rooms ML
+	//    considers it to be a user tag and will count against the limit of 50 tags.
+	//    Tags with only the key prefix of aws do not count against your tags per
+	//    resource limit.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
@@ -7031,7 +7058,7 @@ type TagResourceInput struct {
 	//    * Do not use aws:, AWS:, or any upper or lowercase combination of such
 	//    as a prefix for keys as it is reserved for AWS use. You cannot edit or
 	//    delete tag keys with this prefix. Values can have this prefix. If a tag
-	//    value has aws as its prefix but the key does not, then Forecast considers
+	//    value has aws as its prefix but the key does not, then Clean Rooms considers
 	//    it to be a user tag and will count against the limit of 50 tags. Tags
 	//    with only the key prefix of aws do not count against your tags per resource
 	//    limit.
@@ -7564,30 +7591,6 @@ func AudienceGenerationJobStatus_Values() []string {
 		AudienceGenerationJobStatusDeletePending,
 		AudienceGenerationJobStatusDeleteInProgress,
 		AudienceGenerationJobStatusDeleteFailed,
-	}
-}
-
-const (
-	// AudienceModelMetricTypeNormalizedDiscountedCumulativeGain is a AudienceModelMetricType enum value
-	AudienceModelMetricTypeNormalizedDiscountedCumulativeGain = "NORMALIZED_DISCOUNTED_CUMULATIVE_GAIN"
-
-	// AudienceModelMetricTypeMeanReciprocalRank is a AudienceModelMetricType enum value
-	AudienceModelMetricTypeMeanReciprocalRank = "MEAN_RECIPROCAL_RANK"
-
-	// AudienceModelMetricTypePrecision is a AudienceModelMetricType enum value
-	AudienceModelMetricTypePrecision = "PRECISION"
-
-	// AudienceModelMetricTypeRecall is a AudienceModelMetricType enum value
-	AudienceModelMetricTypeRecall = "RECALL"
-)
-
-// AudienceModelMetricType_Values returns all elements of the AudienceModelMetricType enum
-func AudienceModelMetricType_Values() []string {
-	return []string{
-		AudienceModelMetricTypeNormalizedDiscountedCumulativeGain,
-		AudienceModelMetricTypeMeanReciprocalRank,
-		AudienceModelMetricTypePrecision,
-		AudienceModelMetricTypeRecall,
 	}
 }
 

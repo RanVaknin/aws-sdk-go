@@ -5,11 +5,13 @@
     "endpointPrefix":"rekognition",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Rekognition",
     "serviceId":"Rekognition",
     "signatureVersion":"v4",
     "targetPrefix":"RekognitionService",
-    "uid":"rekognition-2016-06-27"
+    "uid":"rekognition-2016-06-27",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateFaces":{
@@ -1761,7 +1763,8 @@
         "ModerationLabel":{"shape":"ModerationLabel"},
         "StartTimestampMillis":{"shape":"ULong"},
         "EndTimestampMillis":{"shape":"ULong"},
-        "DurationMillis":{"shape":"ULong"}
+        "DurationMillis":{"shape":"ULong"},
+        "ContentTypes":{"shape":"ContentTypes"}
       }
     },
     "ContentModerationDetections":{
@@ -1774,6 +1777,19 @@
         "NAME",
         "TIMESTAMP"
       ]
+    },
+    "ContentType":{
+      "type":"structure",
+      "members":{
+        "Confidence":{"shape":"Percent"},
+        "Name":{"shape":"String"}
+      }
+    },
+    "ContentTypes":{
+      "type":"list",
+      "member":{"shape":"ContentType"},
+      "max":50,
+      "min":0
     },
     "CopyProjectVersionRequest":{
       "type":"structure",
@@ -1832,7 +1848,8 @@
       "members":{
         "DatasetSource":{"shape":"DatasetSource"},
         "DatasetType":{"shape":"DatasetType"},
-        "ProjectArn":{"shape":"ProjectArn"}
+        "ProjectArn":{"shape":"ProjectArn"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateDatasetResponse":{
@@ -1869,7 +1886,8 @@
       "members":{
         "ProjectName":{"shape":"ProjectName"},
         "Feature":{"shape":"CustomizationFeature"},
-        "AutoUpdate":{"shape":"ProjectAutoUpdate"}
+        "AutoUpdate":{"shape":"ProjectAutoUpdate"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateProjectResponse":{
@@ -2455,7 +2473,8 @@
         "ModerationLabels":{"shape":"ModerationLabels"},
         "ModerationModelVersion":{"shape":"String"},
         "HumanLoopActivationOutput":{"shape":"HumanLoopActivationOutput"},
-        "ProjectVersion":{"shape":"ProjectVersionId"}
+        "ProjectVersion":{"shape":"ProjectVersionId"},
+        "ContentTypes":{"shape":"ContentTypes"}
       }
     },
     "DetectProtectiveEquipmentRequest":{
@@ -3818,6 +3837,12 @@
         "S3Object":{"shape":"S3Object"}
       }
     },
+    "MediaAnalysisModelVersions":{
+      "type":"structure",
+      "members":{
+        "Moderation":{"shape":"String"}
+      }
+    },
     "MediaAnalysisOperationsConfig":{
       "type":"structure",
       "members":{
@@ -3835,7 +3860,8 @@
     "MediaAnalysisResults":{
       "type":"structure",
       "members":{
-        "S3Object":{"shape":"S3Object"}
+        "S3Object":{"shape":"S3Object"},
+        "ModelVersions":{"shape":"MediaAnalysisModelVersions"}
       }
     },
     "MediaAnalysisS3KeyPrefix":{
@@ -3853,7 +3879,8 @@
       "members":{
         "Confidence":{"shape":"Percent"},
         "Name":{"shape":"String"},
-        "ParentName":{"shape":"String"}
+        "ParentName":{"shape":"String"},
+        "TaxonomyLevel":{"shape":"UInteger"}
       }
     },
     "ModerationLabels":{

@@ -3,11 +3,8 @@
 // Package iotfleethub provides the client and types for making API
 // requests to AWS IoT Fleet Hub.
 //
-// With Fleet Hub for AWS IoT Device Management you can build stand-alone web
-// applications for monitoring the health of your device fleets.
-//
-// Fleet Hub for AWS IoT Device Management is in public preview and is subject
-// to change.
+// With Fleet Hub for IoT Device Management you can build stand-alone web applications
+// for monitoring the health of your device fleets.
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/iotfleethub-2020-11-03 for more information on this service.
 //
@@ -29,4 +26,7 @@
 // See the AWS IoT Fleet Hub client IoTFleetHub for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/iotfleethub/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package iotfleethub

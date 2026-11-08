@@ -123,6 +123,7 @@ func (c *Rekognition) AssociateFacesRequest(input *AssociateFacesInput) (req *re
 //     or deletion of the User caused an inconsistent state. **
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -413,6 +414,7 @@ func (c *Rekognition) CopyProjectVersionRequest(input *CopyProjectVersionInput) 
 //     call again.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -533,6 +535,7 @@ func (c *Rekognition) CreateCollectionRequest(input *CreateCollectionInput) (req
 //     A resource with the specified ID already exists.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -1009,6 +1012,7 @@ func (c *Rekognition) CreateProjectVersionRequest(input *CreateProjectVersionInp
 //     this limit, contact Amazon Rekognition.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -1145,6 +1149,7 @@ func (c *Rekognition) CreateStreamProcessorRequest(input *CreateStreamProcessorI
 //     this limit, contact Amazon Rekognition.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -1242,6 +1247,7 @@ func (c *Rekognition) CreateUserRequest(input *CreateUserInput) (req *request.Re
 //     The resource specified in the request cannot be found.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -2782,7 +2788,8 @@ func (c *Rekognition) DetectCustomLabelsRequest(input *DetectCustomLabelsInput) 
 // a (CustomLabel) object in an array (CustomLabels). Each CustomLabel object
 // provides the label name (Name), the level of confidence that the image contains
 // the object (Confidence), and object location information, if it exists, for
-// the label on the image (Geometry).
+// the label on the image (Geometry). Note that for the DetectCustomLabelsLabels
+// operation, Polygons are not returned in the Geometry section of the response.
 //
 // To filter labels that are returned, specify a value for MinConfidence. DetectCustomLabelsLabels
 // only returns labels with a confidence that's higher than the specified value.
@@ -4904,6 +4911,10 @@ func (c *Rekognition) GetLabelDetectionRequest(input *GetLabelDetectionInput) (r
 // the NextToken request parameter with the token value returned from the previous
 // call to GetLabelDetection.
 //
+// If you are retrieving results while using the Amazon Simple Notification
+// Service, note that you will receive an "ERROR" notification if the job encounters
+// an issue.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -5831,6 +5842,7 @@ func (c *Rekognition) IndexFacesRequest(input *IndexFacesInput) (req *request.Re
 //     The provided image format is not supported.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -7338,6 +7350,7 @@ func (c *Rekognition) PutProjectPolicyRequest(input *PutProjectPolicyInput) (req
 //     call again.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -9584,6 +9597,7 @@ func (c *Rekognition) TagResourceRequest(input *TagResourceInput) (req *request.
 //     the API operation again.
 //
 //   - ServiceQuotaExceededException
+//
 //     The size of the collection exceeds the allowed limit. For more information,
 //     see Guidelines and quotas in Amazon Rekognition in the Amazon Rekognition
 //     Developer Guide.
@@ -10221,9 +10235,8 @@ func (s *AssociateFacesInput) SetUserMatchThreshold(v float64) *AssociateFacesIn
 type AssociateFacesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An array of AssociatedFace objects containing FaceIDs that are successfully
-	// associated with the UserID is returned. Returned if the AssociateFaces action
-	// is successful.
+	// An array of AssociatedFace objects containing FaceIDs that have been successfully
+	// associated with the UserID. Returned if the AssociateFaces action is successful.
 	AssociatedFaces []*AssociatedFace `type:"list"`
 
 	// An array of UnsuccessfulAssociation objects containing FaceIDs that are not
@@ -11427,6 +11440,10 @@ func (s *ConnectedHomeSettingsForUpdate) SetMinConfidence(v float64) *ConnectedH
 type ContentModerationDetection struct {
 	_ struct{} `type:"structure"`
 
+	// A list of predicted results for the type of content an image contains. For
+	// example, the image content might be from animation, sports, or a video game.
+	ContentTypes []*ContentType `type:"list"`
+
 	// The time duration of a segment in milliseconds, I.e. time elapsed from StartTimestampMillis
 	// to EndTimestampMillis.
 	DurationMillis *int64 `type:"long"`
@@ -11466,6 +11483,12 @@ func (s ContentModerationDetection) GoString() string {
 	return s.String()
 }
 
+// SetContentTypes sets the ContentTypes field's value.
+func (s *ContentModerationDetection) SetContentTypes(v []*ContentType) *ContentModerationDetection {
+	s.ContentTypes = v
+	return s
+}
+
 // SetDurationMillis sets the DurationMillis field's value.
 func (s *ContentModerationDetection) SetDurationMillis(v int64) *ContentModerationDetection {
 	s.DurationMillis = &v
@@ -11493,6 +11516,48 @@ func (s *ContentModerationDetection) SetStartTimestampMillis(v int64) *ContentMo
 // SetTimestamp sets the Timestamp field's value.
 func (s *ContentModerationDetection) SetTimestamp(v int64) *ContentModerationDetection {
 	s.Timestamp = &v
+	return s
+}
+
+// Contains information regarding the confidence and name of a detected content
+// type.
+type ContentType struct {
+	_ struct{} `type:"structure"`
+
+	// The confidence level of the label given
+	Confidence *float64 `type:"float"`
+
+	// The name of the label
+	Name *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentType) GoString() string {
+	return s.String()
+}
+
+// SetConfidence sets the Confidence field's value.
+func (s *ContentType) SetConfidence(v float64) *ContentType {
+	s.Confidence = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ContentType) SetName(v string) *ContentType {
+	s.Name = &v
 	return s
 }
 
@@ -11859,6 +11924,9 @@ type CreateDatasetInput struct {
 	//
 	// ProjectArn is a required field
 	ProjectArn *string `min:"20" type:"string" required:"true"`
+
+	// A set of tags (key-value pairs) that you want to attach to the dataset.
+	Tags map[string]*string `type:"map"`
 }
 
 // String returns the string representation.
@@ -11918,6 +11986,12 @@ func (s *CreateDatasetInput) SetDatasetType(v string) *CreateDatasetInput {
 // SetProjectArn sets the ProjectArn field's value.
 func (s *CreateDatasetInput) SetProjectArn(v string) *CreateDatasetInput {
 	s.ProjectArn = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateDatasetInput) SetTags(v map[string]*string) *CreateDatasetInput {
+	s.Tags = v
 	return s
 }
 
@@ -12030,7 +12104,11 @@ func (s *CreateFaceLivenessSessionInput) SetSettings(v *CreateFaceLivenessSessio
 type CreateFaceLivenessSessionOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique 128-bit UUID identifying a Face Liveness session.
+	// A unique 128-bit UUID identifying a Face Liveness session. A new sessionID
+	// must be used for every Face Liveness check. If a given sessionID is used
+	// for subsequent Face Liveness checks, the checks will fail. Additionally,
+	// a SessionId expires 3 minutes after it's sent, making all Liveness data associated
+	// with the session (e.g., sessionID, reference image, audit images, etc.) unavailable.
 	//
 	// SessionId is a required field
 	SessionId *string `min:"36" type:"string" required:"true"`
@@ -12141,6 +12219,9 @@ type CreateProjectInput struct {
 	//
 	// ProjectName is a required field
 	ProjectName *string `min:"1" type:"string" required:"true"`
+
+	// A set of tags (key-value pairs) that you want to attach to the project.
+	Tags map[string]*string `type:"map"`
 }
 
 // String returns the string representation.
@@ -12192,6 +12273,12 @@ func (s *CreateProjectInput) SetFeature(v string) *CreateProjectInput {
 // SetProjectName sets the ProjectName field's value.
 func (s *CreateProjectInput) SetProjectName(v string) *CreateProjectInput {
 	s.ProjectName = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateProjectInput) SetTags(v map[string]*string) *CreateProjectInput {
+	s.Tags = v
 	return s
 }
 
@@ -15562,11 +15649,15 @@ func (s *DetectModerationLabelsInput) SetProjectVersion(v string) *DetectModerat
 type DetectModerationLabelsOutput struct {
 	_ struct{} `type:"structure"`
 
+	// A list of predicted results for the type of content an image contains. For
+	// example, the image content might be from animation, sports, or a video game.
+	ContentTypes []*ContentType `type:"list"`
+
 	// Shows the results of the human in the loop evaluation.
 	HumanLoopActivationOutput *HumanLoopActivationOutput `type:"structure"`
 
-	// Array of detected Moderation labels and the time, in milliseconds from the
-	// start of the video, they were detected.
+	// Array of detected Moderation labels. For video operations, this includes
+	// the time, in milliseconds from the start of the video, they were detected.
 	ModerationLabels []*ModerationLabel `type:"list"`
 
 	// Version number of the base moderation detection model that was used to detect
@@ -15595,6 +15686,12 @@ func (s DetectModerationLabelsOutput) String() string {
 // value will be replaced with "sensitive".
 func (s DetectModerationLabelsOutput) GoString() string {
 	return s.String()
+}
+
+// SetContentTypes sets the ContentTypes field's value.
+func (s *DetectModerationLabelsOutput) SetContentTypes(v []*ContentType) *DetectModerationLabelsOutput {
+	s.ContentTypes = v
+	return s
 }
 
 // SetHumanLoopActivationOutput sets the HumanLoopActivationOutput field's value.
@@ -22805,6 +22902,39 @@ func (s *MediaAnalysisManifestSummary) SetS3Object(v *S3Object) *MediaAnalysisMa
 	return s
 }
 
+// Object containing information about the model versions of selected features
+// in a given job.
+type MediaAnalysisModelVersions struct {
+	_ struct{} `type:"structure"`
+
+	// The Moderation base model version.
+	Moderation *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisModelVersions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisModelVersions) GoString() string {
+	return s.String()
+}
+
+// SetModeration sets the Moderation field's value.
+func (s *MediaAnalysisModelVersions) SetModeration(v string) *MediaAnalysisModelVersions {
+	s.Moderation = &v
+	return s
+}
+
 // Configuration options for a media analysis job. Configuration is operation-specific.
 type MediaAnalysisOperationsConfig struct {
 	_ struct{} `type:"structure"`
@@ -22917,6 +23047,10 @@ func (s *MediaAnalysisOutputConfig) SetS3KeyPrefix(v string) *MediaAnalysisOutpu
 type MediaAnalysisResults struct {
 	_ struct{} `type:"structure"`
 
+	// Information about the model versions for the features selected in a given
+	// job.
+	ModelVersions *MediaAnalysisModelVersions `type:"structure"`
+
 	// Provides the S3 bucket name and object name.
 	//
 	// The region for the S3 bucket containing the S3 object must match the region
@@ -22946,6 +23080,12 @@ func (s MediaAnalysisResults) GoString() string {
 	return s.String()
 }
 
+// SetModelVersions sets the ModelVersions field's value.
+func (s *MediaAnalysisResults) SetModelVersions(v *MediaAnalysisModelVersions) *MediaAnalysisResults {
+	s.ModelVersions = v
+	return s
+}
+
 // SetS3Object sets the S3Object field's value.
 func (s *MediaAnalysisResults) SetS3Object(v *S3Object) *MediaAnalysisResults {
 	s.S3Object = v
@@ -22973,6 +23113,10 @@ type ModerationLabel struct {
 	// The name for the parent label. Labels at the top level of the hierarchy have
 	// the parent label "".
 	ParentName *string `type:"string"`
+
+	// The level of the moderation label with regard to its taxonomy, from 1 to
+	// 3.
+	TaxonomyLevel *int64 `type:"integer"`
 }
 
 // String returns the string representation.
@@ -23008,6 +23152,12 @@ func (s *ModerationLabel) SetName(v string) *ModerationLabel {
 // SetParentName sets the ParentName field's value.
 func (s *ModerationLabel) SetParentName(v string) *ModerationLabel {
 	s.ParentName = &v
+	return s
+}
+
+// SetTaxonomyLevel sets the TaxonomyLevel field's value.
+func (s *ModerationLabel) SetTaxonomyLevel(v int64) *ModerationLabel {
+	s.TaxonomyLevel = &v
 	return s
 }
 

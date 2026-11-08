@@ -13,6 +13,9 @@ const (
 	//
 	// The current account doesn't have the IAM permissions required to perform
 	// the specified Resolver operation.
+	//
+	// This error can also be thrown when a customer has reached the 5120 character
+	// limit for a resource policy for CloudWatch Logs.
 	ErrCodeAccessDeniedException = "AccessDeniedException"
 
 	// ErrCodeConflictException for service response error code
@@ -110,8 +113,8 @@ const (
 	// ErrCodeValidationException for service response error code
 	// "ValidationException".
 	//
-	// You have provided an invalid command. Supported values are ADD, REMOVE, or
-	// REPLACE a domain.
+	// You have provided an invalid command. If you ran the UpdateFirewallDomains
+	// request. supported values are ADD, REMOVE, or REPLACE a domain.
 	ErrCodeValidationException = "ValidationException"
 )
 

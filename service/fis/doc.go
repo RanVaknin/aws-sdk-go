@@ -3,9 +3,9 @@
 // Package fis provides the client and types for making API
 // requests to AWS Fault Injection Simulator.
 //
-// Fault Injection Simulator is a managed service that enables you to perform
+// Fault Injection Service is a managed service that enables you to perform
 // fault injection experiments on your Amazon Web Services workloads. For more
-// information, see the Fault Injection Simulator User Guide (https://docs.aws.amazon.com/fis/latest/userguide/).
+// information, see the Fault Injection Service User Guide (https://docs.aws.amazon.com/fis/latest/userguide/).
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/fis-2020-12-01 for more information on this service.
 //
@@ -27,4 +27,7 @@
 // See the AWS Fault Injection Simulator client FIS for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/fis/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package fis

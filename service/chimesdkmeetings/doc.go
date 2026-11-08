@@ -4,9 +4,10 @@
 // requests to Amazon Chime SDK Meetings.
 //
 // The Amazon Chime SDK meetings APIs in this section allow software developers
-// to create Amazon Chime SDK meetings, set the AWS Regions for meetings, create
-// and manage users, and send and receive meeting notifications. For more information
-// about the meeting APIs, see Amazon Chime SDK meetings (https://docs.aws.amazon.com/chime/latest/APIReference/API_Operations_Amazon_Chime_SDK_Meetings.html).
+// to create Amazon Chime SDK meetings, set the Amazon Web Services Regions
+// for meetings, create and manage users, and send and receive meeting notifications.
+// For more information about the meeting APIs, see Amazon Chime SDK meetings
+// (https://docs.aws.amazon.com/chime/latest/APIReference/API_Operations_Amazon_Chime_SDK_Meetings.html).
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/chime-sdk-meetings-2021-07-15 for more information on this service.
 //
@@ -28,4 +29,7 @@
 // See the Amazon Chime SDK Meetings client ChimeSDKMeetings for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/chimesdkmeetings/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package chimesdkmeetings

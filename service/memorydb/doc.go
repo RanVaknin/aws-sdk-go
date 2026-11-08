@@ -3,12 +3,12 @@
 // Package memorydb provides the client and types for making API
 // requests to Amazon MemoryDB.
 //
-// MemoryDB for Redis is a fully managed, Redis-compatible, in-memory database
-// that delivers ultra-fast performance and Multi-AZ durability for modern applications
+// MemoryDB is a fully managed, Redis OSS-compatible, in-memory database that
+// delivers ultra-fast performance and Multi-AZ durability for modern applications
 // built using microservices architectures. MemoryDB stores the entire database
 // in-memory, enabling low latency and high throughput data access. It is compatible
-// with Redis, a popular open source data store, enabling you to leverage Redis’
-// flexible and friendly data structures, APIs, and commands.
+// with Redis OSS, a popular open source data store, enabling you to leverage
+// Redis OSS’ flexible and friendly data structures, APIs, and commands.
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01 for more information on this service.
 //
@@ -30,4 +30,7 @@
 // See the Amazon MemoryDB client MemoryDB for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/memorydb/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package memorydb

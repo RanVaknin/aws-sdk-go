@@ -290,11 +290,31 @@ const (
 	// The encryption key is disabled.
 	ErrCodeEncryptionKeyDisabledException = "EncryptionKeyDisabledException"
 
+	// ErrCodeEncryptionKeyInvalidIdException for service response error code
+	// "EncryptionKeyInvalidIdException".
+	//
+	// The Key Management Service encryption key is not valid.
+	ErrCodeEncryptionKeyInvalidIdException = "EncryptionKeyInvalidIdException"
+
+	// ErrCodeEncryptionKeyInvalidUsageException for service response error code
+	// "EncryptionKeyInvalidUsageException".
+	//
+	// A KMS encryption key was used to try and encrypt or decrypt a repository,
+	// but either the repository or the key was not in a valid state to support
+	// the operation.
+	ErrCodeEncryptionKeyInvalidUsageException = "EncryptionKeyInvalidUsageException"
+
 	// ErrCodeEncryptionKeyNotFoundException for service response error code
 	// "EncryptionKeyNotFoundException".
 	//
 	// No encryption key was found.
 	ErrCodeEncryptionKeyNotFoundException = "EncryptionKeyNotFoundException"
+
+	// ErrCodeEncryptionKeyRequiredException for service response error code
+	// "EncryptionKeyRequiredException".
+	//
+	// A KMS encryption key ID is required but was not specified.
+	ErrCodeEncryptionKeyRequiredException = "EncryptionKeyRequiredException"
 
 	// ErrCodeEncryptionKeyUnavailableException for service response error code
 	// "EncryptionKeyUnavailableException".
@@ -946,6 +966,12 @@ const (
 	// of approval rules associated with it.
 	ErrCodeNumberOfRulesExceededException = "NumberOfRulesExceededException"
 
+	// ErrCodeOperationNotAllowedException for service response error code
+	// "OperationNotAllowedException".
+	//
+	// The requested action is not allowed.
+	ErrCodeOperationNotAllowedException = "OperationNotAllowedException"
+
 	// ErrCodeOverrideAlreadySetException for service response error code
 	// "OverrideAlreadySetException".
 	//
@@ -1317,7 +1343,10 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"EncryptionIntegrityChecksFailedException":              newErrorEncryptionIntegrityChecksFailedException,
 	"EncryptionKeyAccessDeniedException":                    newErrorEncryptionKeyAccessDeniedException,
 	"EncryptionKeyDisabledException":                        newErrorEncryptionKeyDisabledException,
+	"EncryptionKeyInvalidIdException":                       newErrorEncryptionKeyInvalidIdException,
+	"EncryptionKeyInvalidUsageException":                    newErrorEncryptionKeyInvalidUsageException,
 	"EncryptionKeyNotFoundException":                        newErrorEncryptionKeyNotFoundException,
+	"EncryptionKeyRequiredException":                        newErrorEncryptionKeyRequiredException,
 	"EncryptionKeyUnavailableException":                     newErrorEncryptionKeyUnavailableException,
 	"FileContentAndSourceFileSpecifiedException":            newErrorFileContentAndSourceFileSpecifiedException,
 	"FileContentRequiredException":                          newErrorFileContentRequiredException,
@@ -1412,6 +1441,7 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"NoChangeException":                                     newErrorNoChangeException,
 	"NumberOfRuleTemplatesExceededException":                newErrorNumberOfRuleTemplatesExceededException,
 	"NumberOfRulesExceededException":                        newErrorNumberOfRulesExceededException,
+	"OperationNotAllowedException":                          newErrorOperationNotAllowedException,
 	"OverrideAlreadySetException":                           newErrorOverrideAlreadySetException,
 	"OverrideStatusRequiredException":                       newErrorOverrideStatusRequiredException,
 	"ParentCommitDoesNotExistException":                     newErrorParentCommitDoesNotExistException,

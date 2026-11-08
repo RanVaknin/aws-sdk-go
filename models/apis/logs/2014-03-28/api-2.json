@@ -5,11 +5,13 @@
     "endpointPrefix":"logs",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon CloudWatch Logs",
     "serviceId":"CloudWatch Logs",
     "signatureVersion":"v4",
     "targetPrefix":"Logs_20140328",
-    "uid":"logs-2014-03-28"
+    "uid":"logs-2014-03-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateKmsKey":{
@@ -1128,6 +1130,7 @@
         "lastUpdatedTime":{"shape":"Timestamp"},
         "policyType":{"shape":"PolicyType"},
         "scope":{"shape":"Scope"},
+        "selectionCriteria":{"shape":"SelectionCriteria"},
         "accountId":{"shape":"AccountId"}
       }
     },
@@ -2337,8 +2340,11 @@
       "event":true
     },
     "LogEvent":{
-      "type":"string",
-      "min":1
+      "type":"structure",
+      "members":{
+        "timestamp":{"shape":"Timestamp"},
+        "message":{"shape":"EventMessage"}
+      }
     },
     "LogEventIndex":{"type":"integer"},
     "LogGroup":{
@@ -2353,7 +2359,8 @@
         "kmsKeyId":{"shape":"KmsKeyId"},
         "dataProtectionStatus":{"shape":"DataProtectionStatus"},
         "inheritedProperties":{"shape":"InheritedProperties"},
-        "logGroupClass":{"shape":"LogGroupClass"}
+        "logGroupClass":{"shape":"LogGroupClass"},
+        "logGroupArn":{"shape":"Arn"}
       }
     },
     "LogGroupArn":{
@@ -2612,7 +2619,10 @@
     "PolicyName":{"type":"string"},
     "PolicyType":{
       "type":"string",
-      "enum":["DATA_PROTECTION_POLICY"]
+      "enum":[
+        "DATA_PROTECTION_POLICY",
+        "SUBSCRIPTION_FILTER_POLICY"
+      ]
     },
     "Priority":{
       "type":"string",
@@ -2629,7 +2639,8 @@
         "policyName":{"shape":"PolicyName"},
         "policyDocument":{"shape":"AccountPolicyDocument"},
         "policyType":{"shape":"PolicyType"},
-        "scope":{"shape":"Scope"}
+        "scope":{"shape":"Scope"},
+        "selectionCriteria":{"shape":"SelectionCriteria"}
       }
     },
     "PutAccountPolicyResponse":{
@@ -3014,6 +3025,7 @@
       "type":"list",
       "member":{"shape":"SearchedLogStream"}
     },
+    "SelectionCriteria":{"type":"string"},
     "SequenceToken":{
       "type":"string",
       "min":1

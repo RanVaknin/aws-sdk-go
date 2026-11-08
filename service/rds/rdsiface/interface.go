@@ -160,6 +160,10 @@ type RDSAPI interface {
 	CreateDBSecurityGroupWithContext(aws.Context, *rds.CreateDBSecurityGroupInput, ...request.Option) (*rds.CreateDBSecurityGroupOutput, error)
 	CreateDBSecurityGroupRequest(*rds.CreateDBSecurityGroupInput) (*request.Request, *rds.CreateDBSecurityGroupOutput)
 
+	CreateDBShardGroup(*rds.CreateDBShardGroupInput) (*rds.CreateDBShardGroupOutput, error)
+	CreateDBShardGroupWithContext(aws.Context, *rds.CreateDBShardGroupInput, ...request.Option) (*rds.CreateDBShardGroupOutput, error)
+	CreateDBShardGroupRequest(*rds.CreateDBShardGroupInput) (*request.Request, *rds.CreateDBShardGroupOutput)
+
 	CreateDBSnapshot(*rds.CreateDBSnapshotInput) (*rds.CreateDBSnapshotOutput, error)
 	CreateDBSnapshotWithContext(aws.Context, *rds.CreateDBSnapshotInput, ...request.Option) (*rds.CreateDBSnapshotOutput, error)
 	CreateDBSnapshotRequest(*rds.CreateDBSnapshotInput) (*request.Request, *rds.CreateDBSnapshotOutput)
@@ -239,6 +243,10 @@ type RDSAPI interface {
 	DeleteDBSecurityGroup(*rds.DeleteDBSecurityGroupInput) (*rds.DeleteDBSecurityGroupOutput, error)
 	DeleteDBSecurityGroupWithContext(aws.Context, *rds.DeleteDBSecurityGroupInput, ...request.Option) (*rds.DeleteDBSecurityGroupOutput, error)
 	DeleteDBSecurityGroupRequest(*rds.DeleteDBSecurityGroupInput) (*request.Request, *rds.DeleteDBSecurityGroupOutput)
+
+	DeleteDBShardGroup(*rds.DeleteDBShardGroupInput) (*rds.DeleteDBShardGroupOutput, error)
+	DeleteDBShardGroupWithContext(aws.Context, *rds.DeleteDBShardGroupInput, ...request.Option) (*rds.DeleteDBShardGroupOutput, error)
+	DeleteDBShardGroupRequest(*rds.DeleteDBShardGroupInput) (*request.Request, *rds.DeleteDBShardGroupOutput)
 
 	DeleteDBSnapshot(*rds.DeleteDBSnapshotInput) (*rds.DeleteDBSnapshotOutput, error)
 	DeleteDBSnapshotWithContext(aws.Context, *rds.DeleteDBSnapshotInput, ...request.Option) (*rds.DeleteDBSnapshotOutput, error)
@@ -413,12 +421,23 @@ type RDSAPI interface {
 	DescribeDBProxyTargetsPages(*rds.DescribeDBProxyTargetsInput, func(*rds.DescribeDBProxyTargetsOutput, bool) bool) error
 	DescribeDBProxyTargetsPagesWithContext(aws.Context, *rds.DescribeDBProxyTargetsInput, func(*rds.DescribeDBProxyTargetsOutput, bool) bool, ...request.Option) error
 
+	DescribeDBRecommendations(*rds.DescribeDBRecommendationsInput) (*rds.DescribeDBRecommendationsOutput, error)
+	DescribeDBRecommendationsWithContext(aws.Context, *rds.DescribeDBRecommendationsInput, ...request.Option) (*rds.DescribeDBRecommendationsOutput, error)
+	DescribeDBRecommendationsRequest(*rds.DescribeDBRecommendationsInput) (*request.Request, *rds.DescribeDBRecommendationsOutput)
+
+	DescribeDBRecommendationsPages(*rds.DescribeDBRecommendationsInput, func(*rds.DescribeDBRecommendationsOutput, bool) bool) error
+	DescribeDBRecommendationsPagesWithContext(aws.Context, *rds.DescribeDBRecommendationsInput, func(*rds.DescribeDBRecommendationsOutput, bool) bool, ...request.Option) error
+
 	DescribeDBSecurityGroups(*rds.DescribeDBSecurityGroupsInput) (*rds.DescribeDBSecurityGroupsOutput, error)
 	DescribeDBSecurityGroupsWithContext(aws.Context, *rds.DescribeDBSecurityGroupsInput, ...request.Option) (*rds.DescribeDBSecurityGroupsOutput, error)
 	DescribeDBSecurityGroupsRequest(*rds.DescribeDBSecurityGroupsInput) (*request.Request, *rds.DescribeDBSecurityGroupsOutput)
 
 	DescribeDBSecurityGroupsPages(*rds.DescribeDBSecurityGroupsInput, func(*rds.DescribeDBSecurityGroupsOutput, bool) bool) error
 	DescribeDBSecurityGroupsPagesWithContext(aws.Context, *rds.DescribeDBSecurityGroupsInput, func(*rds.DescribeDBSecurityGroupsOutput, bool) bool, ...request.Option) error
+
+	DescribeDBShardGroups(*rds.DescribeDBShardGroupsInput) (*rds.DescribeDBShardGroupsOutput, error)
+	DescribeDBShardGroupsWithContext(aws.Context, *rds.DescribeDBShardGroupsInput, ...request.Option) (*rds.DescribeDBShardGroupsOutput, error)
+	DescribeDBShardGroupsRequest(*rds.DescribeDBShardGroupsInput) (*request.Request, *rds.DescribeDBShardGroupsOutput)
 
 	DescribeDBSnapshotAttributes(*rds.DescribeDBSnapshotAttributesInput) (*rds.DescribeDBSnapshotAttributesOutput, error)
 	DescribeDBSnapshotAttributesWithContext(aws.Context, *rds.DescribeDBSnapshotAttributesInput, ...request.Option) (*rds.DescribeDBSnapshotAttributesOutput, error)
@@ -555,12 +574,20 @@ type RDSAPI interface {
 	DescribeValidDBInstanceModificationsWithContext(aws.Context, *rds.DescribeValidDBInstanceModificationsInput, ...request.Option) (*rds.DescribeValidDBInstanceModificationsOutput, error)
 	DescribeValidDBInstanceModificationsRequest(*rds.DescribeValidDBInstanceModificationsInput) (*request.Request, *rds.DescribeValidDBInstanceModificationsOutput)
 
+	DisableHttpEndpoint(*rds.DisableHttpEndpointInput) (*rds.DisableHttpEndpointOutput, error)
+	DisableHttpEndpointWithContext(aws.Context, *rds.DisableHttpEndpointInput, ...request.Option) (*rds.DisableHttpEndpointOutput, error)
+	DisableHttpEndpointRequest(*rds.DisableHttpEndpointInput) (*request.Request, *rds.DisableHttpEndpointOutput)
+
 	DownloadDBLogFilePortion(*rds.DownloadDBLogFilePortionInput) (*rds.DownloadDBLogFilePortionOutput, error)
 	DownloadDBLogFilePortionWithContext(aws.Context, *rds.DownloadDBLogFilePortionInput, ...request.Option) (*rds.DownloadDBLogFilePortionOutput, error)
 	DownloadDBLogFilePortionRequest(*rds.DownloadDBLogFilePortionInput) (*request.Request, *rds.DownloadDBLogFilePortionOutput)
 
 	DownloadDBLogFilePortionPages(*rds.DownloadDBLogFilePortionInput, func(*rds.DownloadDBLogFilePortionOutput, bool) bool) error
 	DownloadDBLogFilePortionPagesWithContext(aws.Context, *rds.DownloadDBLogFilePortionInput, func(*rds.DownloadDBLogFilePortionOutput, bool) bool, ...request.Option) error
+
+	EnableHttpEndpoint(*rds.EnableHttpEndpointInput) (*rds.EnableHttpEndpointOutput, error)
+	EnableHttpEndpointWithContext(aws.Context, *rds.EnableHttpEndpointInput, ...request.Option) (*rds.EnableHttpEndpointOutput, error)
+	EnableHttpEndpointRequest(*rds.EnableHttpEndpointInput) (*request.Request, *rds.EnableHttpEndpointOutput)
 
 	FailoverDBCluster(*rds.FailoverDBClusterInput) (*rds.FailoverDBClusterOutput, error)
 	FailoverDBClusterWithContext(aws.Context, *rds.FailoverDBClusterInput, ...request.Option) (*rds.FailoverDBClusterOutput, error)
@@ -626,6 +653,14 @@ type RDSAPI interface {
 	ModifyDBProxyTargetGroupWithContext(aws.Context, *rds.ModifyDBProxyTargetGroupInput, ...request.Option) (*rds.ModifyDBProxyTargetGroupOutput, error)
 	ModifyDBProxyTargetGroupRequest(*rds.ModifyDBProxyTargetGroupInput) (*request.Request, *rds.ModifyDBProxyTargetGroupOutput)
 
+	ModifyDBRecommendation(*rds.ModifyDBRecommendationInput) (*rds.ModifyDBRecommendationOutput, error)
+	ModifyDBRecommendationWithContext(aws.Context, *rds.ModifyDBRecommendationInput, ...request.Option) (*rds.ModifyDBRecommendationOutput, error)
+	ModifyDBRecommendationRequest(*rds.ModifyDBRecommendationInput) (*request.Request, *rds.ModifyDBRecommendationOutput)
+
+	ModifyDBShardGroup(*rds.ModifyDBShardGroupInput) (*rds.ModifyDBShardGroupOutput, error)
+	ModifyDBShardGroupWithContext(aws.Context, *rds.ModifyDBShardGroupInput, ...request.Option) (*rds.ModifyDBShardGroupOutput, error)
+	ModifyDBShardGroupRequest(*rds.ModifyDBShardGroupInput) (*request.Request, *rds.ModifyDBShardGroupOutput)
+
 	ModifyDBSnapshot(*rds.ModifyDBSnapshotInput) (*rds.ModifyDBSnapshotOutput, error)
 	ModifyDBSnapshotWithContext(aws.Context, *rds.ModifyDBSnapshotInput, ...request.Option) (*rds.ModifyDBSnapshotOutput, error)
 	ModifyDBSnapshotRequest(*rds.ModifyDBSnapshotInput) (*request.Request, *rds.ModifyDBSnapshotOutput)
@@ -645,6 +680,10 @@ type RDSAPI interface {
 	ModifyGlobalCluster(*rds.ModifyGlobalClusterInput) (*rds.ModifyGlobalClusterOutput, error)
 	ModifyGlobalClusterWithContext(aws.Context, *rds.ModifyGlobalClusterInput, ...request.Option) (*rds.ModifyGlobalClusterOutput, error)
 	ModifyGlobalClusterRequest(*rds.ModifyGlobalClusterInput) (*request.Request, *rds.ModifyGlobalClusterOutput)
+
+	ModifyIntegration(*rds.ModifyIntegrationInput) (*rds.ModifyIntegrationOutput, error)
+	ModifyIntegrationWithContext(aws.Context, *rds.ModifyIntegrationInput, ...request.Option) (*rds.ModifyIntegrationOutput, error)
+	ModifyIntegrationRequest(*rds.ModifyIntegrationInput) (*request.Request, *rds.ModifyIntegrationOutput)
 
 	ModifyOptionGroup(*rds.ModifyOptionGroupInput) (*rds.ModifyOptionGroupOutput, error)
 	ModifyOptionGroupWithContext(aws.Context, *rds.ModifyOptionGroupInput, ...request.Option) (*rds.ModifyOptionGroupOutput, error)
@@ -673,6 +712,10 @@ type RDSAPI interface {
 	RebootDBInstance(*rds.RebootDBInstanceInput) (*rds.RebootDBInstanceOutput, error)
 	RebootDBInstanceWithContext(aws.Context, *rds.RebootDBInstanceInput, ...request.Option) (*rds.RebootDBInstanceOutput, error)
 	RebootDBInstanceRequest(*rds.RebootDBInstanceInput) (*request.Request, *rds.RebootDBInstanceOutput)
+
+	RebootDBShardGroup(*rds.RebootDBShardGroupInput) (*rds.RebootDBShardGroupOutput, error)
+	RebootDBShardGroupWithContext(aws.Context, *rds.RebootDBShardGroupInput, ...request.Option) (*rds.RebootDBShardGroupOutput, error)
+	RebootDBShardGroupRequest(*rds.RebootDBShardGroupInput) (*request.Request, *rds.RebootDBShardGroupOutput)
 
 	RegisterDBProxyTargets(*rds.RegisterDBProxyTargetsInput) (*rds.RegisterDBProxyTargetsOutput, error)
 	RegisterDBProxyTargetsWithContext(aws.Context, *rds.RegisterDBProxyTargetsInput, ...request.Option) (*rds.RegisterDBProxyTargetsOutput, error)

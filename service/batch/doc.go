@@ -9,8 +9,8 @@
 // of the batch computing to remove the undifferentiated heavy lifting of configuring
 // and managing required infrastructure. At the same time, it also adopts a
 // familiar batch computing software approach. You can use Batch to efficiently
-// provision resources d, and work toward eliminating capacity constraints,
-// reducing your overall compute costs, and delivering results more quickly.
+// provision resources, and work toward eliminating capacity constraints, reducing
+// your overall compute costs, and delivering results more quickly.
 //
 // As a fully managed service, Batch can run batch computing workloads of any
 // scale. Batch automatically provisions compute resources and optimizes workload
@@ -39,4 +39,7 @@
 // See the AWS Batch client Batch for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/batch/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package batch

@@ -71,7 +71,7 @@
 // All API actions are logged as CloudTrail events. See Logging Detective API
 // Calls with CloudTrail (https://docs.aws.amazon.com/detective/latest/adminguide/logging-using-cloudtrail.html).
 //
-// We replaced the term "master account" with the term "administrator account."
+// We replaced the term "master account" with the term "administrator account".
 // An administrator account is used to centrally manage multiple accounts. In
 // the case of Detective, the administrator account manages the accounts in
 // their behavior graph.
@@ -96,4 +96,7 @@
 // See the Amazon Detective client Detective for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/detective/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package detective

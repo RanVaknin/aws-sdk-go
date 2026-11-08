@@ -5,12 +5,14 @@
     "endpointPrefix":"connect",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Amazon Connect",
     "serviceFullName":"Amazon Connect Service",
     "serviceId":"Connect",
     "signatureVersion":"v4",
     "signingName":"connect",
-    "uid":"connect-2017-08-08"
+    "uid":"connect-2017-08-08",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ActivateEvaluationForm":{
@@ -245,6 +247,21 @@
       ],
       "idempotent":true
     },
+    "AssociateUserProficiencies":{
+      "name":"AssociateUserProficiencies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/users/{InstanceId}/{UserId}/associate-proficiencies"
+      },
+      "input":{"shape":"AssociateUserProficienciesRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "BatchAssociateAnalyticsDataSet":{
       "name":"BatchAssociateAnalyticsDataSet",
       "http":{
@@ -275,6 +292,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "BatchGetAttachedFileMetadata":{
+      "name":"BatchGetAttachedFileMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/attached-files/{InstanceId}"
+      },
+      "input":{"shape":"BatchGetAttachedFileMetadataRequest"},
+      "output":{"shape":"BatchGetAttachedFileMetadataResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "BatchGetFlowAssociation":{
@@ -327,6 +360,22 @@
         {"shape":"InternalServiceException"},
         {"shape":"IdempotencyException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "CompleteAttachedFileUpload":{
+      "name":"CompleteAttachedFileUpload",
+      "http":{
+        "method":"POST",
+        "requestUri":"/attached-files/{InstanceId}/{FileId}"
+      },
+      "input":{"shape":"CompleteAttachedFileUploadRequest"},
+      "output":{"shape":"CompleteAttachedFileUploadResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAgentStatus":{
@@ -484,6 +533,23 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "CreatePredefinedAttribute":{
+      "name":"CreatePredefinedAttribute",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/predefined-attributes/{InstanceId}"
+      },
+      "input":{"shape":"CreatePredefinedAttributeRequest"},
+      "errors":[
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
@@ -758,6 +824,22 @@
         {"shape":"ResourceConflictException"}
       ]
     },
+    "DeleteAttachedFile":{
+      "name":"DeleteAttachedFile",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/attached-files/{InstanceId}/{FileId}"
+      },
+      "input":{"shape":"DeleteAttachedFileRequest"},
+      "output":{"shape":"DeleteAttachedFileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteContactEvaluation":{
       "name":"DeleteContactEvaluation",
       "http":{
@@ -865,6 +947,23 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "DeletePredefinedAttribute":{
+      "name":"DeletePredefinedAttribute",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/predefined-attributes/{InstanceId}/{Name}"
+      },
+      "input":{"shape":"DeletePredefinedAttributeRequest"},
+      "errors":[
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "idempotent":true
     },
     "DeletePrompt":{
       "name":"DeletePrompt",
@@ -1106,6 +1205,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DescribeAuthenticationProfile":{
+      "name":"DescribeAuthenticationProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authentication-profiles/{InstanceId}/{AuthenticationProfileId}"
+      },
+      "input":{"shape":"DescribeAuthenticationProfileRequest"},
+      "output":{"shape":"DescribeAuthenticationProfileResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DescribeContact":{
       "name":"DescribeContact",
       "http":{
@@ -1262,6 +1377,22 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DescribePredefinedAttribute":{
+      "name":"DescribePredefinedAttribute",
+      "http":{
+        "method":"GET",
+        "requestUri":"/predefined-attributes/{InstanceId}/{Name}"
+      },
+      "input":{"shape":"DescribePredefinedAttributeRequest"},
+      "output":{"shape":"DescribePredefinedAttributeResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "DescribePrompt":{
@@ -1641,6 +1772,21 @@
       ],
       "idempotent":true
     },
+    "DisassociateUserProficiencies":{
+      "name":"DisassociateUserProficiencies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/users/{InstanceId}/{UserId}/disassociate-proficiencies"
+      },
+      "input":{"shape":"DisassociateUserProficienciesRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DismissUserContact":{
       "name":"DismissUserContact",
       "http":{
@@ -1656,6 +1802,22 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "GetAttachedFile":{
+      "name":"GetAttachedFile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/attached-files/{InstanceId}/{FileId}"
+      },
+      "input":{"shape":"GetAttachedFileRequest"},
+      "output":{"shape":"GetAttachedFileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetContactAttributes":{
@@ -1881,6 +2043,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAuthenticationProfiles":{
+      "name":"ListAuthenticationProfiles",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authentication-profiles-summary/{InstanceId}"
+      },
+      "input":{"shape":"ListAuthenticationProfilesRequest"},
+      "output":{"shape":"ListAuthenticationProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "ListBots":{
@@ -2162,6 +2340,22 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListPredefinedAttributes":{
+      "name":"ListPredefinedAttributes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/predefined-attributes/{InstanceId}"
+      },
+      "input":{"shape":"ListPredefinedAttributesRequest"},
+      "output":{"shape":"ListPredefinedAttributesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "ListPrompts":{
@@ -2451,6 +2645,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListUserProficiencies":{
+      "name":"ListUserProficiencies",
+      "http":{
+        "method":"GET",
+        "requestUri":"/users/{InstanceId}/{UserId}/proficiencies"
+      },
+      "input":{"shape":"ListUserProficienciesRequest"},
+      "output":{"shape":"ListUserProficienciesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListUsers":{
       "name":"ListUsers",
       "http":{
@@ -2623,6 +2833,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchAgentStatuses":{
+      "name":"SearchAgentStatuses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-agent-statuses"
+      },
+      "input":{"shape":"SearchAgentStatusesRequest"},
+      "output":{"shape":"SearchAgentStatusesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchAvailablePhoneNumbers":{
       "name":"SearchAvailablePhoneNumbers",
       "http":{
@@ -2638,6 +2864,54 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "SearchContactFlowModules":{
+      "name":"SearchContactFlowModules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-contact-flow-modules"
+      },
+      "input":{"shape":"SearchContactFlowModulesRequest"},
+      "output":{"shape":"SearchContactFlowModulesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchContactFlows":{
+      "name":"SearchContactFlows",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-contact-flows"
+      },
+      "input":{"shape":"SearchContactFlowsRequest"},
+      "output":{"shape":"SearchContactFlowsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchContacts":{
+      "name":"SearchContacts",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-contacts"
+      },
+      "input":{"shape":"SearchContactsRequest"},
+      "output":{"shape":"SearchContactsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "SearchHoursOfOperations":{
       "name":"SearchHoursOfOperations",
       "http":{
@@ -2646,6 +2920,22 @@
       },
       "input":{"shape":"SearchHoursOfOperationsRequest"},
       "output":{"shape":"SearchHoursOfOperationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchPredefinedAttributes":{
+      "name":"SearchPredefinedAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-predefined-attributes"
+      },
+      "input":{"shape":"SearchPredefinedAttributesRequest"},
+      "output":{"shape":"SearchPredefinedAttributesResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -2751,6 +3041,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchUserHierarchyGroups":{
+      "name":"SearchUserHierarchyGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-user-hierarchy-groups"
+      },
+      "input":{"shape":"SearchUserHierarchyGroupsRequest"},
+      "output":{"shape":"SearchUserHierarchyGroupsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchUsers":{
       "name":"SearchUsers",
       "http":{
@@ -2796,6 +3102,23 @@
         {"shape":"InternalServiceException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartAttachedFileUpload":{
+      "name":"StartAttachedFileUpload",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/attached-files/{InstanceId}"
+      },
+      "input":{"shape":"StartAttachedFileUploadRequest"},
+      "output":{"shape":"StartAttachedFileUploadResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "StartChatContact":{
@@ -3088,6 +3411,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateAuthenticationProfile":{
+      "name":"UpdateAuthenticationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/authentication-profiles/{InstanceId}/{AuthenticationProfileId}"
+      },
+      "input":{"shape":"UpdateAuthenticationProfileRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdateContact":{
       "name":"UpdateContact",
       "http":{
@@ -3221,6 +3559,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateContactRoutingData":{
+      "name":"UpdateContactRoutingData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contacts/{InstanceId}/{ContactId}/routing-data"
+      },
+      "input":{"shape":"UpdateContactRoutingDataRequest"},
+      "output":{"shape":"UpdateContactRoutingDataResponse"},
+      "errors":[
+        {"shape":"ResourceConflictException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateContactSchedule":{
       "name":"UpdateContactSchedule",
       "http":{
@@ -3351,6 +3706,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
         {"shape":"IdempotencyException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdatePredefinedAttribute":{
+      "name":"UpdatePredefinedAttribute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/predefined-attributes/{InstanceId}/{Name}"
+      },
+      "input":{"shape":"UpdatePredefinedAttributeRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
@@ -3695,6 +4065,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateUserProficiencies":{
+      "name":"UpdateUserProficiencies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/users/{InstanceId}/{UserId}/proficiencies"
+      },
+      "input":{"shape":"UpdateUserProficienciesRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdateUserRoutingProfile":{
       "name":"UpdateUserRoutingProfile",
       "http":{
@@ -3774,6 +4159,12 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AccessTokenDuration":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":10
+    },
     "ActionSummaries":{
       "type":"list",
       "member":{"shape":"ActionSummary"}
@@ -3794,7 +4185,8 @@
         "SEND_NOTIFICATION",
         "CREATE_CASE",
         "UPDATE_CASE",
-        "END_ASSOCIATED_TASKS"
+        "END_ASSOCIATED_TASKS",
+        "SUBMIT_AUTO_EVALUATION"
       ]
     },
     "ActivateEvaluationFormRequest":{
@@ -3868,29 +4260,70 @@
     "AgentFirstName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "sensitive":true
+    },
+    "AgentHierarchyGroup":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"}
+      }
+    },
+    "AgentHierarchyGroups":{
+      "type":"structure",
+      "members":{
+        "L1Ids":{"shape":"HierarchyGroupIdList"},
+        "L2Ids":{"shape":"HierarchyGroupIdList"},
+        "L3Ids":{"shape":"HierarchyGroupIdList"},
+        "L4Ids":{"shape":"HierarchyGroupIdList"},
+        "L5Ids":{"shape":"HierarchyGroupIdList"}
+      }
+    },
+    "AgentId":{
+      "type":"string",
+      "max":256
+    },
+    "AgentIds":{
+      "type":"list",
+      "member":{"shape":"AgentId"}
     },
     "AgentInfo":{
       "type":"structure",
       "members":{
         "Id":{"shape":"AgentResourceId"},
         "ConnectedToAgentTimestamp":{"shape":"timestamp"},
-        "AgentPauseDurationInSeconds":{"shape":"AgentPauseDurationInSeconds"}
+        "AgentPauseDurationInSeconds":{"shape":"AgentPauseDurationInSeconds"},
+        "HierarchyGroups":{"shape":"HierarchyGroups"},
+        "DeviceInfo":{"shape":"DeviceInfo"},
+        "Capabilities":{"shape":"ParticipantCapabilities"}
       }
     },
     "AgentLastName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "AgentPauseDurationInSeconds":{
       "type":"integer",
       "min":0
     },
+    "AgentQualityMetrics":{
+      "type":"structure",
+      "members":{
+        "Audio":{"shape":"AudioQualityMetricsInfo"}
+      }
+    },
     "AgentResourceId":{
       "type":"string",
       "max":256,
       "min":1
+    },
+    "AgentResourceIdList":{
+      "type":"list",
+      "member":{"shape":"AgentResourceId"},
+      "max":100,
+      "min":0
     },
     "AgentStatus":{
       "type":"structure",
@@ -3913,6 +4346,10 @@
       "min":1
     },
     "AgentStatusId":{"type":"string"},
+    "AgentStatusList":{
+      "type":"list",
+      "member":{"shape":"AgentStatus"}
+    },
     "AgentStatusName":{
       "type":"string",
       "max":127,
@@ -3929,6 +4366,24 @@
         "StatusStartTimestamp":{"shape":"Timestamp"},
         "StatusArn":{"shape":"ARN"},
         "StatusName":{"shape":"AgentStatusName"}
+      }
+    },
+    "AgentStatusSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"AgentStatusSearchCriteria"}
+    },
+    "AgentStatusSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"AgentStatusSearchConditionList"},
+        "AndConditions":{"shape":"AgentStatusSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "AgentStatusSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
       }
     },
     "AgentStatusState":{
@@ -3970,6 +4425,12 @@
       "type":"string",
       "max":100,
       "min":1
+    },
+    "AgentsCriteria":{
+      "type":"structure",
+      "members":{
+        "AgentIds":{"shape":"AgentIds"}
+      }
     },
     "AgentsMinOneMaxHundred":{
       "type":"list",
@@ -4019,6 +4480,25 @@
         "EnableAnswerMachineDetection":{"shape":"Boolean"},
         "AwaitAnswerMachinePrompt":{"shape":"Boolean"}
       }
+    },
+    "AnsweringMachineDetectionStatus":{
+      "type":"string",
+      "enum":[
+        "ANSWERED",
+        "UNDETECTED",
+        "ERROR",
+        "HUMAN_ANSWERED",
+        "SIT_TONE_DETECTED",
+        "SIT_TONE_BUSY",
+        "SIT_TONE_INVALID_NUMBER",
+        "FAX_MACHINE_DETECTED",
+        "VOICEMAIL_BEEP",
+        "VOICEMAIL_NO_BEEP",
+        "AMD_UNRESOLVED",
+        "AMD_UNANSWERED",
+        "AMD_ERROR",
+        "AMD_NOT_APPLICABLE"
+      ]
     },
     "Application":{
       "type":"structure",
@@ -4314,10 +4794,85 @@
       "members":{
       }
     },
+    "AssociateUserProficienciesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "UserId",
+        "UserProficiencies"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "UserProficiencies":{"shape":"UserProficiencyList"}
+      }
+    },
+    "AssociatedQueueIdList":{
+      "type":"list",
+      "member":{"shape":"QueueId"}
+    },
     "AssociationId":{
       "type":"string",
       "max":100,
       "min":1
+    },
+    "AttachedFile":{
+      "type":"structure",
+      "required":[
+        "CreationTime",
+        "FileArn",
+        "FileId",
+        "FileName",
+        "FileSizeInBytes",
+        "FileStatus"
+      ],
+      "members":{
+        "CreationTime":{"shape":"ISO8601Datetime"},
+        "FileArn":{"shape":"ARN"},
+        "FileId":{"shape":"FileId"},
+        "FileName":{"shape":"FileName"},
+        "FileSizeInBytes":{
+          "shape":"FileSizeInBytes",
+          "box":true
+        },
+        "FileStatus":{"shape":"FileStatusType"},
+        "CreatedBy":{"shape":"CreatedByInfo"},
+        "FileUseCaseType":{"shape":"FileUseCaseType"},
+        "AssociatedResourceArn":{"shape":"ARN"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "AttachedFileError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"ErrorMessage"},
+        "FileId":{"shape":"FileId"}
+      }
+    },
+    "AttachedFileErrorsList":{
+      "type":"list",
+      "member":{"shape":"AttachedFileError"}
+    },
+    "AttachedFileInvalidRequestExceptionReason":{
+      "type":"string",
+      "enum":[
+        "INVALID_FILE_SIZE",
+        "INVALID_FILE_TYPE",
+        "INVALID_FILE_NAME"
+      ]
+    },
+    "AttachedFilesList":{
+      "type":"list",
+      "member":{"shape":"AttachedFile"}
     },
     "AttachmentName":{
       "type":"string",
@@ -4347,10 +4902,31 @@
         "Value":{"shape":"InstanceAttributeValue"}
       }
     },
+    "AttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
+      }
+    },
+    "AttributeCondition":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"PredefinedAttributeName"},
+        "Value":{"shape":"ProficiencyValue"},
+        "ProficiencyLevel":{"shape":"NullableProficiencyLevel"},
+        "MatchCriteria":{"shape":"MatchCriteria"},
+        "ComparisonOperator":{"shape":"ComparisonOperator"}
+      }
+    },
     "AttributeName":{
       "type":"string",
       "max":32767,
       "min":1
+    },
+    "AttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"AttributeAndCondition"}
     },
     "AttributeValue":{
       "type":"string",
@@ -4371,6 +4947,61 @@
       "members":{
         "EchoReduction":{"shape":"MeetingFeatureStatus"}
       }
+    },
+    "AudioQualityMetricsInfo":{
+      "type":"structure",
+      "members":{
+        "QualityScore":{"shape":"AudioQualityScore"},
+        "PotentialQualityIssues":{"shape":"PotentialAudioQualityIssues"}
+      }
+    },
+    "AudioQualityScore":{"type":"float"},
+    "AuthenticationProfile":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AuthenticationProfileId"},
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"AuthenticationProfileName"},
+        "Description":{"shape":"AuthenticationProfileDescription"},
+        "AllowedIps":{"shape":"IpCidrList"},
+        "BlockedIps":{"shape":"IpCidrList"},
+        "IsDefault":{"shape":"Boolean"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "PeriodicSessionDuration":{"shape":"AccessTokenDuration"},
+        "MaxSessionDuration":{"shape":"RefreshTokenDuration"}
+      }
+    },
+    "AuthenticationProfileDescription":{
+      "type":"string",
+      "max":250,
+      "min":1
+    },
+    "AuthenticationProfileId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "AuthenticationProfileName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AuthenticationProfileSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AuthenticationProfileId"},
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"AuthenticationProfileName"},
+        "IsDefault":{"shape":"Boolean"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "AuthenticationProfileSummaryList":{
+      "type":"list",
+      "member":{"shape":"AuthenticationProfileSummary"}
     },
     "AutoAccept":{"type":"boolean"},
     "AvailableNumberSummary":{
@@ -4435,6 +5066,34 @@
       "members":{
         "Deleted":{"shape":"DataSetIds"},
         "Errors":{"shape":"ErrorResults"}
+      }
+    },
+    "BatchGetAttachedFileMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "FileIds",
+        "InstanceId",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "FileIds":{"shape":"FileIdList"},
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        }
+      }
+    },
+    "BatchGetAttachedFileMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "Files":{"shape":"AttachedFilesList"},
+        "Errors":{"shape":"AttachedFileErrorsList"}
       }
     },
     "BatchGetFlowAssociationRequest":{
@@ -4521,6 +5180,10 @@
         "CHAT",
         "TASK"
       ]
+    },
+    "ChannelList":{
+      "type":"list",
+      "member":{"shape":"Channel"}
     },
     "ChannelToCountMap":{
       "type":"map",
@@ -4636,6 +5299,16 @@
       "type":"string",
       "max":500
     },
+    "CommonAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "CommonAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"CommonAttributeAndCondition"}
+    },
     "CommonNameLength127":{
       "type":"string",
       "max":127,
@@ -4645,10 +5318,56 @@
       "type":"string",
       "enum":["LT"]
     },
+    "ComparisonOperator":{
+      "type":"string",
+      "max":127,
+      "min":1
+    },
+    "CompleteAttachedFileUploadRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FileId",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FileId":{
+          "shape":"FileId",
+          "location":"uri",
+          "locationName":"FileId"
+        },
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        }
+      }
+    },
+    "CompleteAttachedFileUploadResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "Concurrency":{
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "Condition":{
+      "type":"structure",
+      "members":{
+        "StringCondition":{"shape":"StringCondition"},
+        "NumberCondition":{"shape":"NumberCondition"}
+      }
+    },
+    "Conditions":{
+      "type":"list",
+      "member":{"shape":"Condition"}
     },
     "ConflictException":{
       "type":"structure",
@@ -4688,7 +5407,24 @@
         "ScheduledTimestamp":{"shape":"timestamp"},
         "RelatedContactId":{"shape":"ContactId"},
         "WisdomInfo":{"shape":"WisdomInfo"},
-        "Tags":{"shape":"ContactTagMap"}
+        "QueueTimeAdjustmentSeconds":{"shape":"QueueTimeAdjustmentSeconds"},
+        "QueuePriority":{"shape":"QueuePriority"},
+        "Tags":{"shape":"ContactTagMap"},
+        "ConnectedToSystemTimestamp":{"shape":"timestamp"},
+        "RoutingCriteria":{"shape":"RoutingCriteria"},
+        "Customer":{"shape":"Customer"},
+        "Campaign":{"shape":"Campaign"},
+        "AnsweringMachineDetectionStatus":{"shape":"AnsweringMachineDetectionStatus"},
+        "CustomerVoiceActivity":{"shape":"CustomerVoiceActivity"},
+        "QualityMetrics":{"shape":"QualityMetrics"},
+        "DisconnectDetails":{"shape":"DisconnectDetails"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"}
+      }
+    },
+    "ContactAnalysis":{
+      "type":"structure",
+      "members":{
+        "Transcript":{"shape":"Transcript"}
       }
     },
     "ContactDataRequest":{
@@ -4722,6 +5458,7 @@
         "Name":{"shape":"ContactFlowName"},
         "Type":{"shape":"ContactFlowType"},
         "State":{"shape":"ContactFlowState"},
+        "Status":{"shape":"ContactFlowStatus"},
         "Description":{"shape":"ContactFlowDescription"},
         "Content":{"shape":"ContactFlowContent"},
         "Tags":{"shape":"TagMap"}
@@ -4768,6 +5505,28 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "ContactFlowModuleSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowModuleSearchCriteria"}
+    },
+    "ContactFlowModuleSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"ContactFlowModuleSearchConditionList"},
+        "AndConditions":{"shape":"ContactFlowModuleSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "ContactFlowModuleSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "ContactFlowModuleSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowModule"}
+    },
     "ContactFlowModuleState":{
       "type":"string",
       "enum":[
@@ -4807,11 +5566,43 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "ContactFlowSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowSearchCriteria"}
+    },
+    "ContactFlowSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"ContactFlowSearchConditionList"},
+        "AndConditions":{"shape":"ContactFlowSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"},
+        "TypeCondition":{"shape":"ContactFlowType"},
+        "StateCondition":{"shape":"ContactFlowState"},
+        "StatusCondition":{"shape":"ContactFlowStatus"}
+      }
+    },
+    "ContactFlowSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "ContactFlowSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlow"}
+    },
     "ContactFlowState":{
       "type":"string",
       "enum":[
         "ACTIVE",
         "ARCHIVED"
+      ]
+    },
+    "ContactFlowStatus":{
+      "type":"string",
+      "enum":[
+        "PUBLISHED",
+        "SAVED"
       ]
     },
     "ContactFlowSummary":{
@@ -4821,7 +5612,8 @@
         "Arn":{"shape":"ARN"},
         "Name":{"shape":"ContactFlowName"},
         "ContactFlowType":{"shape":"ContactFlowType"},
-        "ContactFlowState":{"shape":"ContactFlowState"}
+        "ContactFlowState":{"shape":"ContactFlowState"},
+        "ContactFlowStatus":{"shape":"ContactFlowStatus"}
       }
     },
     "ContactFlowSummaryList":{
@@ -4879,6 +5671,36 @@
       "key":{"shape":"ReferenceKey"},
       "value":{"shape":"Reference"}
     },
+    "ContactSearchSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Id":{"shape":"ContactId"},
+        "InitialContactId":{"shape":"ContactId"},
+        "PreviousContactId":{"shape":"ContactId"},
+        "InitiationMethod":{"shape":"ContactInitiationMethod"},
+        "Channel":{"shape":"Channel"},
+        "QueueInfo":{"shape":"ContactSearchSummaryQueueInfo"},
+        "AgentInfo":{"shape":"ContactSearchSummaryAgentInfo"},
+        "InitiationTimestamp":{"shape":"timestamp"},
+        "DisconnectTimestamp":{"shape":"timestamp"},
+        "ScheduledTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "ContactSearchSummaryAgentInfo":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AgentResourceId"},
+        "ConnectedToAgentTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "ContactSearchSummaryQueueInfo":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"QueueId"},
+        "EnqueueTimestamp":{"shape":"timestamp"}
+      }
+    },
     "ContactState":{
       "type":"string",
       "enum":[
@@ -4921,6 +5743,10 @@
       "type":"string",
       "max":256
     },
+    "Contacts":{
+      "type":"list",
+      "member":{"shape":"ContactSearchSummary"}
+    },
     "Content":{
       "type":"string",
       "max":1024,
@@ -4931,12 +5757,29 @@
       "max":255,
       "min":1
     },
+    "ControlPlaneAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"CommonAttributeOrConditionList"},
+        "AndCondition":{"shape":"CommonAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
+    },
     "ControlPlaneTagFilter":{
       "type":"structure",
       "members":{
         "OrConditions":{"shape":"TagOrConditionList"},
         "AndConditions":{"shape":"TagAndConditionList"},
         "TagCondition":{"shape":"TagCondition"}
+      }
+    },
+    "ControlPlaneUserAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"AttributeOrConditionList"},
+        "AndCondition":{"shape":"AttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
     "CreateAgentStatusRequest":{
@@ -5028,6 +5871,7 @@
         "Type":{"shape":"ContactFlowType"},
         "Description":{"shape":"ContactFlowDescription"},
         "Content":{"shape":"ContactFlowContent"},
+        "Status":{"shape":"ContactFlowStatus"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -5204,6 +6048,23 @@
       "type":"structure",
       "members":{
         "ContinuedFromContactId":{"shape":"ContactId"}
+      }
+    },
+    "CreatePredefinedAttributeRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"PredefinedAttributeName"},
+        "Values":{"shape":"PredefinedAttributeValues"}
       }
     },
     "CreatePromptRequest":{
@@ -5383,7 +6244,9 @@
         "Tags":{"shape":"TagMap"},
         "AllowedAccessControlTags":{"shape":"AllowedAccessControlTags"},
         "TagRestrictedResources":{"shape":"TagRestrictedResourceList"},
-        "Applications":{"shape":"Applications"}
+        "Applications":{"shape":"Applications"},
+        "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
+        "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"}
       }
     },
     "CreateSecurityProfileResponse":{
@@ -5632,6 +6495,14 @@
         "State":{"shape":"VocabularyState"}
       }
     },
+    "CreatedByInfo":{
+      "type":"structure",
+      "members":{
+        "ConnectUserArn":{"shape":"ARN"},
+        "AWSIdentityArn":{"shape":"ARN"}
+      },
+      "union":true
+    },
     "Credentials":{
       "type":"structure",
       "members":{
@@ -5639,7 +6510,8 @@
         "AccessTokenExpiration":{"shape":"timestamp"},
         "RefreshToken":{"shape":"SecurityToken"},
         "RefreshTokenExpiration":{"shape":"timestamp"}
-      }
+      },
+      "sensitive":true
     },
     "CrossChannelBehavior":{
       "type":"structure",
@@ -5715,6 +6587,26 @@
       "type":"list",
       "member":{"shape":"CurrentMetric"}
     },
+    "Customer":{
+      "type":"structure",
+      "members":{
+        "DeviceInfo":{"shape":"DeviceInfo"},
+        "Capabilities":{"shape":"ParticipantCapabilities"}
+      }
+    },
+    "CustomerQualityMetrics":{
+      "type":"structure",
+      "members":{
+        "Audio":{"shape":"AudioQualityMetricsInfo"}
+      }
+    },
+    "CustomerVoiceActivity":{
+      "type":"structure",
+      "members":{
+        "GreetingStartTimestamp":{"shape":"timestamp"},
+        "GreetingEndTimestamp":{"shape":"timestamp"}
+      }
+    },
     "DataSetId":{
       "type":"string",
       "max":255,
@@ -5788,6 +6680,36 @@
       "type":"integer",
       "max":9999,
       "min":0
+    },
+    "DeleteAttachedFileRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FileId",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FileId":{
+          "shape":"FileId",
+          "location":"uri",
+          "locationName":"FileId"
+        },
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        }
+      }
+    },
+    "DeleteAttachedFileResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "DeleteContactEvaluationRequest":{
       "type":"structure",
@@ -5927,6 +6849,25 @@
           "shape":"IntegrationAssociationId",
           "location":"uri",
           "locationName":"IntegrationAssociationId"
+        }
+      }
+    },
+    "DeletePredefinedAttributeRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Name"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{
+          "shape":"PredefinedAttributeName",
+          "location":"uri",
+          "locationName":"Name"
         }
       }
     },
@@ -6258,6 +7199,31 @@
         "AgentStatus":{"shape":"AgentStatus"}
       }
     },
+    "DescribeAuthenticationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "AuthenticationProfileId":{
+          "shape":"AuthenticationProfileId",
+          "location":"uri",
+          "locationName":"AuthenticationProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
+      }
+    },
+    "DescribeAuthenticationProfileResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfile":{"shape":"AuthenticationProfile"}
+      }
+    },
     "DescribeContactEvaluationRequest":{
       "type":"structure",
       "required":[
@@ -6508,6 +7474,31 @@
       "type":"structure",
       "members":{
         "ClaimedPhoneNumberSummary":{"shape":"ClaimedPhoneNumberSummary"}
+      }
+    },
+    "DescribePredefinedAttributeRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Name"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{
+          "shape":"PredefinedAttributeName",
+          "location":"uri",
+          "locationName":"Name"
+        }
+      }
+    },
+    "DescribePredefinedAttributeResponse":{
+      "type":"structure",
+      "members":{
+        "PredefinedAttribute":{"shape":"PredefinedAttribute"}
       }
     },
     "DescribePromptRequest":{
@@ -6799,7 +7790,8 @@
     "Description":{
       "type":"string",
       "max":4096,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "Description250":{
       "type":"string",
@@ -6820,12 +7812,21 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "DeviceInfo":{
+      "type":"structure",
+      "members":{
+        "PlatformName":{"shape":"PlatformName"},
+        "PlatformVersion":{"shape":"PlatformVersion"},
+        "OperatingSystem":{"shape":"OperatingSystem"}
+      }
+    },
     "Dimensions":{
       "type":"structure",
       "members":{
         "Queue":{"shape":"QueueReference"},
         "Channel":{"shape":"Channel"},
-        "RoutingProfile":{"shape":"RoutingProfileReference"}
+        "RoutingProfile":{"shape":"RoutingProfileReference"},
+        "RoutingStepExpression":{"shape":"RoutingExpression"}
       }
     },
     "DimensionsV2Key":{"type":"string"},
@@ -7114,6 +8115,33 @@
       "members":{
       }
     },
+    "DisassociateUserProficienciesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "UserId",
+        "UserProficiencies"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "UserProficiencies":{"shape":"UserProficiencyDisassociateList"}
+      }
+    },
+    "DisconnectDetails":{
+      "type":"structure",
+      "members":{
+        "PotentialDisconnectIssue":{"shape":"PotentialDisconnectIssue"}
+      }
+    },
     "DisconnectReason":{
       "type":"structure",
       "members":{
@@ -7168,6 +8196,13 @@
       "member":{"shape":"Distribution"}
     },
     "Double":{"type":"double"},
+    "DownloadUrlMetadata":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"MetadataUrl"},
+        "UrlExpiry":{"shape":"ISO8601Datetime"}
+      }
+    },
     "DuplicateResourceException":{
       "type":"structure",
       "members":{
@@ -7176,7 +8211,11 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
-    "Email":{"type":"string"},
+    "DurationInSeconds":{"type":"integer"},
+    "Email":{
+      "type":"string",
+      "sensitive":true
+    },
     "EmailReference":{
       "type":"structure",
       "members":{
@@ -7229,6 +8268,8 @@
         "CONTACT_FLOW"
       ]
     },
+    "ErrorCode":{"type":"string"},
+    "ErrorMessage":{"type":"string"},
     "ErrorResult":{
       "type":"structure",
       "members":{
@@ -7360,6 +8401,11 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "EvaluationFormId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "EvaluationFormItem":{
       "type":"structure",
@@ -7669,7 +8715,7 @@
     },
     "EvaluationNoteString":{
       "type":"string",
-      "max":1024,
+      "max":3072,
       "min":0
     },
     "EvaluationNotesMap":{
@@ -7760,6 +8806,25 @@
         "OnCaseUpdate"
       ]
     },
+    "Expiry":{
+      "type":"structure",
+      "members":{
+        "DurationInSeconds":{"shape":"DurationInSeconds"},
+        "ExpiryTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "Expression":{
+      "type":"structure",
+      "members":{
+        "AttributeCondition":{"shape":"AttributeCondition"},
+        "AndExpression":{"shape":"Expressions"},
+        "OrExpression":{"shape":"Expressions"}
+      }
+    },
+    "Expressions":{
+      "type":"list",
+      "member":{"shape":"Expression"}
+    },
     "FailedRequest":{
       "type":"structure",
       "members":{
@@ -7821,6 +8886,40 @@
       "type":"list",
       "member":{"shape":"FieldValue"}
     },
+    "FileId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "FileIdList":{
+      "type":"list",
+      "member":{"shape":"FileId"},
+      "min":1
+    },
+    "FileName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^\\P{C}*$"
+    },
+    "FileSizeInBytes":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
+    "FileStatusType":{
+      "type":"string",
+      "enum":[
+        "APPROVED",
+        "REJECTED",
+        "PROCESSING",
+        "FAILED"
+      ]
+    },
+    "FileUseCaseType":{
+      "type":"string",
+      "enum":["ATTACHMENT"]
+    },
     "FilterV2":{
       "type":"structure",
       "members":{
@@ -7839,7 +8938,8 @@
       "members":{
         "Queues":{"shape":"Queues"},
         "Channels":{"shape":"Channels"},
-        "RoutingProfiles":{"shape":"RoutingProfiles"}
+        "RoutingProfiles":{"shape":"RoutingProfiles"},
+        "RoutingStepExpressions":{"shape":"RoutingExpressions"}
       }
     },
     "FiltersV2List":{
@@ -7872,6 +8972,56 @@
     "FunctionArnsList":{
       "type":"list",
       "member":{"shape":"FunctionArn"}
+    },
+    "GetAttachedFileRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FileId",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FileId":{
+          "shape":"FileId",
+          "location":"uri",
+          "locationName":"FileId"
+        },
+        "UrlExpiryInSeconds":{
+          "shape":"URLExpiryInSeconds",
+          "location":"querystring",
+          "locationName":"urlExpiryInSeconds"
+        },
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        }
+      }
+    },
+    "GetAttachedFileResponse":{
+      "type":"structure",
+      "required":["FileSizeInBytes"],
+      "members":{
+        "FileArn":{"shape":"ARN"},
+        "FileId":{"shape":"FileId"},
+        "CreationTime":{"shape":"ISO8601Datetime"},
+        "FileStatus":{"shape":"FileStatusType"},
+        "FileName":{"shape":"FileName"},
+        "FileSizeInBytes":{
+          "shape":"FileSizeInBytes",
+          "box":true
+        },
+        "AssociatedResourceArn":{"shape":"ARN"},
+        "FileUseCaseType":{"shape":"FileUseCaseType"},
+        "CreatedBy":{"shape":"CreatedByInfo"},
+        "DownloadUrlMetadata":{"shape":"DownloadUrlMetadata"},
+        "Tags":{"shape":"TagMap"}
+      }
     },
     "GetContactAttributesRequest":{
       "type":"structure",
@@ -8177,7 +9327,8 @@
       "enum":[
         "QUEUE",
         "CHANNEL",
-        "ROUTING_PROFILE"
+        "ROUTING_PROFILE",
+        "ROUTING_STEP_EXPRESSION"
       ]
     },
     "GroupingV2":{"type":"string"},
@@ -8189,7 +9340,7 @@
     "GroupingsV2":{
       "type":"list",
       "member":{"shape":"GroupingV2"},
-      "max":2
+      "max":3
     },
     "HierarchyGroup":{
       "type":"structure",
@@ -8212,6 +9363,12 @@
       }
     },
     "HierarchyGroupId":{"type":"string"},
+    "HierarchyGroupIdList":{
+      "type":"list",
+      "member":{"shape":"HierarchyGroupId"},
+      "max":10,
+      "min":0
+    },
     "HierarchyGroupMatchType":{
       "type":"string",
       "enum":[
@@ -8239,6 +9396,16 @@
       "members":{
         "Id":{"shape":"HierarchyGroupId"},
         "Arn":{"shape":"ARN"}
+      }
+    },
+    "HierarchyGroups":{
+      "type":"structure",
+      "members":{
+        "Level1":{"shape":"AgentHierarchyGroup"},
+        "Level2":{"shape":"AgentHierarchyGroup"},
+        "Level3":{"shape":"AgentHierarchyGroup"},
+        "Level4":{"shape":"AgentHierarchyGroup"},
+        "Level5":{"shape":"AgentHierarchyGroup"}
       }
     },
     "HierarchyLevel":{
@@ -8279,6 +9446,15 @@
         "LevelFour":{"shape":"HierarchyGroupSummaryReference"},
         "LevelFive":{"shape":"HierarchyGroupSummaryReference"}
       }
+    },
+    "HierarchyRestrictedResourceList":{
+      "type":"list",
+      "member":{"shape":"HierarchyRestrictedResourceName"}
+    },
+    "HierarchyRestrictedResourceName":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "HierarchyStructure":{
       "type":"structure",
@@ -8520,6 +9696,11 @@
       }
     },
     "InboundCallsEnabled":{"type":"boolean"},
+    "Index":{"type":"integer"},
+    "InitiationMethodList":{
+      "type":"list",
+      "member":{"shape":"ContactInitiationMethod"}
+    },
     "Instance":{
       "type":"structure",
       "members":{
@@ -8553,7 +9734,8 @@
         "EARLY_MEDIA",
         "MULTI_PARTY_CONFERENCE",
         "HIGH_VOLUME_OUTBOUND",
-        "ENHANCED_CONTACT_MONITORING"
+        "ENHANCED_CONTACT_MONITORING",
+        "ENHANCED_CHAT_MONITORING"
       ]
     },
     "InstanceAttributeValue":{
@@ -8614,7 +9796,9 @@
         "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS",
         "ATTACHMENTS",
         "CONTACT_EVALUATIONS",
-        "SCREEN_RECORDINGS"
+        "SCREEN_RECORDINGS",
+        "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS",
+        "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS"
       ]
     },
     "InstanceSummary":{
@@ -8730,10 +9914,18 @@
     "InvalidRequestException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"Message"}
+        "Message":{"shape":"Message"},
+        "Reason":{"shape":"InvalidRequestExceptionReason"}
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "InvalidRequestExceptionReason":{
+      "type":"structure",
+      "members":{
+        "AttachedFileInvalidRequestExceptionReason":{"shape":"AttachedFileInvalidRequestExceptionReason"}
+      },
+      "union":true
     },
     "InvisibleFieldInfo":{
       "type":"structure",
@@ -8744,6 +9936,16 @@
     "InvisibleTaskTemplateFields":{
       "type":"list",
       "member":{"shape":"InvisibleFieldInfo"}
+    },
+    "IpCidr":{
+      "type":"string",
+      "max":50,
+      "min":2,
+      "pattern":"^[A-Za-z0-9:/]*$"
+    },
+    "IpCidrList":{
+      "type":"list",
+      "member":{"shape":"IpCidr"}
     },
     "JoinToken":{
       "type":"string",
@@ -8933,6 +10135,35 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListAuthenticationProfilesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAuthenticationProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileSummaryList":{"shape":"AuthenticationProfileSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListBotsRequest":{
       "type":"structure",
       "required":[
@@ -8968,6 +10199,13 @@
       "members":{
         "LexBots":{"shape":"LexBotConfigList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCondition":{
+      "type":"structure",
+      "members":{
+        "TargetListType":{"shape":"TargetListType"},
+        "Conditions":{"shape":"Conditions"}
       }
     },
     "ListContactEvaluationsRequest":{
@@ -9524,6 +10762,35 @@
       "members":{
         "NextToken":{"shape":"LargeNextToken"},
         "ListPhoneNumbersSummaryList":{"shape":"ListPhoneNumbersSummaryList"}
+      }
+    },
+    "ListPredefinedAttributesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListPredefinedAttributesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "PredefinedAttributeSummaryList":{"shape":"PredefinedAttributeSummaryList"}
       }
     },
     "ListPromptsRequest":{
@@ -10121,6 +11388,45 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListUserProficienciesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "UserId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListUserProficienciesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "UserProficiencyList":{"shape":"UserProficiencyList"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
     "ListUsersRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -10222,6 +11528,12 @@
       }
     },
     "Long":{"type":"long"},
+    "MatchCriteria":{
+      "type":"structure",
+      "members":{
+        "AgentsCriteria":{"shape":"AgentsCriteria"}
+      }
+    },
     "MaxResult10":{
       "type":"integer",
       "max":10,
@@ -10250,6 +11562,12 @@
     "MaxResult25":{
       "type":"integer",
       "max":25,
+      "min":1
+    },
+    "MaxResult500":{
+      "type":"integer",
+      "box":true,
+      "max":500,
       "min":1
     },
     "MaxResult7":{
@@ -10321,6 +11639,11 @@
     },
     "MeetingId":{"type":"string"},
     "Message":{"type":"string"},
+    "MetadataUrl":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "MetricDataCollectionsV2":{
       "type":"list",
       "member":{"shape":"MetricDataV2"}
@@ -10427,7 +11750,8 @@
     "Name":{
       "type":"string",
       "max":512,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "Name128":{
       "type":"string",
@@ -10471,6 +11795,33 @@
         "UserIds":{"shape":"UserIdList"}
       }
     },
+    "NullableProficiencyLevel":{
+      "type":"float",
+      "max":5.0,
+      "min":1.0
+    },
+    "NullableProficiencyLimitValue":{"type":"integer"},
+    "NumberComparisonType":{
+      "type":"string",
+      "enum":[
+        "GREATER_OR_EQUAL",
+        "GREATER",
+        "LESSER_OR_EQUAL",
+        "LESSER",
+        "EQUAL",
+        "NOT_EQUAL",
+        "RANGE"
+      ]
+    },
+    "NumberCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "MinValue":{"shape":"NullableProficiencyLimitValue"},
+        "MaxValue":{"shape":"NullableProficiencyLimitValue"},
+        "ComparisonType":{"shape":"NumberComparisonType"}
+      }
+    },
     "NumberReference":{
       "type":"structure",
       "members":{
@@ -10497,6 +11848,11 @@
       "members":{
         "Label":{"shape":"NumericQuestionPropertyAutomationLabel"}
       }
+    },
+    "OperatingSystem":{
+      "type":"string",
+      "max":128,
+      "min":0
     },
     "Origin":{
       "type":"string",
@@ -10572,7 +11928,8 @@
         "AGENT",
         "CUSTOMER",
         "SYSTEM",
-        "CUSTOM_BOT"
+        "CUSTOM_BOT",
+        "SUPERVISOR"
       ]
     },
     "ParticipantTimerAction":{
@@ -10632,7 +11989,8 @@
     },
     "Password":{
       "type":"string",
-      "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\S]{8,64}$/"
+      "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\S]{8,64}$/",
+      "sensitive":true
     },
     "PauseContactRequest":{
       "type":"structure",
@@ -11001,6 +12359,92 @@
         "DESK_PHONE"
       ]
     },
+    "PlatformName":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "PlatformVersion":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "PotentialAudioQualityIssue":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "PotentialAudioQualityIssues":{
+      "type":"list",
+      "member":{"shape":"PotentialAudioQualityIssue"},
+      "max":3,
+      "min":0
+    },
+    "PotentialDisconnectIssue":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "PredefinedAttribute":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"PredefinedAttributeName"},
+        "Values":{"shape":"PredefinedAttributeValues"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "PredefinedAttributeName":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "PredefinedAttributeSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"PredefinedAttributeSearchCriteria"}
+    },
+    "PredefinedAttributeSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"PredefinedAttributeSearchConditionList"},
+        "AndConditions":{"shape":"PredefinedAttributeSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "PredefinedAttributeSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"PredefinedAttribute"}
+    },
+    "PredefinedAttributeStringValue":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "PredefinedAttributeStringValuesList":{
+      "type":"list",
+      "member":{"shape":"PredefinedAttributeStringValue"},
+      "max":128,
+      "min":1
+    },
+    "PredefinedAttributeSummary":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"PredefinedAttributeName"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "PredefinedAttributeSummaryList":{
+      "type":"list",
+      "member":{"shape":"PredefinedAttributeSummary"}
+    },
+    "PredefinedAttributeValues":{
+      "type":"structure",
+      "members":{
+        "StringList":{"shape":"PredefinedAttributeStringValuesList"}
+      },
+      "union":true
+    },
     "Prefix":{
       "type":"string",
       "max":128,
@@ -11026,6 +12470,17 @@
       "type":"list",
       "member":{"shape":"ProblemDetail"},
       "max":50,
+      "min":1
+    },
+    "ProficiencyLevel":{
+      "type":"float",
+      "box":true,
+      "max":5.0,
+      "min":1.0
+    },
+    "ProficiencyValue":{
+      "type":"string",
+      "max":128,
       "min":1
     },
     "Prompt":{
@@ -11160,6 +12615,13 @@
       "members":{
       }
     },
+    "QualityMetrics":{
+      "type":"structure",
+      "members":{
+        "Agent":{"shape":"AgentQualityMetrics"},
+        "Customer":{"shape":"CustomerQualityMetrics"}
+      }
+    },
     "Queue":{
       "type":"structure",
       "members":{
@@ -11185,6 +12647,12 @@
       "min":1
     },
     "QueueId":{"type":"string"},
+    "QueueIdList":{
+      "type":"list",
+      "member":{"shape":"QueueId"},
+      "max":100,
+      "min":0
+    },
     "QueueInfo":{
       "type":"structure",
       "members":{
@@ -11199,6 +12667,11 @@
     "QueueName":{
       "type":"string",
       "max":256,
+      "min":1
+    },
+    "QueuePriority":{
+      "type":"long",
+      "max":9223372036854775807,
       "min":1
     },
     "QueueQuickConnectConfig":{
@@ -11264,6 +12737,7 @@
       "type":"list",
       "member":{"shape":"QueueSummary"}
     },
+    "QueueTimeAdjustmentSeconds":{"type":"integer"},
     "QueueType":{
       "type":"string",
       "enum":[
@@ -11483,6 +12957,28 @@
       "max":5,
       "min":0
     },
+    "RealTimeContactAnalysisPostContactSummaryContent":{
+      "type":"string",
+      "max":1270,
+      "min":1
+    },
+    "RealTimeContactAnalysisPostContactSummaryFailureCode":{
+      "type":"string",
+      "enum":[
+        "QUOTA_EXCEEDED",
+        "INSUFFICIENT_CONVERSATION_CONTENT",
+        "FAILED_SAFETY_GUIDELINES",
+        "INVALID_ANALYSIS_CONFIGURATION",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "RealTimeContactAnalysisPostContactSummaryStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
     "RealTimeContactAnalysisSegmentAttachments":{
       "type":"structure",
       "required":[
@@ -11531,6 +13027,15 @@
         "IssuesDetected":{"shape":"RealTimeContactAnalysisIssuesDetected"}
       }
     },
+    "RealTimeContactAnalysisSegmentPostContactSummary":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Content":{"shape":"RealTimeContactAnalysisPostContactSummaryContent"},
+        "Status":{"shape":"RealTimeContactAnalysisPostContactSummaryStatus"},
+        "FailureCode":{"shape":"RealTimeContactAnalysisPostContactSummaryFailureCode"}
+      }
+    },
     "RealTimeContactAnalysisSegmentTranscript":{
       "type":"structure",
       "required":[
@@ -11559,13 +13064,14 @@
         "Categories",
         "Issues",
         "Event",
-        "Attachments"
+        "Attachments",
+        "PostContactSummary"
       ]
     },
     "RealTimeContactAnalysisSegmentTypes":{
       "type":"list",
       "member":{"shape":"RealTimeContactAnalysisSegmentType"},
-      "max":5
+      "max":6
     },
     "RealTimeContactAnalysisSentimentLabel":{
       "type":"string",
@@ -11646,7 +13152,8 @@
         "Categories":{"shape":"RealTimeContactAnalysisSegmentCategories"},
         "Issues":{"shape":"RealTimeContactAnalysisSegmentIssues"},
         "Event":{"shape":"RealTimeContactAnalysisSegmentEvent"},
-        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"}
+        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"},
+        "PostContactSummary":{"shape":"RealTimeContactAnalysisSegmentPostContactSummary"}
       },
       "union":true
     },
@@ -11718,6 +13225,12 @@
       "type":"string",
       "max":4096,
       "min":0
+    },
+    "RefreshTokenDuration":{
+      "type":"integer",
+      "box":true,
+      "max":720,
+      "min":360
     },
     "RegionName":{
       "type":"string",
@@ -11891,6 +13404,33 @@
       "members":{
       }
     },
+    "RoutingCriteria":{
+      "type":"structure",
+      "members":{
+        "Steps":{"shape":"Steps"},
+        "ActivationTimestamp":{"shape":"timestamp"},
+        "Index":{"shape":"Index"}
+      }
+    },
+    "RoutingCriteriaStepStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE",
+        "JOINED",
+        "EXPIRED"
+      ]
+    },
+    "RoutingExpression":{
+      "type":"string",
+      "max":3000,
+      "min":1
+    },
+    "RoutingExpressions":{
+      "type":"list",
+      "member":{"shape":"RoutingExpression"},
+      "max":50
+    },
     "RoutingProfile":{
       "type":"structure",
       "members":{
@@ -11907,7 +13447,8 @@
         "AgentAvailabilityTimer":{"shape":"AgentAvailabilityTimer"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedRegion":{"shape":"RegionName"},
-        "IsDefault":{"shape":"Boolean"}
+        "IsDefault":{"shape":"Boolean"},
+        "AssociatedQueueIds":{"shape":"AssociatedQueueIdList"}
       }
     },
     "RoutingProfileDescription":{
@@ -12072,7 +13613,8 @@
         "SendNotificationAction":{"shape":"SendNotificationActionDefinition"},
         "CreateCaseAction":{"shape":"CreateCaseActionDefinition"},
         "UpdateCaseAction":{"shape":"UpdateCaseActionDefinition"},
-        "EndAssociatedTasksAction":{"shape":"EndAssociatedTasksActionDefinition"}
+        "EndAssociatedTasksAction":{"shape":"EndAssociatedTasksActionDefinition"},
+        "SubmitAutoEvaluationAction":{"shape":"SubmitAutoEvaluationActionDefinition"}
       }
     },
     "RuleActions":{
@@ -12151,6 +13693,28 @@
       "min":1,
       "pattern":"s3://\\S+/.+|https://\\\\S+\\\\.s3\\\\.\\\\S+\\\\.amazonaws\\\\.com/\\\\S+"
     },
+    "SearchAgentStatusesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"AgentStatusSearchFilter"},
+        "SearchCriteria":{"shape":"AgentStatusSearchCriteria"}
+      }
+    },
+    "SearchAgentStatusesResponse":{
+      "type":"structure",
+      "members":{
+        "AgentStatuses":{"shape":"AgentStatusList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
       "required":[
@@ -12177,6 +13741,118 @@
         "AvailableNumbersList":{"shape":"AvailableNumbersList"}
       }
     },
+    "SearchContactFlowModulesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"ContactFlowModuleSearchFilter"},
+        "SearchCriteria":{"shape":"ContactFlowModuleSearchCriteria"}
+      }
+    },
+    "SearchContactFlowModulesResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModules":{"shape":"ContactFlowModuleSearchSummaryList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchContactFlowsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"ContactFlowSearchFilter"},
+        "SearchCriteria":{"shape":"ContactFlowSearchCriteria"}
+      }
+    },
+    "SearchContactFlowsResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlows":{"shape":"ContactFlowSearchSummaryList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchContactsMatchType":{
+      "type":"string",
+      "enum":[
+        "MATCH_ALL",
+        "MATCH_ANY"
+      ]
+    },
+    "SearchContactsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "TimeRange"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "TimeRange":{"shape":"SearchContactsTimeRange"},
+        "SearchCriteria":{"shape":"SearchCriteria"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "NextToken":{"shape":"LargeNextToken"},
+        "Sort":{"shape":"Sort"}
+      }
+    },
+    "SearchContactsResponse":{
+      "type":"structure",
+      "required":["Contacts"],
+      "members":{
+        "Contacts":{"shape":"Contacts"},
+        "NextToken":{"shape":"LargeNextToken"},
+        "TotalCount":{"shape":"TotalCount"}
+      }
+    },
+    "SearchContactsTimeRange":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "Type":{"shape":"SearchContactsTimeRangeType"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
+    },
+    "SearchContactsTimeRangeType":{
+      "type":"string",
+      "enum":[
+        "INITIATION_TIMESTAMP",
+        "SCHEDULED_TIMESTAMP",
+        "CONNECTED_TO_AGENT_TIMESTAMP",
+        "DISCONNECT_TIMESTAMP"
+      ]
+    },
+    "SearchCriteria":{
+      "type":"structure",
+      "members":{
+        "AgentIds":{"shape":"AgentResourceIdList"},
+        "AgentHierarchyGroups":{"shape":"AgentHierarchyGroups"},
+        "Channels":{"shape":"ChannelList"},
+        "ContactAnalysis":{"shape":"ContactAnalysis"},
+        "InitiationMethods":{"shape":"InitiationMethodList"},
+        "QueueIds":{"shape":"QueueIdList"},
+        "SearchableContactAttributes":{"shape":"SearchableContactAttributes"}
+      }
+    },
     "SearchHoursOfOperationsRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -12195,6 +13871,27 @@
       "type":"structure",
       "members":{
         "HoursOfOperations":{"shape":"HoursOfOperationList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchPredefinedAttributesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchCriteria":{"shape":"PredefinedAttributeSearchCriteria"}
+      }
+    },
+    "SearchPredefinedAttributesResponse":{
+      "type":"structure",
+      "members":{
+        "PredefinedAttributes":{"shape":"PredefinedAttributeSearchSummaryList"},
         "NextToken":{"shape":"NextToken2500"},
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
@@ -12228,7 +13925,7 @@
         "InstanceId":{"shape":"InstanceId"},
         "NextToken":{"shape":"NextToken2500"},
         "MaxResults":{
-          "shape":"MaxResult100",
+          "shape":"MaxResult500",
           "box":true
         },
         "SearchFilter":{"shape":"QueueSearchFilter"},
@@ -12293,7 +13990,7 @@
         "InstanceId":{"shape":"InstanceId"},
         "NextToken":{"shape":"NextToken2500"},
         "MaxResults":{
-          "shape":"MaxResult100",
+          "shape":"MaxResult500",
           "box":true
         },
         "SearchFilter":{"shape":"RoutingProfileSearchFilter"},
@@ -12330,7 +14027,18 @@
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
-    "SearchUsersRequest":{
+    "SearchText":{
+      "type":"string",
+      "max":128,
+      "sensitive":true
+    },
+    "SearchTextList":{
+      "type":"list",
+      "member":{"shape":"SearchText"},
+      "max":100,
+      "min":0
+    },
+    "SearchUserHierarchyGroupsRequest":{
       "type":"structure",
       "required":["InstanceId"],
       "members":{
@@ -12338,6 +14046,28 @@
         "NextToken":{"shape":"NextToken2500"},
         "MaxResults":{
           "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"UserHierarchyGroupSearchFilter"},
+        "SearchCriteria":{"shape":"UserHierarchyGroupSearchCriteria"}
+      }
+    },
+    "SearchUserHierarchyGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "UserHierarchyGroups":{"shape":"UserHierarchyGroupList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchUsersRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult500",
           "box":true
         },
         "SearchFilter":{"shape":"UserSearchFilter"},
@@ -12375,6 +14105,49 @@
         "NextToken":{"shape":"VocabularyNextToken"}
       }
     },
+    "SearchableContactAttributeKey":{
+      "type":"string",
+      "max":100,
+      "min":0,
+      "sensitive":true
+    },
+    "SearchableContactAttributeValue":{
+      "type":"string",
+      "max":100,
+      "min":0,
+      "sensitive":true
+    },
+    "SearchableContactAttributeValueList":{
+      "type":"list",
+      "member":{"shape":"SearchableContactAttributeValue"},
+      "max":20,
+      "min":0
+    },
+    "SearchableContactAttributes":{
+      "type":"structure",
+      "required":["Criteria"],
+      "members":{
+        "Criteria":{"shape":"SearchableContactAttributesCriteriaList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
+    },
+    "SearchableContactAttributesCriteria":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"SearchableContactAttributeKey"},
+        "Values":{"shape":"SearchableContactAttributeValueList"}
+      }
+    },
+    "SearchableContactAttributesCriteriaList":{
+      "type":"list",
+      "member":{"shape":"SearchableContactAttributesCriteria"},
+      "max":15,
+      "min":0
+    },
     "SearchableQueueType":{
       "type":"string",
       "enum":["STANDARD"]
@@ -12403,7 +14176,9 @@
         "AllowedAccessControlTags":{"shape":"AllowedAccessControlTags"},
         "TagRestrictedResources":{"shape":"TagRestrictedResourceList"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LastModifiedRegion":{"shape":"RegionName"}
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
+        "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"}
       }
     },
     "SecurityProfileDescription":{
@@ -12602,11 +14377,33 @@
       "min":1
     },
     "SnapshotVersion":{"type":"string"},
+    "Sort":{
+      "type":"structure",
+      "required":[
+        "FieldName",
+        "Order"
+      ],
+      "members":{
+        "FieldName":{"shape":"SortableFieldName"},
+        "Order":{"shape":"SortOrder"}
+      }
+    },
     "SortOrder":{
       "type":"string",
       "enum":[
         "ASCENDING",
         "DESCENDING"
+      ]
+    },
+    "SortableFieldName":{
+      "type":"string",
+      "enum":[
+        "INITIATION_TIMESTAMP",
+        "SCHEDULED_TIMESTAMP",
+        "CONNECTED_TO_AGENT_TIMESTAMP",
+        "DISCONNECT_TIMESTAMP",
+        "INITIATION_METHOD",
+        "CHANNEL"
       ]
     },
     "SourceApplicationName":{
@@ -12627,6 +14424,52 @@
         "ZENDESK",
         "CASES"
       ]
+    },
+    "StartAttachedFileUploadRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FileName",
+        "FileSizeInBytes",
+        "FileUseCaseType",
+        "AssociatedResourceArn"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FileName":{"shape":"FileName"},
+        "FileSizeInBytes":{
+          "shape":"FileSizeInBytes",
+          "box":true
+        },
+        "UrlExpiryInSeconds":{"shape":"URLExpiryInSeconds"},
+        "FileUseCaseType":{"shape":"FileUseCaseType"},
+        "AssociatedResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"associatedResourceArn"
+        },
+        "CreatedBy":{"shape":"CreatedByInfo"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "StartAttachedFileUploadResponse":{
+      "type":"structure",
+      "members":{
+        "FileArn":{"shape":"ARN"},
+        "FileId":{"shape":"FileId"},
+        "CreationTime":{"shape":"ISO8601Datetime"},
+        "FileStatus":{"shape":"FileStatusType"},
+        "CreatedBy":{"shape":"CreatedByInfo"},
+        "UploadUrlMetadata":{"shape":"UploadUrlMetadata"}
+      }
     },
     "StartChatContactRequest":{
       "type":"structure",
@@ -12840,6 +14683,18 @@
         "AVG"
       ]
     },
+    "Step":{
+      "type":"structure",
+      "members":{
+        "Expiry":{"shape":"Expiry"},
+        "Expression":{"shape":"Expression"},
+        "Status":{"shape":"RoutingCriteriaStepStatus"}
+      }
+    },
+    "Steps":{
+      "type":"list",
+      "member":{"shape":"Step"}
+    },
     "StopContactRecordingRequest":{
       "type":"structure",
       "required":[
@@ -12935,6 +14790,13 @@
       "type":"string",
       "max":200,
       "min":1
+    },
+    "SubmitAutoEvaluationActionDefinition":{
+      "type":"structure",
+      "required":["EvaluationFormId"],
+      "members":{
+        "EvaluationFormId":{"shape":"EvaluationFormId"}
+      }
     },
     "SubmitContactEvaluationRequest":{
       "type":"structure",
@@ -13044,7 +14906,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^(?!aws:)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
     },
     "TagKeyList":{
       "type":"list",
@@ -13119,6 +14981,10 @@
     "TagsList":{
       "type":"list",
       "member":{"shape":"TagSet"}
+    },
+    "TargetListType":{
+      "type":"string",
+      "enum":["PROFICIENCIES"]
     },
     "TaskActionDefinition":{
       "type":"structure",
@@ -13331,6 +15197,7 @@
       "error":{"httpStatusCode":429},
       "exception":true
     },
+    "TotalCount":{"type":"long"},
     "TotalPauseCount":{
       "type":"integer",
       "max":10,
@@ -13412,6 +15279,33 @@
         "CAMPAIGN"
       ]
     },
+    "Transcript":{
+      "type":"structure",
+      "required":["Criteria"],
+      "members":{
+        "Criteria":{"shape":"TranscriptCriteriaList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
+    },
+    "TranscriptCriteria":{
+      "type":"structure",
+      "required":[
+        "ParticipantRole",
+        "SearchText",
+        "MatchType"
+      ],
+      "members":{
+        "ParticipantRole":{"shape":"ParticipantRole"},
+        "SearchText":{"shape":"SearchTextList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
+    },
+    "TranscriptCriteriaList":{
+      "type":"list",
+      "member":{"shape":"TranscriptCriteria"},
+      "max":6,
+      "min":0
+    },
     "TransferContactRequest":{
       "type":"structure",
       "required":[
@@ -13442,6 +15336,11 @@
       "type":"string",
       "max":2000,
       "min":1
+    },
+    "URLExpiryInSeconds":{
+      "type":"integer",
+      "max":300,
+      "min":5
     },
     "Unit":{
       "type":"string",
@@ -13530,6 +15429,33 @@
           "box":true
         },
         "ResetOrderNumber":{"shape":"Boolean"}
+      }
+    },
+    "UpdateAuthenticationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "AuthenticationProfileId":{
+          "shape":"AuthenticationProfileId",
+          "location":"uri",
+          "locationName":"AuthenticationProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"AuthenticationProfileName"},
+        "Description":{"shape":"AuthenticationProfileDescription"},
+        "AllowedIps":{"shape":"IpCidrList"},
+        "BlockedIps":{"shape":"IpCidrList"},
+        "PeriodicSessionDuration":{
+          "shape":"AccessTokenDuration",
+          "box":true
+        }
       }
     },
     "UpdateCaseActionDefinition":{
@@ -13748,6 +15674,32 @@
       "members":{
       }
     },
+    "UpdateContactRoutingDataRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "QueueTimeAdjustmentSeconds":{"shape":"QueueTimeAdjustmentSeconds"},
+        "QueuePriority":{"shape":"QueuePriority"}
+      }
+    },
+    "UpdateContactRoutingDataResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateContactScheduleRequest":{
       "type":"structure",
       "required":[
@@ -13961,6 +15913,26 @@
       "members":{
         "PhoneNumberId":{"shape":"PhoneNumberId"},
         "PhoneNumberArn":{"shape":"ARN"}
+      }
+    },
+    "UpdatePredefinedAttributeRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Name"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{
+          "shape":"PredefinedAttributeName",
+          "location":"uri",
+          "locationName":"Name"
+        },
+        "Values":{"shape":"PredefinedAttributeValues"}
       }
     },
     "UpdatePromptRequest":{
@@ -14299,7 +16271,9 @@
         },
         "AllowedAccessControlTags":{"shape":"AllowedAccessControlTags"},
         "TagRestrictedResources":{"shape":"TagRestrictedResourceList"},
-        "Applications":{"shape":"Applications"}
+        "Applications":{"shape":"Applications"},
+        "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
+        "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"}
       }
     },
     "UpdateTaskTemplateRequest":{
@@ -14462,6 +16436,27 @@
         }
       }
     },
+    "UpdateUserProficienciesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "UserId",
+        "UserProficiencies"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "UserProficiencies":{"shape":"UserProficiencyList"}
+      }
+    },
     "UpdateUserRoutingProfileRequest":{
       "type":"structure",
       "required":[
@@ -14559,7 +16554,30 @@
       "members":{
       }
     },
+    "UploadUrlMetadata":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"MetadataUrl"},
+        "UrlExpiry":{"shape":"ISO8601Datetime"},
+        "HeadersToInclude":{"shape":"UrlMetadataSignedHeaders"}
+      }
+    },
     "Url":{"type":"string"},
+    "UrlMetadataSignedHeaders":{
+      "type":"map",
+      "key":{"shape":"UrlMetadataSignedHeadersKey"},
+      "value":{"shape":"UrlMetadataSignedHeadersValue"}
+    },
+    "UrlMetadataSignedHeadersKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "UrlMetadataSignedHeadersValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "UrlReference":{
       "type":"structure",
       "members":{
@@ -14642,6 +16660,28 @@
       "type":"list",
       "member":{"shape":"UserData"}
     },
+    "UserHierarchyGroupList":{
+      "type":"list",
+      "member":{"shape":"HierarchyGroup"}
+    },
+    "UserHierarchyGroupSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"UserHierarchyGroupSearchCriteria"}
+    },
+    "UserHierarchyGroupSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "AndConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "UserHierarchyGroupSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+      }
+    },
     "UserId":{"type":"string"},
     "UserIdList":{
       "type":"list",
@@ -14682,6 +16722,38 @@
         "DeskPhoneNumber":{"shape":"PhoneNumber"}
       }
     },
+    "UserProficiency":{
+      "type":"structure",
+      "required":[
+        "AttributeName",
+        "AttributeValue",
+        "Level"
+      ],
+      "members":{
+        "AttributeName":{"shape":"PredefinedAttributeName"},
+        "AttributeValue":{"shape":"PredefinedAttributeStringValue"},
+        "Level":{"shape":"ProficiencyLevel"}
+      }
+    },
+    "UserProficiencyDisassociate":{
+      "type":"structure",
+      "required":[
+        "AttributeName",
+        "AttributeValue"
+      ],
+      "members":{
+        "AttributeName":{"shape":"PredefinedAttributeName"},
+        "AttributeValue":{"shape":"PredefinedAttributeStringValue"}
+      }
+    },
+    "UserProficiencyDisassociateList":{
+      "type":"list",
+      "member":{"shape":"UserProficiencyDisassociate"}
+    },
+    "UserProficiencyList":{
+      "type":"list",
+      "member":{"shape":"UserProficiency"}
+    },
     "UserQuickConnectConfig":{
       "type":"structure",
       "required":[
@@ -14710,13 +16782,15 @@
         "OrConditions":{"shape":"UserSearchConditionList"},
         "AndConditions":{"shape":"UserSearchConditionList"},
         "StringCondition":{"shape":"StringCondition"},
+        "ListCondition":{"shape":"ListCondition"},
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
     "UserSearchFilter":{
       "type":"structure",
       "members":{
-        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+        "TagFilter":{"shape":"ControlPlaneTagFilter"},
+        "UserAttributeFilter":{"shape":"ControlPlaneUserAttributeFilter"}
       }
     },
     "UserSearchSummary":{

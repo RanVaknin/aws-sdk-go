@@ -3,5 +3,7 @@
 ### SDK Enhancements
 
 ### SDK Bugs
-* The logging behavior in `aws/ec2metadata/token_provider.go` was updated: warnings about falling back to IMDSv1 are now logged only when LogLevel is set to `LogDebugWithDeprecated`.
-  * This change prevents unnecessary warnings when LogLevel is set to suppress messages.  
+* Fix improper use of printf-style functions.
+  * Required for Go 1.24.
+* `service/s3/s3manager`: Abort multipart download if object is modified during download
+  * Fixes [4986](https://github.com/aws/aws-sdk-go/issues/4986)

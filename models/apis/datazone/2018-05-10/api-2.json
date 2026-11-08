@@ -52,6 +52,44 @@
       ],
       "idempotent":true
     },
+    "AssociateEnvironmentRole":{
+      "name":"AssociateEnvironmentRole",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/roles/{environmentRoleArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateEnvironmentRoleInput"},
+      "output":{"shape":"AssociateEnvironmentRoleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "CancelMetadataGenerationRun":{
+      "name":"CancelMetadataGenerationRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/metadata-generation-runs/{identifier}/cancel",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelMetadataGenerationRunInput"},
+      "output":{"shape":"CancelMetadataGenerationRunOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "CancelSubscription":{
       "name":"CancelSubscription",
       "http":{
@@ -81,6 +119,27 @@
       },
       "input":{"shape":"CreateAssetInput"},
       "output":{"shape":"CreateAssetOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAssetFilter":{
+      "name":"CreateAssetFilter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/assets/{assetIdentifier}/filters",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateAssetFilterInput"},
+      "output":{"shape":"CreateAssetFilterOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -183,6 +242,25 @@
       },
       "input":{"shape":"CreateEnvironmentInput"},
       "output":{"shape":"CreateEnvironmentOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "CreateEnvironmentAction":{
+      "name":"CreateEnvironmentAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/actions",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateEnvironmentActionInput"},
+      "output":{"shape":"CreateEnvironmentActionOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -445,6 +523,25 @@
       ],
       "idempotent":true
     },
+    "DeleteAssetFilter":{
+      "name":"DeleteAssetFilter",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/assets/{assetIdentifier}/filters/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAssetFilterInput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteAssetType":{
       "name":"DeleteAssetType",
       "http":{
@@ -518,6 +615,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteEnvironmentAction":{
+      "name":"DeleteEnvironmentAction",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/actions/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteEnvironmentActionInput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ],
@@ -732,6 +848,44 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "DeleteTimeSeriesDataPoints":{
+      "name":"DeleteTimeSeriesDataPoints",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/time-series-data-points",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTimeSeriesDataPointsInput"},
+      "output":{"shape":"DeleteTimeSeriesDataPointsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "DisassociateEnvironmentRole":{
+      "name":"DisassociateEnvironmentRole",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/roles/{environmentRoleArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateEnvironmentRoleInput"},
+      "output":{"shape":"DisassociateEnvironmentRoleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "GetAsset":{
       "name":"GetAsset",
       "http":{
@@ -741,6 +895,24 @@
       },
       "input":{"shape":"GetAssetInput"},
       "output":{"shape":"GetAssetOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "GetAssetFilter":{
+      "name":"GetAssetFilter",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/assets/{assetIdentifier}/filters/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAssetFilterInput"},
+      "output":{"shape":"GetAssetFilterOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -845,6 +1017,24 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "GetEnvironmentAction":{
+      "name":"GetEnvironmentAction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/actions/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEnvironmentActionInput"},
+      "output":{"shape":"GetEnvironmentActionOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "GetEnvironmentBlueprint":{
       "name":"GetEnvironmentBlueprint",
       "http":{
@@ -872,6 +1062,24 @@
       },
       "input":{"shape":"GetEnvironmentBlueprintConfigurationInput"},
       "output":{"shape":"GetEnvironmentBlueprintConfigurationOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "GetEnvironmentCredentials":{
+      "name":"GetEnvironmentCredentials",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/credentials",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEnvironmentCredentialsInput"},
+      "output":{"shape":"GetEnvironmentCredentialsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -990,6 +1198,24 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "GetLineageNode":{
+      "name":"GetLineageNode",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/lineage/nodes/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLineageNodeInput"},
+      "output":{"shape":"GetLineageNodeOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "GetListing":{
       "name":"GetListing",
       "http":{
@@ -999,6 +1225,24 @@
       },
       "input":{"shape":"GetListingInput"},
       "output":{"shape":"GetListingOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "GetMetadataGenerationRun":{
+      "name":"GetMetadataGenerationRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/metadata-generation-runs/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMetadataGenerationRunInput"},
+      "output":{"shape":"GetMetadataGenerationRunOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -1098,6 +1342,24 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "GetTimeSeriesDataPoint":{
+      "name":"GetTimeSeriesDataPoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/time-series-data-points/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTimeSeriesDataPointInput"},
+      "output":{"shape":"GetTimeSeriesDataPointOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "GetUserProfile":{
       "name":"GetUserProfile",
       "http":{
@@ -1107,6 +1369,24 @@
       },
       "input":{"shape":"GetUserProfileInput"},
       "output":{"shape":"GetUserProfileOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListAssetFilters":{
+      "name":"ListAssetFilters",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/assets/{assetIdentifier}/filters",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAssetFiltersInput"},
+      "output":{"shape":"ListAssetFiltersOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -1214,6 +1494,23 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "ListEnvironmentActions":{
+      "name":"ListEnvironmentActions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/actions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEnvironmentActionsInput"},
+      "output":{"shape":"ListEnvironmentActionsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "ListEnvironmentBlueprintConfigurations":{
       "name":"ListEnvironmentBlueprintConfigurations",
       "http":{
@@ -1278,6 +1575,42 @@
       "output":{"shape":"ListEnvironmentsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListLineageNodeHistory":{
+      "name":"ListLineageNodeHistory",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/lineage/nodes/{identifier}/history",
+        "responseCode":200
+      },
+      "input":{"shape":"ListLineageNodeHistoryInput"},
+      "output":{"shape":"ListLineageNodeHistoryOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListMetadataGenerationRuns":{
+      "name":"ListMetadataGenerationRuns",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/metadata-generation-runs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMetadataGenerationRunsInput"},
+      "output":{"shape":"ListMetadataGenerationRunsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1427,6 +1760,66 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "ListTimeSeriesDataPoints":{
+      "name":"ListTimeSeriesDataPoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/time-series-data-points",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTimeSeriesDataPointsInput"},
+      "output":{"shape":"ListTimeSeriesDataPointsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "PostLineageEvent":{
+      "name":"PostLineageEvent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/lineage/events",
+        "responseCode":200
+      },
+      "input":{"shape":"PostLineageEventInput"},
+      "output":{"shape":"PostLineageEventOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "PostTimeSeriesDataPoints":{
+      "name":"PostTimeSeriesDataPoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/time-series-data-points",
+        "responseCode":201
+      },
+      "input":{"shape":"PostTimeSeriesDataPointsInput"},
+      "output":{"shape":"PostTimeSeriesDataPointsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "PutEnvironmentBlueprintConfiguration":{
       "name":"PutEnvironmentBlueprintConfiguration",
       "http":{
@@ -1461,6 +1854,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ],
@@ -1614,6 +2008,27 @@
       ],
       "idempotent":true
     },
+    "StartMetadataGenerationRun":{
+      "name":"StartMetadataGenerationRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/metadata-generation-runs",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMetadataGenerationRunInput"},
+      "output":{"shape":"StartMetadataGenerationRunOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -1646,6 +2061,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateAssetFilter":{
+      "name":"UpdateAssetFilter",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/assets/{assetIdentifier}/filters/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAssetFilterInput"},
+      "output":{"shape":"UpdateAssetFilterOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ],
       "idempotent":true
@@ -1706,6 +2141,25 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "UpdateEnvironmentAction":{
+      "name":"UpdateEnvironmentAction",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/environments/{environmentIdentifier}/actions/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateEnvironmentActionInput"},
+      "output":{"shape":"UpdateEnvironmentActionOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
@@ -1892,7 +2346,9 @@
   "shapes":{
     "AcceptChoice":{
       "type":"structure",
+      "required":["predictionTarget"],
       "members":{
+        "editedValue":{"shape":"EditedValue"},
         "predictionChoice":{"shape":"Integer"},
         "predictionTarget":{"shape":"String"}
       }
@@ -2034,9 +2490,49 @@
       "type":"string",
       "sensitive":true
     },
+    "ActionParameters":{
+      "type":"structure",
+      "members":{
+        "awsConsoleLink":{"shape":"AwsConsoleLinkParameters"}
+      },
+      "union":true
+    },
     "ApplicableAssetTypes":{
       "type":"list",
       "member":{"shape":"TypeName"}
+    },
+    "AssetFilterConfiguration":{
+      "type":"structure",
+      "members":{
+        "columnConfiguration":{"shape":"ColumnFilterConfiguration"},
+        "rowConfiguration":{"shape":"RowFilterConfiguration"}
+      },
+      "union":true
+    },
+    "AssetFilterSummary":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "domainId",
+        "id",
+        "name"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "createdAt":{"shape":"CreatedAt"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "effectiveColumnNames":{"shape":"ColumnNameList"},
+        "effectiveRowFilter":{"shape":"String"},
+        "errorMessage":{"shape":"String"},
+        "id":{"shape":"FilterId"},
+        "name":{"shape":"FilterName"},
+        "status":{"shape":"FilterStatus"}
+      }
+    },
+    "AssetFilters":{
+      "type":"list",
+      "member":{"shape":"AssetFilterSummary"}
     },
     "AssetId":{
       "type":"string",
@@ -2077,6 +2573,7 @@
       "type":"structure",
       "members":{
         "formsOutput":{"shape":"FormOutputList"},
+        "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "readOnlyFormsOutput":{"shape":"FormOutputList"}
       }
     },
@@ -2089,6 +2586,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "forms":{"shape":"Forms"},
         "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "latestTimeSeriesDataPointForms":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "owningProjectId":{"shape":"ProjectId"}
       }
     },
@@ -2124,7 +2622,8 @@
     "AssetListingItemAdditionalAttributes":{
       "type":"structure",
       "members":{
-        "forms":{"shape":"Forms"}
+        "forms":{"shape":"Forms"},
+        "latestTimeSeriesDataPointForms":{"shape":"TimeSeriesDataPointSummaryFormOutputList"}
       }
     },
     "AssetName":{
@@ -2164,7 +2663,7 @@
     },
     "AssetTypeIdentifier":{
       "type":"string",
-      "max":385,
+      "max":513,
       "min":1,
       "pattern":"^(?!\\.)[\\w\\.]*\\w$"
     },
@@ -2190,6 +2689,36 @@
         "revision":{"shape":"Revision"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
+      }
+    },
+    "AssociateEnvironmentRoleInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier",
+        "environmentRoleArn"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "environmentRoleArn":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"environmentRoleArn"
+        }
+      }
+    },
+    "AssociateEnvironmentRoleOutput":{
+      "type":"structure",
+      "members":{
       }
     },
     "Attribute":{
@@ -2218,6 +2747,12 @@
       "type":"string",
       "pattern":"^\\d{12}$"
     },
+    "AwsConsoleLinkParameters":{
+      "type":"structure",
+      "members":{
+        "uri":{"shape":"String"}
+      }
+    },
     "AwsRegion":{
       "type":"string",
       "pattern":"^[a-z]{2}-[a-z]{4,10}-\\d$"
@@ -2230,6 +2765,30 @@
       "type":"structure",
       "members":{
         "enabled":{"shape":"Boolean"}
+      }
+    },
+    "CancelMetadataGenerationRunInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"MetadataGenerationRunIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "CancelMetadataGenerationRunOutput":{
+      "type":"structure",
+      "members":{
       }
     },
     "CancelSubscriptionInput":{
@@ -2297,6 +2856,16 @@
         "templateUrl":{"shape":"String"}
       }
     },
+    "ColumnFilterConfiguration":{
+      "type":"structure",
+      "members":{
+        "includedColumnNames":{"shape":"ColumnNameList"}
+      }
+    },
+    "ColumnNameList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ConfigurableActionParameter":{
       "type":"structure",
       "members":{
@@ -2338,6 +2907,57 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "CreateAssetFilterInput":{
+      "type":"structure",
+      "required":[
+        "assetIdentifier",
+        "configuration",
+        "domainIdentifier",
+        "name"
+      ],
+      "members":{
+        "assetIdentifier":{
+          "shape":"AssetId",
+          "location":"uri",
+          "locationName":"assetIdentifier"
+        },
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "configuration":{"shape":"AssetFilterConfiguration"},
+        "description":{"shape":"Description"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "name":{"shape":"FilterName"}
+      }
+    },
+    "CreateAssetFilterOutput":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "configuration",
+        "domainId",
+        "id",
+        "name"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "configuration":{"shape":"AssetFilterConfiguration"},
+        "createdAt":{"shape":"CreatedAt"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "effectiveColumnNames":{"shape":"ColumnNameList"},
+        "effectiveRowFilter":{"shape":"String"},
+        "errorMessage":{"shape":"String"},
+        "id":{"shape":"FilterId"},
+        "name":{"shape":"FilterName"},
+        "status":{"shape":"FilterStatus"}
+      }
     },
     "CreateAssetInput":{
       "type":"structure",
@@ -2391,6 +3011,7 @@
         "formsOutput":{"shape":"FormOutputList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"AssetId"},
+        "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "listing":{"shape":"AssetListingDetails"},
         "name":{"shape":"AssetName"},
         "owningProjectId":{"shape":"ProjectId"},
@@ -2454,6 +3075,7 @@
         "formsOutput":{"shape":"FormOutputList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"AssetId"},
+        "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "listing":{"shape":"AssetListingDetails"},
         "name":{"shape":"AssetName"},
         "owningProjectId":{"shape":"ProjectId"},
@@ -2606,6 +3228,48 @@
         "tags":{"shape":"Tags"}
       }
     },
+    "CreateEnvironmentActionInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier",
+        "name",
+        "parameters"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "name":{"shape":"String"},
+        "parameters":{"shape":"ActionParameters"}
+      }
+    },
+    "CreateEnvironmentActionOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "environmentId",
+        "id",
+        "name",
+        "parameters"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "id":{"shape":"EnvironmentActionId"},
+        "name":{"shape":"String"},
+        "parameters":{"shape":"ActionParameters"}
+      }
+    },
     "CreateEnvironmentInput":{
       "type":"structure",
       "required":[
@@ -2621,6 +3285,9 @@
           "location":"uri",
           "locationName":"domainIdentifier"
         },
+        "environmentAccountIdentifier":{"shape":"String"},
+        "environmentAccountRegion":{"shape":"String"},
+        "environmentBlueprintIdentifier":{"shape":"String"},
         "environmentProfileIdentifier":{"shape":"EnvironmentProfileId"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "name":{"shape":"String"},
@@ -2633,7 +3300,6 @@
       "required":[
         "createdBy",
         "domainId",
-        "environmentProfileId",
         "name",
         "projectId",
         "provider"
@@ -2879,7 +3545,7 @@
           "location":"uri",
           "locationName":"domainIdentifier"
         },
-        "entityIdentifier":{"shape":"EntityId"},
+        "entityIdentifier":{"shape":"EntityIdentifier"},
         "entityRevision":{"shape":"Revision"},
         "entityType":{"shape":"EntityType"}
       }
@@ -2955,10 +3621,12 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "failureReasons":{"shape":"FailureReasons"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"ProjectId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "name":{"shape":"ProjectName"}
+        "name":{"shape":"ProjectName"},
+        "projectStatus":{"shape":"ProjectStatus"}
       }
     },
     "CreateSubscriptionGrantInput":{
@@ -3219,56 +3887,9 @@
         "UNCHANGED"
       ]
     },
-    "DataProductDescription":{
+    "DataPointIdentifier":{
       "type":"string",
-      "max":4096,
-      "min":1,
-      "sensitive":true
-    },
-    "DataProductId":{
-      "type":"string",
-      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
-    },
-    "DataProductItem":{
-      "type":"structure",
-      "members":{
-        "domainId":{"shape":"DomainId"},
-        "itemId":{"shape":"DataProductId"}
-      }
-    },
-    "DataProductItems":{
-      "type":"list",
-      "member":{"shape":"DataProductItem"},
-      "max":100,
-      "min":0
-    },
-    "DataProductName":{
-      "type":"string",
-      "max":64,
-      "min":1,
-      "sensitive":true
-    },
-    "DataProductSummary":{
-      "type":"structure",
-      "required":[
-        "domainId",
-        "id",
-        "name",
-        "owningProjectId"
-      ],
-      "members":{
-        "createdAt":{"shape":"CreatedAt"},
-        "createdBy":{"shape":"CreatedBy"},
-        "dataProductItems":{"shape":"DataProductItems"},
-        "description":{"shape":"DataProductDescription"},
-        "domainId":{"shape":"DomainId"},
-        "glossaryTerms":{"shape":"GlossaryTerms"},
-        "id":{"shape":"DataProductId"},
-        "name":{"shape":"DataProductName"},
-        "owningProjectId":{"shape":"ProjectId"},
-        "updatedAt":{"shape":"UpdatedAt"},
-        "updatedBy":{"shape":"UpdatedBy"}
-      }
+      "pattern":"^[a-zA-Z0-9_-]{0,36}$"
     },
     "DataSourceConfigurationInput":{
       "type":"structure",
@@ -3447,6 +4068,31 @@
       "min":1,
       "sensitive":true
     },
+    "DeleteAssetFilterInput":{
+      "type":"structure",
+      "required":[
+        "assetIdentifier",
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "assetIdentifier":{
+          "shape":"AssetId",
+          "location":"uri",
+          "locationName":"assetIdentifier"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"FilterId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
     "DeleteAssetInput":{
       "type":"structure",
       "required":[
@@ -3517,6 +4163,11 @@
           "shape":"DataSourceId",
           "location":"uri",
           "locationName":"identifier"
+        },
+        "retainPermissionsOnRevokeFailure":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"retainPermissionsOnRevokeFailure"
         }
       }
     },
@@ -3545,7 +4196,9 @@
         "name":{"shape":"Name"},
         "projectId":{"shape":"ProjectId"},
         "publishOnImport":{"shape":"Boolean"},
+        "retainPermissionsOnRevokeFailure":{"shape":"Boolean"},
         "schedule":{"shape":"ScheduleConfiguration"},
+        "selfGrantStatus":{"shape":"SelfGrantStatusOutput"},
         "status":{"shape":"DataSourceStatus"},
         "type":{"shape":"DataSourceType"},
         "updatedAt":{"shape":"DateTime"}
@@ -3565,6 +4218,11 @@
           "shape":"DomainId",
           "location":"uri",
           "locationName":"identifier"
+        },
+        "skipDeletionCheck":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"skipDeletionCheck"
         }
       }
     },
@@ -3573,6 +4231,31 @@
       "required":["status"],
       "members":{
         "status":{"shape":"DomainStatus"}
+      }
+    },
+    "DeleteEnvironmentActionInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "identifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"identifier"
+        }
       }
     },
     "DeleteEnvironmentBlueprintConfigurationInput":{
@@ -3749,6 +4432,11 @@
           "shape":"ProjectId",
           "location":"uri",
           "locationName":"identifier"
+        },
+        "skipDeletionCheck":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"skipDeletionCheck"
         }
       }
     },
@@ -3872,6 +4560,48 @@
         }
       }
     },
+    "DeleteTimeSeriesDataPointsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "formName"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityIdentifier",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TimeSeriesEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "formName":{
+          "shape":"TimeSeriesFormName",
+          "location":"querystring",
+          "locationName":"formName"
+        }
+      }
+    },
+    "DeleteTimeSeriesDataPointsOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "Deployment":{
       "type":"structure",
       "members":{
@@ -3941,6 +4671,36 @@
       "type":"list",
       "member":{"shape":"DetailedGlossaryTerm"}
     },
+    "DisassociateEnvironmentRoleInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier",
+        "environmentRoleArn"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "environmentRoleArn":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"environmentRoleArn"
+        }
+      }
+    },
+    "DisassociateEnvironmentRoleOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DomainDescription":{
       "type":"string",
       "sensitive":true
@@ -3990,6 +4750,19 @@
         "status":{"shape":"DomainStatus"}
       }
     },
+    "EdgeDirection":{
+      "type":"string",
+      "enum":[
+        "UPSTREAM",
+        "DOWNSTREAM"
+      ]
+    },
+    "EditedValue":{
+      "type":"string",
+      "max":5000,
+      "min":1,
+      "sensitive":true
+    },
     "EnableSetting":{
       "type":"string",
       "enum":[
@@ -4002,14 +4775,43 @@
       "member":{"shape":"RegionName"},
       "min":0
     },
-    "EntityId":{"type":"string"},
+    "EntityId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "EntityIdentifier":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
     "EntityType":{
       "type":"string",
       "enum":["ASSET"]
     },
+    "EnvironmentActionId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
     "EnvironmentActionList":{
       "type":"list",
       "member":{"shape":"ConfigurableEnvironmentAction"}
+    },
+    "EnvironmentActionSummary":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "environmentId",
+        "id",
+        "name",
+        "parameters"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "id":{"shape":"EnvironmentActionId"},
+        "name":{"shape":"String"},
+        "parameters":{"shape":"ActionParameters"}
+      }
     },
     "EnvironmentBlueprintConfigurationItem":{
       "type":"structure",
@@ -4023,6 +4825,7 @@
         "enabledRegions":{"shape":"EnabledRegionList"},
         "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
         "manageAccessRoleArn":{"shape":"RoleArn"},
+        "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"},
         "provisioningRoleArn":{"shape":"RoleArn"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
@@ -4096,7 +4899,7 @@
     },
     "EnvironmentProfileId":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+      "pattern":"^[a-zA-Z0-9_-]{0,36}$"
     },
     "EnvironmentProfileName":{
       "type":"string",
@@ -4159,7 +4962,6 @@
       "required":[
         "createdBy",
         "domainId",
-        "environmentProfileId",
         "name",
         "projectId",
         "provider"
@@ -4180,6 +4982,17 @@
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
+    "EqualToExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
     "ErrorMessage":{"type":"string"},
     "ExternalIdentifier":{
       "type":"string",
@@ -4192,6 +5005,10 @@
       "members":{
         "message":{"shape":"String"}
       }
+    },
+    "FailureReasons":{
+      "type":"list",
+      "member":{"shape":"ProjectDeletionError"}
     },
     "Filter":{
       "type":"structure",
@@ -4240,11 +5057,29 @@
       "type":"list",
       "member":{"shape":"FilterExpression"}
     },
+    "FilterId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
     "FilterList":{
       "type":"list",
       "member":{"shape":"FilterClause"},
       "max":100,
       "min":1
+    },
+    "FilterName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\w -]+$",
+      "sensitive":true
+    },
+    "FilterStatus":{
+      "type":"string",
+      "enum":[
+        "VALID",
+        "INVALID"
+      ]
     },
     "FilterValueString":{
       "type":"string",
@@ -4296,7 +5131,7 @@
     },
     "FormInputContentString":{
       "type":"string",
-      "max":75000,
+      "max":300000,
       "min":0
     },
     "FormInputList":{
@@ -4385,6 +5220,54 @@
       "max":10,
       "min":0
     },
+    "GetAssetFilterInput":{
+      "type":"structure",
+      "required":[
+        "assetIdentifier",
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "assetIdentifier":{
+          "shape":"AssetId",
+          "location":"uri",
+          "locationName":"assetIdentifier"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"FilterId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetAssetFilterOutput":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "configuration",
+        "domainId",
+        "id",
+        "name"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "configuration":{"shape":"AssetFilterConfiguration"},
+        "createdAt":{"shape":"CreatedAt"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "effectiveColumnNames":{"shape":"ColumnNameList"},
+        "effectiveRowFilter":{"shape":"String"},
+        "errorMessage":{"shape":"String"},
+        "id":{"shape":"FilterId"},
+        "name":{"shape":"FilterName"},
+        "status":{"shape":"FilterStatus"}
+      }
+    },
     "GetAssetInput":{
       "type":"structure",
       "required":[
@@ -4432,6 +5315,7 @@
         "formsOutput":{"shape":"FormOutputList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"AssetId"},
+        "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "listing":{"shape":"AssetListingDetails"},
         "name":{"shape":"AssetName"},
         "owningProjectId":{"shape":"ProjectId"},
@@ -4536,6 +5420,7 @@
         "publishOnImport":{"shape":"Boolean"},
         "recommendation":{"shape":"RecommendationConfiguration"},
         "schedule":{"shape":"ScheduleConfiguration"},
+        "selfGrantStatus":{"shape":"SelfGrantStatusOutput"},
         "status":{"shape":"DataSourceStatus"},
         "type":{"shape":"DataSourceType"},
         "updatedAt":{"shape":"DateTime"}
@@ -4621,6 +5506,49 @@
         "tags":{"shape":"Tags"}
       }
     },
+    "GetEnvironmentActionInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "identifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetEnvironmentActionOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "environmentId",
+        "id",
+        "name",
+        "parameters"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "id":{"shape":"EnvironmentActionId"},
+        "name":{"shape":"String"},
+        "parameters":{"shape":"ActionParameters"}
+      }
+    },
     "GetEnvironmentBlueprintConfigurationInput":{
       "type":"structure",
       "required":[
@@ -4652,6 +5580,7 @@
         "enabledRegions":{"shape":"EnabledRegionList"},
         "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
         "manageAccessRoleArn":{"shape":"RoleArn"},
+        "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"},
         "provisioningRoleArn":{"shape":"RoleArn"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
@@ -4697,6 +5626,35 @@
         "userParameters":{"shape":"CustomParameterList"}
       }
     },
+    "GetEnvironmentCredentialsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        }
+      }
+    },
+    "GetEnvironmentCredentialsOutput":{
+      "type":"structure",
+      "members":{
+        "accessKeyId":{"shape":"String"},
+        "expiration":{"shape":"SyntheticTimestamp_date_time"},
+        "secretAccessKey":{"shape":"String"},
+        "sessionToken":{"shape":"String"}
+      },
+      "sensitive":true
+    },
     "GetEnvironmentInput":{
       "type":"structure",
       "required":[
@@ -4721,7 +5679,6 @@
       "required":[
         "createdBy",
         "domainId",
-        "environmentProfileId",
         "name",
         "projectId",
         "provider"
@@ -4971,6 +5928,55 @@
         "userProfileId":{"shape":"String"}
       }
     },
+    "GetLineageNodeInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "eventTimestamp":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"timestamp"
+        },
+        "identifier":{
+          "shape":"LineageNodeIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetLineageNodeOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "typeName"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "downstreamNodes":{"shape":"LineageNodeReferenceList"},
+        "eventTimestamp":{"shape":"Timestamp"},
+        "formsOutput":{"shape":"FormOutputList"},
+        "id":{"shape":"LineageNodeId"},
+        "name":{"shape":"String"},
+        "sourceIdentifier":{"shape":"String"},
+        "typeName":{"shape":"String"},
+        "typeRevision":{"shape":"Revision"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"},
+        "upstreamNodes":{"shape":"LineageNodeReferenceList"}
+      }
+    },
     "GetListingInput":{
       "type":"structure",
       "required":[
@@ -5016,6 +6022,43 @@
         "updatedBy":{"shape":"UpdatedBy"}
       }
     },
+    "GetMetadataGenerationRunInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"MetadataGenerationRunIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetMetadataGenerationRunOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "owningProjectId"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"MetadataGenerationRunIdentifier"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "status":{"shape":"MetadataGenerationRunStatus"},
+        "target":{"shape":"MetadataGenerationRunTarget"},
+        "type":{"shape":"MetadataGenerationRunType"}
+      }
+    },
     "GetProjectInput":{
       "type":"structure",
       "required":[
@@ -5048,10 +6091,12 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "failureReasons":{"shape":"FailureReasons"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"ProjectId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "name":{"shape":"ProjectName"}
+        "name":{"shape":"ProjectName"},
+        "projectStatus":{"shape":"ProjectStatus"}
       }
     },
     "GetSubscriptionGrantInput":{
@@ -5263,6 +6308,53 @@
         "updatedBy":{"shape":"UpdatedBy"}
       }
     },
+    "GetTimeSeriesDataPointInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "formName",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityIdentifier",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TimeSeriesEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "formName":{
+          "shape":"TimeSeriesFormName",
+          "location":"querystring",
+          "locationName":"formName"
+        },
+        "identifier":{
+          "shape":"TimeSeriesDataPointIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetTimeSeriesDataPointOutput":{
+      "type":"structure",
+      "members":{
+        "domainId":{"shape":"DomainId"},
+        "entityId":{"shape":"EntityId"},
+        "entityType":{"shape":"TimeSeriesEntityType"},
+        "form":{"shape":"TimeSeriesDataPointFormOutput"},
+        "formName":{"shape":"TimeSeriesFormName"}
+      }
+    },
     "GetUserProfileInput":{
       "type":"structure",
       "required":[
@@ -5393,6 +6485,7 @@
       "type":"structure",
       "required":["relationalFilterConfigurations"],
       "members":{
+        "autoImportDataQualityResult":{"shape":"Boolean"},
         "dataAccessRole":{"shape":"GlueRunConfigurationInputDataAccessRoleString"},
         "relationalFilterConfigurations":{"shape":"RelationalFilterConfigurations"}
       }
@@ -5406,6 +6499,7 @@
       "required":["relationalFilterConfigurations"],
       "members":{
         "accountId":{"shape":"GlueRunConfigurationOutputAccountIdString"},
+        "autoImportDataQualityResult":{"shape":"Boolean"},
         "dataAccessRole":{"shape":"GlueRunConfigurationOutputDataAccessRoleString"},
         "region":{"shape":"GlueRunConfigurationOutputRegionString"},
         "relationalFilterConfigurations":{"shape":"RelationalFilterConfigurations"}
@@ -5427,6 +6521,13 @@
       "min":4,
       "pattern":"[a-z]{2}-?(iso|gov)?-{1}[a-z]*-{1}[0-9]"
     },
+    "GlueSelfGrantStatusOutput":{
+      "type":"structure",
+      "required":["selfGrantStatusDetails"],
+      "members":{
+        "selfGrantStatusDetails":{"shape":"SelfGrantStatusDetails"}
+      }
+    },
     "GrantedEntity":{
       "type":"structure",
       "members":{
@@ -5440,6 +6541,28 @@
         "listing":{"shape":"ListingRevisionInput"}
       },
       "union":true
+    },
+    "GreaterThanExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "GreaterThanOrEqualToExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
     },
     "GroupDetails":{
       "type":"structure",
@@ -5519,6 +6642,17 @@
       "max":10,
       "min":1
     },
+    "InExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "values"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "values":{"shape":"StringList"}
+      }
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -5542,15 +6676,184 @@
         "GLOSSARY_TERM"
       ]
     },
+    "IsNotNullExpression":{
+      "type":"structure",
+      "required":["columnName"],
+      "members":{
+        "columnName":{"shape":"String"}
+      }
+    },
+    "IsNullExpression":{
+      "type":"structure",
+      "required":["columnName"],
+      "members":{
+        "columnName":{"shape":"String"}
+      }
+    },
     "KmsKeyArn":{
       "type":"string",
       "max":1024,
       "min":1,
       "pattern":"^arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}$"
     },
+    "LakeFormationConfiguration":{
+      "type":"structure",
+      "members":{
+        "locationRegistrationExcludeS3Locations":{"shape":"S3LocationList"},
+        "locationRegistrationRole":{"shape":"RoleArn"}
+      }
+    },
     "LastName":{
       "type":"string",
       "sensitive":true
+    },
+    "LessThanExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "LessThanOrEqualToExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "LikeExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "LineageEvent":{
+      "type":"blob",
+      "max":300000,
+      "min":0,
+      "sensitive":true
+    },
+    "LineageNodeId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "LineageNodeIdentifier":{
+      "type":"string",
+      "max":2086,
+      "min":1
+    },
+    "LineageNodeReference":{
+      "type":"structure",
+      "members":{
+        "eventTimestamp":{"shape":"Timestamp"},
+        "id":{"shape":"LineageNodeId"}
+      }
+    },
+    "LineageNodeReferenceList":{
+      "type":"list",
+      "member":{"shape":"LineageNodeReference"},
+      "max":100,
+      "min":0
+    },
+    "LineageNodeSummaries":{
+      "type":"list",
+      "member":{"shape":"LineageNodeSummary"}
+    },
+    "LineageNodeSummary":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "typeName"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "eventTimestamp":{"shape":"Timestamp"},
+        "id":{"shape":"LineageNodeId"},
+        "name":{"shape":"String"},
+        "sourceIdentifier":{"shape":"String"},
+        "typeName":{"shape":"String"},
+        "typeRevision":{"shape":"Revision"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"}
+      }
+    },
+    "LineageNodeTypeItem":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "formsOutput",
+        "revision"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "formsOutput":{"shape":"FormsOutputMap"},
+        "name":{"shape":"String"},
+        "revision":{"shape":"Revision"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"}
+      }
+    },
+    "ListAssetFiltersInput":{
+      "type":"structure",
+      "required":[
+        "assetIdentifier",
+        "domainIdentifier"
+      ],
+      "members":{
+        "assetIdentifier":{
+          "shape":"AssetId",
+          "location":"uri",
+          "locationName":"assetIdentifier"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "status":{
+          "shape":"FilterStatus",
+          "location":"querystring",
+          "locationName":"status"
+        }
+      }
+    },
+    "ListAssetFiltersOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"AssetFilters"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
     },
     "ListAssetRevisionsInput":{
       "type":"structure",
@@ -5757,6 +7060,46 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListEnvironmentActionSummaries":{
+      "type":"list",
+      "member":{"shape":"EnvironmentActionSummary"}
+    },
+    "ListEnvironmentActionsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListEnvironmentActionsOutput":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ListEnvironmentActionSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListEnvironmentBlueprintConfigurationsInput":{
       "type":"structure",
       "required":["domainIdentifier"],
@@ -5947,6 +7290,100 @@
       "required":["items"],
       "members":{
         "items":{"shape":"EnvironmentSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListLineageNodeHistoryInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "direction":{
+          "shape":"EdgeDirection",
+          "location":"querystring",
+          "locationName":"direction"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "eventTimestampGTE":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"timestampGTE"
+        },
+        "eventTimestampLTE":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"timestampLTE"
+        },
+        "identifier":{
+          "shape":"LineageNodeIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListLineageNodeHistoryOutput":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "nodes":{"shape":"LineageNodeSummaries"}
+      }
+    },
+    "ListMetadataGenerationRunsInput":{
+      "type":"structure",
+      "required":["domainIdentifier"],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "status":{
+          "shape":"MetadataGenerationRunStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "type":{
+          "shape":"MetadataGenerationRunType",
+          "location":"querystring",
+          "locationName":"type"
+        }
+      }
+    },
+    "ListMetadataGenerationRunsOutput":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"MetadataGenerationRuns"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -6342,6 +7779,64 @@
         "tags":{"shape":"Tags"}
       }
     },
+    "ListTimeSeriesDataPointsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "formName"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "endedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endedAt"
+        },
+        "entityIdentifier":{
+          "shape":"EntityIdentifier",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TimeSeriesEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "formName":{
+          "shape":"TimeSeriesFormName",
+          "location":"querystring",
+          "locationName":"formName"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "startedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startedAt"
+        }
+      }
+    },
+    "ListTimeSeriesDataPointsOutput":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListingId":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
@@ -6428,6 +7923,62 @@
       "min":0,
       "sensitive":true
     },
+    "MetadataGenerationRunIdentifier":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "MetadataGenerationRunItem":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "owningProjectId"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"MetadataGenerationRunIdentifier"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "status":{"shape":"MetadataGenerationRunStatus"},
+        "target":{"shape":"MetadataGenerationRunTarget"},
+        "type":{"shape":"MetadataGenerationRunType"}
+      }
+    },
+    "MetadataGenerationRunStatus":{
+      "type":"string",
+      "enum":[
+        "SUBMITTED",
+        "IN_PROGRESS",
+        "CANCELED",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "MetadataGenerationRunTarget":{
+      "type":"structure",
+      "required":[
+        "identifier",
+        "type"
+      ],
+      "members":{
+        "identifier":{"shape":"String"},
+        "revision":{"shape":"Revision"},
+        "type":{"shape":"MetadataGenerationTargetType"}
+      }
+    },
+    "MetadataGenerationRunType":{
+      "type":"string",
+      "enum":["BUSINESS_DESCRIPTIONS"]
+    },
+    "MetadataGenerationRuns":{
+      "type":"list",
+      "member":{"shape":"MetadataGenerationRunItem"}
+    },
+    "MetadataGenerationTargetType":{
+      "type":"string",
+      "enum":["ASSET"]
+    },
     "MetadataMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -6446,6 +7997,39 @@
       "max":256,
       "min":1,
       "sensitive":true
+    },
+    "NotEqualToExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "NotInExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "values"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "values":{"shape":"StringList"}
+      }
+    },
+    "NotLikeExpression":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "value"
+      ],
+      "members":{
+        "columnName":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
     },
     "NotificationOutput":{
       "type":"structure",
@@ -6520,6 +8104,73 @@
       "max":8192,
       "min":1
     },
+    "PostLineageEventInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "event"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "event":{"shape":"LineageEvent"}
+      },
+      "payload":"event"
+    },
+    "PostLineageEventOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "PostTimeSeriesDataPointsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "forms"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityIdentifier",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TimeSeriesEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "forms":{"shape":"TimeSeriesDataPointFormInputList"}
+      }
+    },
+    "PostTimeSeriesDataPointsOutput":{
+      "type":"structure",
+      "members":{
+        "domainId":{"shape":"DomainId"},
+        "entityId":{"shape":"EntityId"},
+        "entityType":{"shape":"TimeSeriesEntityType"},
+        "forms":{"shape":"TimeSeriesDataPointFormOutputList"}
+      }
+    },
     "PredictionChoices":{
       "type":"list",
       "member":{"shape":"Integer"}
@@ -6528,6 +8179,13 @@
       "type":"structure",
       "members":{
         "businessNameGeneration":{"shape":"BusinessNameGenerationConfiguration"}
+      }
+    },
+    "ProjectDeletionError":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "ProjectId":{
@@ -6556,6 +8214,14 @@
       "pattern":"^[\\w -]+$",
       "sensitive":true
     },
+    "ProjectStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
+    },
     "ProjectSummaries":{
       "type":"list",
       "member":{"shape":"ProjectSummary"}
@@ -6573,10 +8239,23 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "failureReasons":{"shape":"FailureReasons"},
         "id":{"shape":"ProjectId"},
         "name":{"shape":"ProjectName"},
+        "projectStatus":{"shape":"ProjectStatus"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
+    },
+    "ProvisioningConfiguration":{
+      "type":"structure",
+      "members":{
+        "lakeFormationConfiguration":{"shape":"LakeFormationConfiguration"}
+      },
+      "union":true
+    },
+    "ProvisioningConfigurationList":{
+      "type":"list",
+      "member":{"shape":"ProvisioningConfiguration"}
     },
     "ProvisioningProperties":{
       "type":"structure",
@@ -6605,6 +8284,7 @@
           "locationName":"environmentBlueprintIdentifier"
         },
         "manageAccessRoleArn":{"shape":"RoleArn"},
+        "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"},
         "provisioningRoleArn":{"shape":"RoleArn"},
         "regionalParameters":{"shape":"RegionalParameterMap"}
       }
@@ -6621,6 +8301,7 @@
         "enabledRegions":{"shape":"EnabledRegionList"},
         "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
         "manageAccessRoleArn":{"shape":"RoleArn"},
+        "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"},
         "provisioningRoleArn":{"shape":"RoleArn"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
@@ -6708,6 +8389,13 @@
       "min":4,
       "pattern":"[a-z]{2}-?(iso|gov)?-{1}[a-z]*-{1}[0-9]"
     },
+    "RedshiftSelfGrantStatusOutput":{
+      "type":"structure",
+      "required":["selfGrantStatusDetails"],
+      "members":{
+        "selfGrantStatusDetails":{"shape":"SelfGrantStatusDetails"}
+      }
+    },
     "RedshiftServerlessStorage":{
       "type":"structure",
       "required":["workgroupName"],
@@ -6747,6 +8435,7 @@
     },
     "RejectChoice":{
       "type":"structure",
+      "required":["predictionTarget"],
       "members":{
         "predictionChoices":{"shape":"PredictionChoices"},
         "predictionTarget":{"shape":"String"}
@@ -6986,6 +8675,45 @@
       "type":"string",
       "pattern":"^arn:aws[^:]*:iam::\\d{12}:(role|role/service-role)/[\\w+=,.@-]*$"
     },
+    "RowFilter":{
+      "type":"structure",
+      "members":{
+        "and":{"shape":"RowFilterList"},
+        "expression":{"shape":"RowFilterExpression"},
+        "or":{"shape":"RowFilterList"}
+      },
+      "union":true
+    },
+    "RowFilterConfiguration":{
+      "type":"structure",
+      "required":["rowFilter"],
+      "members":{
+        "rowFilter":{"shape":"RowFilter"},
+        "sensitive":{"shape":"Boolean"}
+      }
+    },
+    "RowFilterExpression":{
+      "type":"structure",
+      "members":{
+        "equalTo":{"shape":"EqualToExpression"},
+        "greaterThan":{"shape":"GreaterThanExpression"},
+        "greaterThanOrEqualTo":{"shape":"GreaterThanOrEqualToExpression"},
+        "in":{"shape":"InExpression"},
+        "isNotNull":{"shape":"IsNotNullExpression"},
+        "isNull":{"shape":"IsNullExpression"},
+        "lessThan":{"shape":"LessThanExpression"},
+        "lessThanOrEqualTo":{"shape":"LessThanOrEqualToExpression"},
+        "like":{"shape":"LikeExpression"},
+        "notEqualTo":{"shape":"NotEqualToExpression"},
+        "notIn":{"shape":"NotInExpression"},
+        "notLike":{"shape":"NotLikeExpression"}
+      },
+      "union":true
+    },
+    "RowFilterList":{
+      "type":"list",
+      "member":{"shape":"RowFilter"}
+    },
     "RunStatisticsForAssets":{
       "type":"structure",
       "members":{
@@ -6995,6 +8723,18 @@
         "unchanged":{"shape":"Integer"},
         "updated":{"shape":"Integer"}
       }
+    },
+    "S3Location":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^s3://.+$"
+    },
+    "S3LocationList":{
+      "type":"list",
+      "member":{"shape":"S3Location"},
+      "max":20,
+      "min":0
     },
     "ScheduleConfiguration":{
       "type":"structure",
@@ -7069,7 +8809,6 @@
       "type":"structure",
       "members":{
         "assetItem":{"shape":"AssetItem"},
-        "dataProductItem":{"shape":"DataProductSummary"},
         "glossaryItem":{"shape":"GlossaryItem"},
         "glossaryTermItem":{"shape":"GlossaryTermItem"}
       },
@@ -7115,7 +8854,10 @@
     },
     "SearchOutputAdditionalAttribute":{
       "type":"string",
-      "enum":["FORMS"]
+      "enum":[
+        "FORMS",
+        "TIME_SERIES_DATA_POINT_FORMS"
+      ]
     },
     "SearchOutputAdditionalAttributes":{
       "type":"list",
@@ -7180,7 +8922,8 @@
       "type":"structure",
       "members":{
         "assetTypeItem":{"shape":"AssetTypeItem"},
-        "formTypeItem":{"shape":"FormTypeData"}
+        "formTypeItem":{"shape":"FormTypeData"},
+        "lineageNodeTypeItem":{"shape":"LineageNodeTypeItem"}
       },
       "union":true
     },
@@ -7213,6 +8956,53 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "SelfGrantStatus":{
+      "type":"string",
+      "enum":[
+        "GRANT_PENDING",
+        "REVOKE_PENDING",
+        "GRANT_IN_PROGRESS",
+        "REVOKE_IN_PROGRESS",
+        "GRANTED",
+        "GRANT_FAILED",
+        "REVOKE_FAILED"
+      ]
+    },
+    "SelfGrantStatusDetail":{
+      "type":"structure",
+      "required":[
+        "databaseName",
+        "status"
+      ],
+      "members":{
+        "databaseName":{"shape":"SelfGrantStatusDetailDatabaseNameString"},
+        "failureCause":{"shape":"String"},
+        "schemaName":{"shape":"SelfGrantStatusDetailSchemaNameString"},
+        "status":{"shape":"SelfGrantStatus"}
+      }
+    },
+    "SelfGrantStatusDetailDatabaseNameString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SelfGrantStatusDetailSchemaNameString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SelfGrantStatusDetails":{
+      "type":"list",
+      "member":{"shape":"SelfGrantStatusDetail"}
+    },
+    "SelfGrantStatusOutput":{
+      "type":"structure",
+      "members":{
+        "glueSelfGrantStatus":{"shape":"GlueSelfGrantStatusOutput"},
+        "redshiftSelfGrantStatus":{"shape":"RedshiftSelfGrantStatusOutput"}
+      },
+      "union":true
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -7240,7 +9030,7 @@
     },
     "Smithy":{
       "type":"string",
-      "max":10000,
+      "max":100000,
       "min":1
     },
     "SortFieldProject":{
@@ -7320,7 +9110,50 @@
         "updatedAt":{"shape":"DateTime"}
       }
     },
+    "StartMetadataGenerationRunInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "owningProjectIdentifier",
+        "target",
+        "type"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "owningProjectIdentifier":{"shape":"ProjectId"},
+        "target":{"shape":"MetadataGenerationRunTarget"},
+        "type":{"shape":"MetadataGenerationRunType"}
+      }
+    },
+    "StartMetadataGenerationRunOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"MetadataGenerationRunIdentifier"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "status":{"shape":"MetadataGenerationRunStatus"},
+        "type":{"shape":"MetadataGenerationRunType"}
+      }
+    },
     "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "SubscribedAsset":{
       "type":"structure",
       "required":[
@@ -7733,6 +9566,96 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "TimeSeriesDataPointFormInput":{
+      "type":"structure",
+      "required":[
+        "formName",
+        "timestamp",
+        "typeIdentifier"
+      ],
+      "members":{
+        "content":{"shape":"TimeSeriesDataPointFormInputContentString"},
+        "formName":{"shape":"TimeSeriesFormName"},
+        "timestamp":{"shape":"Timestamp"},
+        "typeIdentifier":{"shape":"FormTypeIdentifier"},
+        "typeRevision":{"shape":"Revision"}
+      }
+    },
+    "TimeSeriesDataPointFormInputContentString":{
+      "type":"string",
+      "max":500000,
+      "min":0
+    },
+    "TimeSeriesDataPointFormInputList":{
+      "type":"list",
+      "member":{"shape":"TimeSeriesDataPointFormInput"}
+    },
+    "TimeSeriesDataPointFormOutput":{
+      "type":"structure",
+      "required":[
+        "formName",
+        "timestamp",
+        "typeIdentifier"
+      ],
+      "members":{
+        "content":{"shape":"TimeSeriesDataPointFormOutputContentString"},
+        "formName":{"shape":"TimeSeriesFormName"},
+        "id":{"shape":"DataPointIdentifier"},
+        "timestamp":{"shape":"Timestamp"},
+        "typeIdentifier":{"shape":"FormTypeIdentifier"},
+        "typeRevision":{"shape":"Revision"}
+      }
+    },
+    "TimeSeriesDataPointFormOutputContentString":{
+      "type":"string",
+      "max":500000,
+      "min":0
+    },
+    "TimeSeriesDataPointFormOutputList":{
+      "type":"list",
+      "member":{"shape":"TimeSeriesDataPointFormOutput"}
+    },
+    "TimeSeriesDataPointIdentifier":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "TimeSeriesDataPointSummaryFormOutput":{
+      "type":"structure",
+      "required":[
+        "formName",
+        "timestamp",
+        "typeIdentifier"
+      ],
+      "members":{
+        "contentSummary":{"shape":"TimeSeriesDataPointSummaryFormOutputContentSummaryString"},
+        "formName":{"shape":"TimeSeriesFormName"},
+        "id":{"shape":"DataPointIdentifier"},
+        "timestamp":{"shape":"Timestamp"},
+        "typeIdentifier":{"shape":"FormTypeIdentifier"},
+        "typeRevision":{"shape":"Revision"}
+      }
+    },
+    "TimeSeriesDataPointSummaryFormOutputContentSummaryString":{
+      "type":"string",
+      "max":20000,
+      "min":0
+    },
+    "TimeSeriesDataPointSummaryFormOutputList":{
+      "type":"list",
+      "member":{"shape":"TimeSeriesDataPointSummaryFormOutput"}
+    },
+    "TimeSeriesEntityType":{
+      "type":"string",
+      "enum":[
+        "ASSET",
+        "LISTING"
+      ]
+    },
+    "TimeSeriesFormName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Timestamp":{"type":"timestamp"},
     "Timezone":{
       "type":"string",
@@ -7832,7 +9755,8 @@
       "type":"string",
       "enum":[
         "ASSET_TYPE",
-        "FORM_TYPE"
+        "FORM_TYPE",
+        "LINEAGE_NODE_TYPE"
       ]
     },
     "UnauthorizedException":{
@@ -7871,6 +9795,57 @@
       "members":{
       }
     },
+    "UpdateAssetFilterInput":{
+      "type":"structure",
+      "required":[
+        "assetIdentifier",
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "assetIdentifier":{
+          "shape":"AssetId",
+          "location":"uri",
+          "locationName":"assetIdentifier"
+        },
+        "configuration":{"shape":"AssetFilterConfiguration"},
+        "description":{"shape":"Description"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"FilterId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "name":{"shape":"String"}
+      }
+    },
+    "UpdateAssetFilterOutput":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "configuration",
+        "domainId",
+        "id",
+        "name"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "configuration":{"shape":"AssetFilterConfiguration"},
+        "createdAt":{"shape":"CreatedAt"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "effectiveColumnNames":{"shape":"ColumnNameList"},
+        "effectiveRowFilter":{"shape":"String"},
+        "errorMessage":{"shape":"String"},
+        "id":{"shape":"FilterId"},
+        "name":{"shape":"FilterName"},
+        "status":{"shape":"FilterStatus"}
+      }
+    },
     "UpdateDataSourceInput":{
       "type":"structure",
       "required":[
@@ -7895,6 +9870,7 @@
         "name":{"shape":"Name"},
         "publishOnImport":{"shape":"Boolean"},
         "recommendation":{"shape":"RecommendationConfiguration"},
+        "retainPermissionsOnRevokeFailure":{"shape":"Boolean"},
         "schedule":{"shape":"ScheduleConfiguration"}
       }
     },
@@ -7924,7 +9900,9 @@
         "projectId":{"shape":"ProjectId"},
         "publishOnImport":{"shape":"Boolean"},
         "recommendation":{"shape":"RecommendationConfiguration"},
+        "retainPermissionsOnRevokeFailure":{"shape":"Boolean"},
         "schedule":{"shape":"ScheduleConfiguration"},
+        "selfGrantStatus":{"shape":"SelfGrantStatusOutput"},
         "status":{"shape":"DataSourceStatus"},
         "type":{"shape":"DataSourceType"},
         "updatedAt":{"shape":"DateTime"}
@@ -7963,6 +9941,52 @@
         "singleSignOn":{"shape":"SingleSignOn"}
       }
     },
+    "UpdateEnvironmentActionInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "environmentIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "environmentIdentifier":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentIdentifier"
+        },
+        "identifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "name":{"shape":"String"},
+        "parameters":{"shape":"ActionParameters"}
+      }
+    },
+    "UpdateEnvironmentActionOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "environmentId",
+        "id",
+        "name",
+        "parameters"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "id":{"shape":"EnvironmentActionId"},
+        "name":{"shape":"String"},
+        "parameters":{"shape":"ActionParameters"}
+      }
+    },
     "UpdateEnvironmentInput":{
       "type":"structure",
       "required":[
@@ -7990,7 +10014,6 @@
       "required":[
         "createdBy",
         "domainId",
-        "environmentProfileId",
         "name",
         "projectId",
         "provider"
@@ -8220,10 +10243,12 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "failureReasons":{"shape":"FailureReasons"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"ProjectId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "name":{"shape":"ProjectName"}
+        "name":{"shape":"ProjectName"},
+        "projectStatus":{"shape":"ProjectStatus"}
       }
     },
     "UpdateSubscriptionGrantStatusInput":{

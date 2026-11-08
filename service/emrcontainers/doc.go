@@ -8,7 +8,7 @@
 // (Amazon EKS). With this deployment option, you can focus on running analytics
 // workloads while Amazon EMR on EKS builds, configures, and manages containers
 // for open-source applications. For more information about Amazon EMR on EKS
-// concepts and tasks, see What is shared id="EMR-EKS"/> (https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html).
+// concepts and tasks, see What is Amazon EMR on EKS (https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html).
 //
 // Amazon EMR containers is the API name for Amazon EMR on EKS. The emr-containers
 // prefix is used in the following scenarios:
@@ -44,4 +44,7 @@
 // See the Amazon EMR Containers client EMRContainers for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/emrcontainers/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package emrcontainers

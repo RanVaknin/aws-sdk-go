@@ -454,13 +454,12 @@ func (c *Organizations) AttachPolicyRequest(input *AttachPolicyInput) (req *requ
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -925,12 +924,13 @@ func (c *Organizations) CloseAccountRequest(input *CloseAccountInput) (req *requ
 //     (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_incident-response.html#orgs_cloudtrail-integration)
 //     in the Organizations User Guide.
 //
-//   - You can close only 10% of member accounts, between 10 and 200, within
+//   - You can close only 10% of member accounts, between 10 and 1000, within
 //     a rolling 30 day period. This quota is not bound by a calendar month,
 //     but starts when you close an account. After you reach this limit, you
 //     can close additional accounts. For more information, see Closing a member
 //     account in your organization (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_close.html)
-//     in the Organizations User Guide.
+//     and Quotas for Organizations (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_limits.html)in
+//     the Organizations User Guide.
 //
 //   - To reinstate a closed account, contact Amazon Web Services Support within
 //     the 90-day grace period while the account is in SUSPENDED status.
@@ -1067,13 +1067,12 @@ func (c *Organizations) CloseAccountRequest(input *CloseAccountInput) (req *requ
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -1340,11 +1339,11 @@ func (c *Organizations) CreateAccountRequest(input *CreateAccountInput) (req *re
 //
 //   - When you create an account in an organization using the Organizations
 //     console, API, or CLI commands, the information required for the account
-//     to operate as a standalone account, such as a payment method and signing
-//     the end user license agreement (EULA) is not automatically collected.
-//     If you must remove an account from your organization later, you can do
-//     so only after you provide the missing information. For more information,
-//     see Considerations before removing an account from an organization (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_account-before-remove.html)
+//     to operate as a standalone account, such as a payment method is not automatically
+//     collected. If you must remove an account from your organization later,
+//     you can do so only after you provide the missing information. For more
+//     information, see Considerations before removing an account from an organization
+//     (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_account-before-remove.html)
 //     in the Organizations User Guide.
 //
 //   - If you get an exception that indicates that you exceeded your account
@@ -1483,13 +1482,12 @@ func (c *Organizations) CreateAccountRequest(input *CreateAccountInput) (req *re
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -1948,13 +1946,12 @@ func (c *Organizations) CreateGovCloudAccountRequest(input *CreateGovCloudAccoun
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -2317,13 +2314,12 @@ func (c *Organizations) CreateOrganizationRequest(input *CreateOrganizationInput
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -2680,13 +2676,12 @@ func (c *Organizations) CreateOrganizationalUnitRequest(input *CreateOrganizatio
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -3043,13 +3038,12 @@ func (c *Organizations) CreatePolicyRequest(input *CreatePolicyInput) (req *requ
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -4197,13 +4191,12 @@ func (c *Organizations) DeleteResourcePolicyRequest(input *DeleteResourcePolicyI
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -4484,13 +4477,12 @@ func (c *Organizations) DeregisterDelegatedAdministratorRequest(input *Deregiste
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -5215,13 +5207,12 @@ func (c *Organizations) DescribeEffectivePolicyRequest(input *DescribeEffectiveP
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -6260,13 +6251,12 @@ func (c *Organizations) DescribeResourcePolicyRequest(input *DescribeResourcePol
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -6535,13 +6525,12 @@ func (c *Organizations) DetachPolicyRequest(input *DetachPolicyInput) (req *requ
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -6953,13 +6942,12 @@ func (c *Organizations) DisableAWSServiceAccessRequest(input *DisableAWSServiceA
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -7319,13 +7307,12 @@ func (c *Organizations) DisablePolicyTypeRequest(input *DisablePolicyTypeInput) 
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -7702,13 +7689,12 @@ func (c *Organizations) EnableAWSServiceAccessRequest(input *EnableAWSServiceAcc
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -8321,13 +8307,12 @@ func (c *Organizations) EnablePolicyTypeRequest(input *EnablePolicyTypeInput) (r
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -8767,13 +8752,12 @@ func (c *Organizations) InviteAccountToOrganizationRequest(input *InviteAccountT
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -9173,13 +9157,12 @@ func (c *Organizations) LeaveOrganizationRequest(input *LeaveOrganizationInput) 
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -9538,13 +9521,12 @@ func (c *Organizations) ListAWSServiceAccessForOrganizationRequest(input *ListAW
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -10935,13 +10917,12 @@ func (c *Organizations) ListDelegatedAdministratorsRequest(input *ListDelegatedA
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -11351,13 +11332,12 @@ func (c *Organizations) ListDelegatedServicesForAccountRequest(input *ListDelega
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -14286,13 +14266,12 @@ func (c *Organizations) PutResourcePolicyRequest(input *PutResourcePolicyInput) 
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -14567,13 +14546,12 @@ func (c *Organizations) RegisterDelegatedAdministratorRequest(input *RegisterDel
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -14949,13 +14927,12 @@ func (c *Organizations) RemoveAccountFromOrganizationRequest(input *RemoveAccoun
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -15318,13 +15295,12 @@ func (c *Organizations) TagResourceRequest(input *TagResourceInput) (req *reques
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -15682,13 +15658,12 @@ func (c *Organizations) UntagResourceRequest(input *UntagResourceInput) (req *re
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -16225,13 +16200,12 @@ func (c *Organizations) UpdatePolicyRequest(input *UpdatePolicyInput) (req *requ
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -17800,13 +17774,12 @@ func (s *ConflictException) RequestID() string {
 //   - MASTER_ACCOUNT_ADDRESS_DOES_NOT_MATCH_MARKETPLACE: To create an account
 //     in this organization, you first must migrate the organization's management
 //     account to the marketplace that corresponds to the management account's
-//     address. For example, accounts with India addresses must be associated
-//     with the AISPL marketplace. All accounts in an organization must be associated
-//     with the same marketplace.
+//     address. All accounts in an organization must be associated with the same
+//     marketplace.
 //
 //   - MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE: Applies only to the Amazon
-//     Web Services /> Regions in China. To create an organization, the master
-//     must have a valid business license. For more information, contact customer
+//     Web Services Regions in China. To create an organization, the master must
+//     have a valid business license. For more information, contact customer
 //     support.
 //
 //   - MASTER_ACCOUNT_MISSING_CONTACT_INFO: To complete this operation, you
@@ -18813,6 +18786,10 @@ type CreatePolicyInput struct {
 
 	// The policy text content to add to the new policy. The text that you supply
 	// must adhere to the rules of the policy type you specify in the Type parameter.
+	//
+	// The maximum size of a policy document depends on the policy's type. For more
+	// information, see Maximum and minimum values (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_limits.html#min-max-values)
+	// in the Organizations User Guide.
 	//
 	// Content is a required field
 	Content *string `min:"1" type:"string" required:"true"`
@@ -24711,7 +24688,8 @@ type OrganizationalUnit struct {
 	// in the Amazon Web Services Service Authorization Reference.
 	Arn *string `type:"string"`
 
-	// The unique identifier (ID) associated with this OU.
+	// The unique identifier (ID) associated with this OU. The ID is unique to the
+	// organization only.
 	//
 	// The regex pattern (http://wikipedia.org/wiki/regex) for an organizational
 	// unit ID string requires "ou-" followed by from 4 to 32 lowercase letters
@@ -26156,7 +26134,8 @@ type Root struct {
 	// in the Amazon Web Services Service Authorization Reference.
 	Arn *string `type:"string"`
 
-	// The unique identifier (ID) for the root.
+	// The unique identifier (ID) for the root. The ID is unique to the organization
+	// only.
 	//
 	// The regex pattern (http://wikipedia.org/wiki/regex) for a root ID string
 	// requires "r-" followed by from 4 to 32 lowercase letters or digits.
@@ -27002,6 +26981,10 @@ type UpdatePolicyInput struct {
 	// JSON that complies with the syntax for the policy's type. For more information,
 	// see SCP syntax (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_syntax.html)
 	// in the Organizations User Guide.
+	//
+	// The maximum size of a policy document depends on the policy's type. For more
+	// information, see Maximum and minimum values (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_limits.html#min-max-values)
+	// in the Organizations User Guide.
 	Content *string `min:"1" type:"string"`
 
 	// If provided, the new description for the policy.
@@ -27307,6 +27290,9 @@ const (
 
 	// ConstraintViolationExceptionReasonAccountCreationNotComplete is a ConstraintViolationExceptionReason enum value
 	ConstraintViolationExceptionReasonAccountCreationNotComplete = "ACCOUNT_CREATION_NOT_COMPLETE"
+
+	// ConstraintViolationExceptionReasonCannotRegisterSuspendedAccountAsDelegatedAdministrator is a ConstraintViolationExceptionReason enum value
+	ConstraintViolationExceptionReasonCannotRegisterSuspendedAccountAsDelegatedAdministrator = "CANNOT_REGISTER_SUSPENDED_ACCOUNT_AS_DELEGATED_ADMINISTRATOR"
 )
 
 // ConstraintViolationExceptionReason_Values returns all elements of the ConstraintViolationExceptionReason enum
@@ -27346,6 +27332,7 @@ func ConstraintViolationExceptionReason_Values() []string {
 		ConstraintViolationExceptionReasonServiceAccessNotEnabled,
 		ConstraintViolationExceptionReasonInvalidPaymentInstrument,
 		ConstraintViolationExceptionReasonAccountCreationNotComplete,
+		ConstraintViolationExceptionReasonCannotRegisterSuspendedAccountAsDelegatedAdministrator,
 	}
 }
 

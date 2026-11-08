@@ -1611,6 +1611,9 @@ func (c *AppStream) CreateStackRequest(input *CreateStackInput) (req *request.Re
 //   - InvalidParameterCombinationException
 //     Indicates an incorrect combination of parameters, or a missing parameter.
 //
+//   - OperationNotPermittedException
+//     The attempted operation is not permitted.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appstream-2016-12-01/CreateStack
 func (c *AppStream) CreateStack(input *CreateStackInput) (*CreateStackOutput, error) {
 	req, out := c.CreateStackRequest(input)
@@ -9642,7 +9645,7 @@ type CreateFleetInput struct {
 	// their previous session. Otherwise, they are connected to a new session with
 	// a new streaming instance.
 	//
-	// Specify a value between 60 and 360000.
+	// Specify a value between 60 and 36000.
 	DisconnectTimeoutInSeconds *int64 `type:"integer"`
 
 	// The fleet name to display.
@@ -9694,8 +9697,8 @@ type CreateFleetInput struct {
 	// elapses, they are disconnected.
 	//
 	// To prevent users from being disconnected due to inactivity, specify a value
-	// of 0. Otherwise, specify a value between 60 and 3600. The default value is
-	// 0.
+	// of 0. Otherwise, specify a value between 60 and 36000. The default value
+	// is 0.
 	//
 	// If you enable this feature, we recommend that you specify a value that corresponds
 	// exactly to a whole number of minutes (for example, 60, 120, and 180). If
@@ -15054,7 +15057,7 @@ type Fleet struct {
 	// previous session. Otherwise, they are connected to a new session with a new
 	// streaming instance.
 	//
-	// Specify a value between 60 and 360000.
+	// Specify a value between 60 and 36000.
 	DisconnectTimeoutInSeconds *int64 `type:"integer"`
 
 	// The fleet name to display.
@@ -15108,8 +15111,8 @@ type Fleet struct {
 	// elapses, they are disconnected.
 	//
 	// To prevent users from being disconnected due to inactivity, specify a value
-	// of 0. Otherwise, specify a value between 60 and 3600. The default value is
-	// 0.
+	// of 0. Otherwise, specify a value between 60 and 36000. The default value
+	// is 0.
 	//
 	// If you enable this feature, we recommend that you specify a value that corresponds
 	// exactly to a whole number of minutes (for example, 60, 120, and 180). If
@@ -19305,7 +19308,7 @@ type UpdateFleetInput struct {
 	// their previous session. Otherwise, they are connected to a new session with
 	// a new streaming instance.
 	//
-	// Specify a value between 60 and 360000.
+	// Specify a value between 60 and 36000.
 	DisconnectTimeoutInSeconds *int64 `type:"integer"`
 
 	// The fleet name to display.
@@ -19342,8 +19345,8 @@ type UpdateFleetInput struct {
 	// elapses, they are disconnected.
 	//
 	// To prevent users from being disconnected due to inactivity, specify a value
-	// of 0. Otherwise, specify a value between 60 and 3600. The default value is
-	// 0.
+	// of 0. Otherwise, specify a value between 60 and 36000. The default value
+	// is 0.
 	//
 	// If you enable this feature, we recommend that you specify a value that corresponds
 	// exactly to a whole number of minutes (for example, 60, 120, and 180). If
@@ -20231,6 +20234,19 @@ type UserSetting struct {
 	// Action is a required field
 	Action *string `type:"string" required:"true" enum:"Action"`
 
+	// Specifies the number of characters that can be copied by end users from the
+	// local device to the remote session, and to the local device from the remote
+	// session.
+	//
+	// This can be specified only for the CLIPBOARD_COPY_FROM_LOCAL_DEVICE and CLIPBOARD_COPY_TO_LOCAL_DEVICE
+	// actions.
+	//
+	// This defaults to 20,971,520 (20 MB) when unspecified and the permission is
+	// ENABLED. This can't be specified when the permission is DISABLED.
+	//
+	// The value can be between 1 and 20,971,520 (20 MB).
+	MaximumLength *int64 `type:"integer"`
+
 	// Indicates whether the action is enabled or disabled.
 	//
 	// Permission is a required field
@@ -20274,6 +20290,12 @@ func (s *UserSetting) Validate() error {
 // SetAction sets the Action field's value.
 func (s *UserSetting) SetAction(v string) *UserSetting {
 	s.Action = &v
+	return s
+}
+
+// SetMaximumLength sets the MaximumLength field's value.
+func (s *UserSetting) SetMaximumLength(v int64) *UserSetting {
+	s.MaximumLength = &v
 	return s
 }
 
@@ -21080,6 +21102,9 @@ const (
 
 	// PlatformTypeAmazonLinux2 is a PlatformType enum value
 	PlatformTypeAmazonLinux2 = "AMAZON_LINUX2"
+
+	// PlatformTypeRhel8 is a PlatformType enum value
+	PlatformTypeRhel8 = "RHEL8"
 )
 
 // PlatformType_Values returns all elements of the PlatformType enum
@@ -21090,6 +21115,7 @@ func PlatformType_Values() []string {
 		PlatformTypeWindowsServer2019,
 		PlatformTypeWindowsServer2022,
 		PlatformTypeAmazonLinux2,
+		PlatformTypeRhel8,
 	}
 }
 

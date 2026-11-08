@@ -3,8 +3,7 @@
 // Package bedrockagent provides the client and types for making API
 // requests to Agents for Amazon Bedrock.
 //
-// An example service, deployed with the Octane Service creator, which will
-// echo the string
+// Describes the API operations for creating and managing Amazon Bedrock agents.
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05 for more information on this service.
 //
@@ -26,4 +25,7 @@
 // See the Agents for Amazon Bedrock client BedrockAgent for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/bedrockagent/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package bedrockagent

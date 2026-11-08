@@ -1754,7 +1754,12 @@ const opGetRecommendations = "GetRecommendations"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/wisdom-2020-10-19/GetRecommendations
+//
+// Deprecated: GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) GetRecommendationsRequest(input *GetRecommendationsInput) (req *request.Request, output *GetRecommendationsOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, GetRecommendations, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opGetRecommendations,
 		HTTPMethod: "GET",
@@ -1799,6 +1804,8 @@ func (c *ConnectWisdomService) GetRecommendationsRequest(input *GetRecommendatio
 //     The specified resource does not exist.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/wisdom-2020-10-19/GetRecommendations
+//
+// Deprecated: GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) GetRecommendations(input *GetRecommendationsInput) (*GetRecommendationsOutput, error) {
 	req, out := c.GetRecommendationsRequest(input)
 	return out, req.Send()
@@ -1813,6 +1820,8 @@ func (c *ConnectWisdomService) GetRecommendations(input *GetRecommendationsInput
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) GetRecommendationsWithContext(ctx aws.Context, input *GetRecommendationsInput, opts ...request.Option) (*GetRecommendationsOutput, error) {
 	req, out := c.GetRecommendationsRequest(input)
 	req.SetContext(ctx)
@@ -2940,7 +2949,12 @@ const opQueryAssistant = "QueryAssistant"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/wisdom-2020-10-19/QueryAssistant
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) QueryAssistantRequest(input *QueryAssistantInput) (req *request.Request, output *QueryAssistantOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, QueryAssistant, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opQueryAssistant,
 		HTTPMethod: "POST",
@@ -2992,6 +3006,8 @@ func (c *ConnectWisdomService) QueryAssistantRequest(input *QueryAssistantInput)
 //     The specified resource does not exist.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/wisdom-2020-10-19/QueryAssistant
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) QueryAssistant(input *QueryAssistantInput) (*QueryAssistantOutput, error) {
 	req, out := c.QueryAssistantRequest(input)
 	return out, req.Send()
@@ -3006,6 +3022,8 @@ func (c *ConnectWisdomService) QueryAssistant(input *QueryAssistantInput) (*Quer
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) QueryAssistantWithContext(ctx aws.Context, input *QueryAssistantInput, opts ...request.Option) (*QueryAssistantOutput, error) {
 	req, out := c.QueryAssistantRequest(input)
 	req.SetContext(ctx)
@@ -3029,6 +3047,8 @@ func (c *ConnectWisdomService) QueryAssistantWithContext(ctx aws.Context, input 
 //	        fmt.Println(page)
 //	        return pageNum <= 3
 //	    })
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) QueryAssistantPages(input *QueryAssistantInput, fn func(*QueryAssistantOutput, bool) bool) error {
 	return c.QueryAssistantPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3040,6 +3060,8 @@ func (c *ConnectWisdomService) QueryAssistantPages(input *QueryAssistantInput, f
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *ConnectWisdomService) QueryAssistantPagesWithContext(ctx aws.Context, input *QueryAssistantInput, fn func(*QueryAssistantOutput, bool) bool, opts ...request.Option) error {
 	p := request.Pagination{
 		NewRequest: func() (*request.Request, error) {
@@ -6121,7 +6143,7 @@ type CreateQuickResponseInput struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Connect channels this quick response applies to.
-	Channels []*string `locationName:"channels" type:"list"`
+	Channels []*string `locationName:"channels" type:"list" sensitive:"true"`
 
 	// A unique, case-sensitive identifier that you provide to ensure the idempotency
 	// of the request. If not provided, the Amazon Web Services SDK populates this
@@ -8139,7 +8161,7 @@ type GroupingConfiguration struct {
 	//    * When setting criteria to RoutingProfileArn, you need to provide a list
 	//    of ARNs of Amazon Connect routing profiles (https://docs.aws.amazon.com/connect/latest/APIReference/API_RoutingProfile.html)
 	//    as values of this parameter.
-	Values []*string `locationName:"values" type:"list"`
+	Values []*string `locationName:"values" type:"list" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -10077,7 +10099,7 @@ type QuickResponseData struct {
 
 	// The Amazon Connect contact channels this quick response applies to. The supported
 	// contact channel types include Chat.
-	Channels []*string `locationName:"channels" type:"list"`
+	Channels []*string `locationName:"channels" type:"list" sensitive:"true"`
 
 	// The media type of the quick response content.
 	//
@@ -10750,7 +10772,7 @@ type QuickResponseSearchResultData struct {
 
 	// The Amazon Connect contact channels this quick response applies to. The supported
 	// contact channel types include Chat.
-	Channels []*string `locationName:"channels" type:"list"`
+	Channels []*string `locationName:"channels" type:"list" sensitive:"true"`
 
 	// The media type of the quick response content.
 	//
@@ -10981,7 +11003,7 @@ type QuickResponseSummary struct {
 
 	// The Amazon Connect contact channels this quick response applies to. The supported
 	// contact channel types include Chat.
-	Channels []*string `locationName:"channels" type:"list"`
+	Channels []*string `locationName:"channels" type:"list" sensitive:"true"`
 
 	// The media type of the quick response content.
 	//
@@ -13311,7 +13333,7 @@ type UpdateQuickResponseInput struct {
 
 	// The Amazon Connect contact channels this quick response applies to. The supported
 	// contact channel types include Chat.
-	Channels []*string `locationName:"channels" type:"list"`
+	Channels []*string `locationName:"channels" type:"list" sensitive:"true"`
 
 	// The updated content of the quick response.
 	Content *QuickResponseDataProvider `locationName:"content" type:"structure"`

@@ -445,6 +445,12 @@ func (c *MedicalImaging) GetDICOMImportJobRequest(input *GetDICOMImportJobInput)
 //
 // Get the import job properties to learn more about the job or job progress.
 //
+// The jobStatus refers to the execution of the import job. Therefore, an import
+// job can return a jobStatus as COMPLETED even if validation issues are discovered
+// during the import process. If a jobStatus returns as COMPLETED, we still
+// recommend you review the output manifests written to S3, as they provide
+// details on the success or failure of individual P10 object imports.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -1467,11 +1473,11 @@ func (c *MedicalImaging) SearchImageSetsRequest(input *SearchImageSetsInput) (re
 // Search image sets based on defined input attributes.
 //
 // SearchImageSets accepts a single search query parameter and returns a paginated
-// response of all image sets that have the matching criteria. All range queries
-// must be input as (lowerBound, upperBound).
+// response of all image sets that have the matching criteria. All date range
+// queries must be input as (lowerBound, upperBound).
 //
-// SearchImageSets uses the updatedAt field for sorting in decreasing order
-// from latest to oldest.
+// By default, SearchImageSets uses the updatedAt field for sorting in descending
+// order from newest to oldest.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2314,6 +2320,11 @@ type CopyImageSetInput struct {
 	// DatastoreId is a required field
 	DatastoreId *string `location:"uri" locationName:"datastoreId" type:"string" required:"true"`
 
+	// Setting this flag will force the CopyImageSet operation, even if Patient,
+	// Study, or Series level metadata are mismatched across the sourceImageSet
+	// and destinationImageSet.
+	Force *bool `location:"querystring" locationName:"force" type:"boolean"`
+
 	// The source image set identifier.
 	//
 	// SourceImageSetId is a required field
@@ -2377,6 +2388,12 @@ func (s *CopyImageSetInput) SetCopyImageSetInformation(v *CopyImageSetInformatio
 // SetDatastoreId sets the DatastoreId field's value.
 func (s *CopyImageSetInput) SetDatastoreId(v string) *CopyImageSetInput {
 	s.DatastoreId = &v
+	return s
+}
+
+// SetForce sets the Force field's value.
+func (s *CopyImageSetInput) SetForce(v bool) *CopyImageSetInput {
+	s.Force = &v
 	return s
 }
 
@@ -2445,6 +2462,10 @@ func (s *CopyImageSetOutput) SetSourceImageSetProperties(v *CopySourceImageSetPr
 type CopySourceImageSetInformation struct {
 	_ struct{} `type:"structure"`
 
+	// Contains MetadataCopies structure and wraps information related to specific
+	// copy use cases. For example, when copying subsets.
+	DICOMCopies *MetadataCopies `type:"structure"`
+
 	// The latest version identifier for the source image set.
 	//
 	// LatestVersionId is a required field
@@ -2475,11 +2496,22 @@ func (s *CopySourceImageSetInformation) Validate() error {
 	if s.LatestVersionId == nil {
 		invalidParams.Add(request.NewErrParamRequired("LatestVersionId"))
 	}
+	if s.DICOMCopies != nil {
+		if err := s.DICOMCopies.Validate(); err != nil {
+			invalidParams.AddNested("DICOMCopies", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetDICOMCopies sets the DICOMCopies field's value.
+func (s *CopySourceImageSetInformation) SetDICOMCopies(v *MetadataCopies) *CopySourceImageSetInformation {
+	s.DICOMCopies = v
+	return s
 }
 
 // SetLatestVersionId sets the LatestVersionId field's value.
@@ -3045,6 +3077,34 @@ type DICOMTags struct {
 	// String and GoString methods.
 	DICOMPatientSex *string `type:"string" sensitive:"true"`
 
+	// The DICOM provided identifier for the series Body Part Examined.
+	//
+	// DICOMSeriesBodyPart is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DICOMTags's
+	// String and GoString methods.
+	DICOMSeriesBodyPart *string `type:"string" sensitive:"true"`
+
+	// The DICOM provided identifier for the Series Instance UID.
+	//
+	// DICOMSeriesInstanceUID is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DICOMTags's
+	// String and GoString methods.
+	DICOMSeriesInstanceUID *string `type:"string" sensitive:"true"`
+
+	// The DICOM provided identifier for the series Modality.
+	//
+	// DICOMSeriesModality is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DICOMTags's
+	// String and GoString methods.
+	DICOMSeriesModality *string `type:"string" sensitive:"true"`
+
+	// The DICOM provided identifier for the Series Number.
+	//
+	// DICOMSeriesNumber is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DICOMTags's
+	// String and GoString methods.
+	DICOMSeriesNumber *int64 `type:"integer" sensitive:"true"`
+
 	// The study date.
 	//
 	// DICOMStudyDate is a sensitive parameter and its value will be
@@ -3052,21 +3112,21 @@ type DICOMTags struct {
 	// String and GoString methods.
 	DICOMStudyDate *string `type:"string" sensitive:"true"`
 
-	// The description of the study.
+	// The DICOM provided Study Description.
 	//
 	// DICOMStudyDescription is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by DICOMTags's
 	// String and GoString methods.
 	DICOMStudyDescription *string `type:"string" sensitive:"true"`
 
-	// The DICOM provided studyId.
+	// The DICOM provided identifier for the Study ID.
 	//
 	// DICOMStudyId is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by DICOMTags's
 	// String and GoString methods.
 	DICOMStudyId *string `type:"string" sensitive:"true"`
 
-	// The DICOM provided identifier for studyInstanceUid.>
+	// The DICOM provided identifier for the Study Instance UID.
 	//
 	// DICOMStudyInstanceUID is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by DICOMTags's
@@ -3138,6 +3198,30 @@ func (s *DICOMTags) SetDICOMPatientName(v string) *DICOMTags {
 // SetDICOMPatientSex sets the DICOMPatientSex field's value.
 func (s *DICOMTags) SetDICOMPatientSex(v string) *DICOMTags {
 	s.DICOMPatientSex = &v
+	return s
+}
+
+// SetDICOMSeriesBodyPart sets the DICOMSeriesBodyPart field's value.
+func (s *DICOMTags) SetDICOMSeriesBodyPart(v string) *DICOMTags {
+	s.DICOMSeriesBodyPart = &v
+	return s
+}
+
+// SetDICOMSeriesInstanceUID sets the DICOMSeriesInstanceUID field's value.
+func (s *DICOMTags) SetDICOMSeriesInstanceUID(v string) *DICOMTags {
+	s.DICOMSeriesInstanceUID = &v
+	return s
+}
+
+// SetDICOMSeriesModality sets the DICOMSeriesModality field's value.
+func (s *DICOMTags) SetDICOMSeriesModality(v string) *DICOMTags {
+	s.DICOMSeriesModality = &v
+	return s
+}
+
+// SetDICOMSeriesNumber sets the DICOMSeriesNumber field's value.
+func (s *DICOMTags) SetDICOMSeriesNumber(v int64) *DICOMTags {
+	s.DICOMSeriesNumber = &v
 	return s
 }
 
@@ -4185,6 +4269,11 @@ type GetImageSetOutput struct {
 	// The error message thrown if an image set action fails.
 	Message *string `locationName:"message" min:"1" type:"string"`
 
+	// This object contains the details of any overrides used while creating a specific
+	// image set version. If an image set was copied or updated using the force
+	// flag, this object will contain the forced flag.
+	Overrides *Overrides `locationName:"overrides" type:"structure"`
+
 	// The timestamp when image set properties were updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 
@@ -4257,6 +4346,12 @@ func (s *GetImageSetOutput) SetImageSetWorkflowStatus(v string) *GetImageSetOutp
 // SetMessage sets the Message field's value.
 func (s *GetImageSetOutput) SetMessage(v string) *GetImageSetOutput {
 	s.Message = &v
+	return s
+}
+
+// SetOverrides sets the Overrides field's value.
+func (s *GetImageSetOutput) SetOverrides(v *Overrides) *GetImageSetOutput {
+	s.Overrides = v
 	return s
 }
 
@@ -4345,6 +4440,11 @@ type ImageSetProperties struct {
 	// The error message thrown if an image set action fails.
 	Message *string `locationName:"message" min:"1" type:"string"`
 
+	// Contains details on overrides used when creating the returned version of
+	// an image set. For example, if forced exists, the forced flag was used when
+	// creating the image set.
+	Overrides *Overrides `locationName:"overrides" type:"structure"`
+
 	// The timestamp when the image set properties were updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 
@@ -4405,6 +4505,12 @@ func (s *ImageSetProperties) SetImageSetWorkflowStatus(v string) *ImageSetProper
 // SetMessage sets the Message field's value.
 func (s *ImageSetProperties) SetMessage(v string) *ImageSetProperties {
 	s.Message = &v
+	return s
+}
+
+// SetOverrides sets the Overrides field's value.
+func (s *ImageSetProperties) SetOverrides(v *Overrides) *ImageSetProperties {
+	s.Overrides = v
 	return s
 }
 
@@ -5005,12 +5111,76 @@ func (s *ListTagsForResourceOutput) SetTags(v map[string]*string) *ListTagsForRe
 	return s
 }
 
+// Contains copiable Attributes structure and wraps information related to specific
+// copy use cases. For example, when copying subsets.
+type MetadataCopies struct {
+	_ struct{} `type:"structure"`
+
+	// The JSON string used to specify a subset of SOP Instances to copy from source
+	// to destination image set.
+	//
+	// CopiableAttributes is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by MetadataCopies's
+	// String and GoString methods.
+	//
+	// CopiableAttributes is a required field
+	CopiableAttributes *string `locationName:"copiableAttributes" min:"1" type:"string" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MetadataCopies) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MetadataCopies) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MetadataCopies) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MetadataCopies"}
+	if s.CopiableAttributes == nil {
+		invalidParams.Add(request.NewErrParamRequired("CopiableAttributes"))
+	}
+	if s.CopiableAttributes != nil && len(*s.CopiableAttributes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CopiableAttributes", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCopiableAttributes sets the CopiableAttributes field's value.
+func (s *MetadataCopies) SetCopiableAttributes(v string) *MetadataCopies {
+	s.CopiableAttributes = &v
+	return s
+}
+
 // Contains DICOMUpdates.
 type MetadataUpdates struct {
 	_ struct{} `type:"structure"`
 
 	// The object containing removableAttributes and updatableAttributes.
 	DICOMUpdates *DICOMUpdates `type:"structure"`
+
+	// Specifies the previous image set version ID to revert the current image set
+	// back to.
+	//
+	// You must provide either revertToVersionId or DICOMUpdates in your request.
+	// A ValidationException error is thrown if both parameters are provided at
+	// the same time.
+	RevertToVersionId *string `locationName:"revertToVersionId" type:"string"`
 }
 
 // String returns the string representation.
@@ -5049,6 +5219,46 @@ func (s *MetadataUpdates) Validate() error {
 // SetDICOMUpdates sets the DICOMUpdates field's value.
 func (s *MetadataUpdates) SetDICOMUpdates(v *DICOMUpdates) *MetadataUpdates {
 	s.DICOMUpdates = v
+	return s
+}
+
+// SetRevertToVersionId sets the RevertToVersionId field's value.
+func (s *MetadataUpdates) SetRevertToVersionId(v string) *MetadataUpdates {
+	s.RevertToVersionId = &v
+	return s
+}
+
+// Specifies the overrides used in image set modification calls to CopyImageSet
+// and UpdateImageSetMetadata.
+type Overrides struct {
+	_ struct{} `type:"structure"`
+
+	// Setting this flag will force the CopyImageSet and UpdateImageSetMetadata
+	// operations, even if Patient, Study, or Series level metadata are mismatched.
+	Forced *bool `locationName:"forced" type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Overrides) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Overrides) GoString() string {
+	return s.String()
+}
+
+// SetForced sets the Forced field's value.
+func (s *Overrides) SetForced(v bool) *Overrides {
+	s.Forced = &v
 	return s
 }
 
@@ -5137,6 +5347,13 @@ type SearchByAttributeValue struct {
 	// String and GoString methods.
 	DICOMPatientId *string `type:"string" sensitive:"true"`
 
+	// The Series Instance UID input for search.
+	//
+	// DICOMSeriesInstanceUID is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SearchByAttributeValue's
+	// String and GoString methods.
+	DICOMSeriesInstanceUID *string `type:"string" sensitive:"true"`
+
 	// The aggregated structure containing DICOM study date and study time for search.
 	DICOMStudyDateAndTime *DICOMStudyDateAndTime `type:"structure"`
 
@@ -5153,6 +5370,9 @@ type SearchByAttributeValue struct {
 	// replaced with "sensitive" in string returned by SearchByAttributeValue's
 	// String and GoString methods.
 	DICOMStudyInstanceUID *string `type:"string" sensitive:"true"`
+
+	// The timestamp input for search.
+	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 }
 
 // String returns the string representation.
@@ -5206,6 +5426,12 @@ func (s *SearchByAttributeValue) SetDICOMPatientId(v string) *SearchByAttributeV
 	return s
 }
 
+// SetDICOMSeriesInstanceUID sets the DICOMSeriesInstanceUID field's value.
+func (s *SearchByAttributeValue) SetDICOMSeriesInstanceUID(v string) *SearchByAttributeValue {
+	s.DICOMSeriesInstanceUID = &v
+	return s
+}
+
 // SetDICOMStudyDateAndTime sets the DICOMStudyDateAndTime field's value.
 func (s *SearchByAttributeValue) SetDICOMStudyDateAndTime(v *DICOMStudyDateAndTime) *SearchByAttributeValue {
 	s.DICOMStudyDateAndTime = v
@@ -5224,12 +5450,21 @@ func (s *SearchByAttributeValue) SetDICOMStudyInstanceUID(v string) *SearchByAtt
 	return s
 }
 
+// SetUpdatedAt sets the UpdatedAt field's value.
+func (s *SearchByAttributeValue) SetUpdatedAt(v time.Time) *SearchByAttributeValue {
+	s.UpdatedAt = &v
+	return s
+}
+
 // The search criteria.
 type SearchCriteria struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
 	// The filters for the search criteria.
 	Filters []*SearchFilter `locationName:"filters" min:"1" type:"list"`
+
+	// The sort input for search criteria.
+	Sort *Sort `locationName:"sort" type:"structure"`
 }
 
 // String returns the string representation.
@@ -5266,6 +5501,11 @@ func (s *SearchCriteria) Validate() error {
 			}
 		}
 	}
+	if s.Sort != nil {
+		if err := s.Sort.Validate(); err != nil {
+			invalidParams.AddNested("Sort", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -5276,6 +5516,12 @@ func (s *SearchCriteria) Validate() error {
 // SetFilters sets the Filters field's value.
 func (s *SearchCriteria) SetFilters(v []*SearchFilter) *SearchCriteria {
 	s.Filters = v
+	return s
+}
+
+// SetSort sets the Sort field's value.
+func (s *SearchCriteria) SetSort(v *Sort) *SearchCriteria {
+	s.Sort = v
 	return s
 }
 
@@ -5456,6 +5702,9 @@ type SearchImageSetsOutput struct {
 
 	// The token for pagination results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+
+	// The sort order for image set search results.
+	Sort *Sort `locationName:"sort" type:"structure"`
 }
 
 // String returns the string representation.
@@ -5485,6 +5734,12 @@ func (s *SearchImageSetsOutput) SetImageSetsMetadataSummaries(v []*ImageSetsMeta
 // SetNextToken sets the NextToken field's value.
 func (s *SearchImageSetsOutput) SetNextToken(v string) *SearchImageSetsOutput {
 	s.NextToken = &v
+	return s
+}
+
+// SetSort sets the Sort field's value.
+func (s *SearchImageSetsOutput) SetSort(v *Sort) *SearchImageSetsOutput {
+	s.Sort = v
 	return s
 }
 
@@ -5552,6 +5807,67 @@ func (s *ServiceQuotaExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// Sort search results.
+type Sort struct {
+	_ struct{} `type:"structure"`
+
+	// The sort field for search criteria.
+	//
+	// SortField is a required field
+	SortField *string `locationName:"sortField" type:"string" required:"true" enum:"SortField"`
+
+	// The sort order for search criteria.
+	//
+	// SortOrder is a required field
+	SortOrder *string `locationName:"sortOrder" type:"string" required:"true" enum:"SortOrder"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Sort) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Sort) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *Sort) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "Sort"}
+	if s.SortField == nil {
+		invalidParams.Add(request.NewErrParamRequired("SortField"))
+	}
+	if s.SortOrder == nil {
+		invalidParams.Add(request.NewErrParamRequired("SortOrder"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSortField sets the SortField field's value.
+func (s *Sort) SetSortField(v string) *Sort {
+	s.SortField = &v
+	return s
+}
+
+// SetSortOrder sets the SortOrder field's value.
+func (s *Sort) SetSortOrder(v string) *Sort {
+	s.SortOrder = &v
+	return s
+}
+
 type StartDICOMImportJobInput struct {
 	_ struct{} `type:"structure"`
 
@@ -5568,6 +5884,9 @@ type StartDICOMImportJobInput struct {
 	//
 	// DatastoreId is a required field
 	DatastoreId *string `location:"uri" locationName:"datastoreId" type:"string" required:"true"`
+
+	// The account ID of the source S3 bucket owner.
+	InputOwnerAccountId *string `locationName:"inputOwnerAccountId" min:"12" type:"string"`
 
 	// The input prefix path for the S3 bucket that contains the DICOM files to
 	// be imported.
@@ -5621,6 +5940,9 @@ func (s *StartDICOMImportJobInput) Validate() error {
 	if s.DatastoreId != nil && len(*s.DatastoreId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DatastoreId", 1))
 	}
+	if s.InputOwnerAccountId != nil && len(*s.InputOwnerAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("InputOwnerAccountId", 12))
+	}
 	if s.InputS3Uri == nil {
 		invalidParams.Add(request.NewErrParamRequired("InputS3Uri"))
 	}
@@ -5658,6 +5980,12 @@ func (s *StartDICOMImportJobInput) SetDataAccessRoleArn(v string) *StartDICOMImp
 // SetDatastoreId sets the DatastoreId field's value.
 func (s *StartDICOMImportJobInput) SetDatastoreId(v string) *StartDICOMImportJobInput {
 	s.DatastoreId = &v
+	return s
+}
+
+// SetInputOwnerAccountId sets the InputOwnerAccountId field's value.
+func (s *StartDICOMImportJobInput) SetInputOwnerAccountId(v string) *StartDICOMImportJobInput {
+	s.InputOwnerAccountId = &v
 	return s
 }
 
@@ -5989,6 +6317,15 @@ type UpdateImageSetMetadataInput struct {
 	// DatastoreId is a required field
 	DatastoreId *string `location:"uri" locationName:"datastoreId" type:"string" required:"true"`
 
+	// Setting this flag will force the UpdateImageSetMetadata operation for the
+	// following attributes:
+	//
+	//    * Tag.StudyInstanceUID, Tag.SeriesInstanceUID, Tag.SOPInstanceUID, and
+	//    Tag.StudyID
+	//
+	//    * Adding, removing, or updating private tags for an individual SOP Instance
+	Force *bool `location:"querystring" locationName:"force" type:"boolean"`
+
 	// The image set identifier.
 	//
 	// ImageSetId is a required field
@@ -6059,6 +6396,12 @@ func (s *UpdateImageSetMetadataInput) Validate() error {
 // SetDatastoreId sets the DatastoreId field's value.
 func (s *UpdateImageSetMetadataInput) SetDatastoreId(v string) *UpdateImageSetMetadataInput {
 	s.DatastoreId = &v
+	return s
+}
+
+// SetForce sets the Force field's value.
+func (s *UpdateImageSetMetadataInput) SetForce(v bool) *UpdateImageSetMetadataInput {
+	s.Force = &v
 	return s
 }
 
@@ -6379,5 +6722,41 @@ func Operator_Values() []string {
 	return []string{
 		OperatorEqual,
 		OperatorBetween,
+	}
+}
+
+const (
+	// SortFieldUpdatedAt is a SortField enum value
+	SortFieldUpdatedAt = "updatedAt"
+
+	// SortFieldCreatedAt is a SortField enum value
+	SortFieldCreatedAt = "createdAt"
+
+	// SortFieldDicomstudyDateAndTime is a SortField enum value
+	SortFieldDicomstudyDateAndTime = "DICOMStudyDateAndTime"
+)
+
+// SortField_Values returns all elements of the SortField enum
+func SortField_Values() []string {
+	return []string{
+		SortFieldUpdatedAt,
+		SortFieldCreatedAt,
+		SortFieldDicomstudyDateAndTime,
+	}
+}
+
+const (
+	// SortOrderAsc is a SortOrder enum value
+	SortOrderAsc = "ASC"
+
+	// SortOrderDesc is a SortOrder enum value
+	SortOrderDesc = "DESC"
+)
+
+// SortOrder_Values returns all elements of the SortOrder enum
+func SortOrder_Values() []string {
+	return []string{
+		SortOrderAsc,
+		SortOrderDesc,
 	}
 }

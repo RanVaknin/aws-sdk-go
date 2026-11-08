@@ -25,6 +25,9 @@
 //   - UpdateRepositoryDescription, which sets or updates the description of
 //     the repository.
 //
+//   - UpdateRepositoryEncryptionKey, which updates the Key Management Service
+//     encryption key used to encrypt and decrypt a repository.
+//
 //   - UpdateRepositoryName, which changes the name of the repository. If you
 //     change the name of a repository, no other users of that repository can
 //     access it until you send them the new HTTPS or SSH URL to use.
@@ -286,4 +289,7 @@
 // See the AWS CodeCommit client CodeCommit for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/codecommit/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package codecommit

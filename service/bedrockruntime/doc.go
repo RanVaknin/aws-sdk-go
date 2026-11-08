@@ -3,7 +3,7 @@
 // Package bedrockruntime provides the client and types for making API
 // requests to Amazon Bedrock Runtime.
 //
-// Describes the API operations for running inference using Bedrock models.
+// Describes the API operations for running inference using Amazon Bedrock models.
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30 for more information on this service.
 //
@@ -25,4 +25,7 @@
 // See the Amazon Bedrock Runtime client BedrockRuntime for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/bedrockruntime/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package bedrockruntime

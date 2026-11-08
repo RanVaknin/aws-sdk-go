@@ -68,6 +68,14 @@ type DataZoneAPI interface {
 	AcceptSubscriptionRequestWithContext(aws.Context, *datazone.AcceptSubscriptionRequestInput, ...request.Option) (*datazone.AcceptSubscriptionRequestOutput, error)
 	AcceptSubscriptionRequestRequest(*datazone.AcceptSubscriptionRequestInput) (*request.Request, *datazone.AcceptSubscriptionRequestOutput)
 
+	AssociateEnvironmentRole(*datazone.AssociateEnvironmentRoleInput) (*datazone.AssociateEnvironmentRoleOutput, error)
+	AssociateEnvironmentRoleWithContext(aws.Context, *datazone.AssociateEnvironmentRoleInput, ...request.Option) (*datazone.AssociateEnvironmentRoleOutput, error)
+	AssociateEnvironmentRoleRequest(*datazone.AssociateEnvironmentRoleInput) (*request.Request, *datazone.AssociateEnvironmentRoleOutput)
+
+	CancelMetadataGenerationRun(*datazone.CancelMetadataGenerationRunInput) (*datazone.CancelMetadataGenerationRunOutput, error)
+	CancelMetadataGenerationRunWithContext(aws.Context, *datazone.CancelMetadataGenerationRunInput, ...request.Option) (*datazone.CancelMetadataGenerationRunOutput, error)
+	CancelMetadataGenerationRunRequest(*datazone.CancelMetadataGenerationRunInput) (*request.Request, *datazone.CancelMetadataGenerationRunOutput)
+
 	CancelSubscription(*datazone.CancelSubscriptionInput) (*datazone.CancelSubscriptionOutput, error)
 	CancelSubscriptionWithContext(aws.Context, *datazone.CancelSubscriptionInput, ...request.Option) (*datazone.CancelSubscriptionOutput, error)
 	CancelSubscriptionRequest(*datazone.CancelSubscriptionInput) (*request.Request, *datazone.CancelSubscriptionOutput)
@@ -75,6 +83,10 @@ type DataZoneAPI interface {
 	CreateAsset(*datazone.CreateAssetInput) (*datazone.CreateAssetOutput, error)
 	CreateAssetWithContext(aws.Context, *datazone.CreateAssetInput, ...request.Option) (*datazone.CreateAssetOutput, error)
 	CreateAssetRequest(*datazone.CreateAssetInput) (*request.Request, *datazone.CreateAssetOutput)
+
+	CreateAssetFilter(*datazone.CreateAssetFilterInput) (*datazone.CreateAssetFilterOutput, error)
+	CreateAssetFilterWithContext(aws.Context, *datazone.CreateAssetFilterInput, ...request.Option) (*datazone.CreateAssetFilterOutput, error)
+	CreateAssetFilterRequest(*datazone.CreateAssetFilterInput) (*request.Request, *datazone.CreateAssetFilterOutput)
 
 	CreateAssetRevision(*datazone.CreateAssetRevisionInput) (*datazone.CreateAssetRevisionOutput, error)
 	CreateAssetRevisionWithContext(aws.Context, *datazone.CreateAssetRevisionInput, ...request.Option) (*datazone.CreateAssetRevisionOutput, error)
@@ -95,6 +107,10 @@ type DataZoneAPI interface {
 	CreateEnvironment(*datazone.CreateEnvironmentInput) (*datazone.CreateEnvironmentOutput, error)
 	CreateEnvironmentWithContext(aws.Context, *datazone.CreateEnvironmentInput, ...request.Option) (*datazone.CreateEnvironmentOutput, error)
 	CreateEnvironmentRequest(*datazone.CreateEnvironmentInput) (*request.Request, *datazone.CreateEnvironmentOutput)
+
+	CreateEnvironmentAction(*datazone.CreateEnvironmentActionInput) (*datazone.CreateEnvironmentActionOutput, error)
+	CreateEnvironmentActionWithContext(aws.Context, *datazone.CreateEnvironmentActionInput, ...request.Option) (*datazone.CreateEnvironmentActionOutput, error)
+	CreateEnvironmentActionRequest(*datazone.CreateEnvironmentActionInput) (*request.Request, *datazone.CreateEnvironmentActionOutput)
 
 	CreateEnvironmentProfile(*datazone.CreateEnvironmentProfileInput) (*datazone.CreateEnvironmentProfileOutput, error)
 	CreateEnvironmentProfileWithContext(aws.Context, *datazone.CreateEnvironmentProfileInput, ...request.Option) (*datazone.CreateEnvironmentProfileOutput, error)
@@ -148,6 +164,10 @@ type DataZoneAPI interface {
 	DeleteAssetWithContext(aws.Context, *datazone.DeleteAssetInput, ...request.Option) (*datazone.DeleteAssetOutput, error)
 	DeleteAssetRequest(*datazone.DeleteAssetInput) (*request.Request, *datazone.DeleteAssetOutput)
 
+	DeleteAssetFilter(*datazone.DeleteAssetFilterInput) (*datazone.DeleteAssetFilterOutput, error)
+	DeleteAssetFilterWithContext(aws.Context, *datazone.DeleteAssetFilterInput, ...request.Option) (*datazone.DeleteAssetFilterOutput, error)
+	DeleteAssetFilterRequest(*datazone.DeleteAssetFilterInput) (*request.Request, *datazone.DeleteAssetFilterOutput)
+
 	DeleteAssetType(*datazone.DeleteAssetTypeInput) (*datazone.DeleteAssetTypeOutput, error)
 	DeleteAssetTypeWithContext(aws.Context, *datazone.DeleteAssetTypeInput, ...request.Option) (*datazone.DeleteAssetTypeOutput, error)
 	DeleteAssetTypeRequest(*datazone.DeleteAssetTypeInput) (*request.Request, *datazone.DeleteAssetTypeOutput)
@@ -163,6 +183,10 @@ type DataZoneAPI interface {
 	DeleteEnvironment(*datazone.DeleteEnvironmentInput) (*datazone.DeleteEnvironmentOutput, error)
 	DeleteEnvironmentWithContext(aws.Context, *datazone.DeleteEnvironmentInput, ...request.Option) (*datazone.DeleteEnvironmentOutput, error)
 	DeleteEnvironmentRequest(*datazone.DeleteEnvironmentInput) (*request.Request, *datazone.DeleteEnvironmentOutput)
+
+	DeleteEnvironmentAction(*datazone.DeleteEnvironmentActionInput) (*datazone.DeleteEnvironmentActionOutput, error)
+	DeleteEnvironmentActionWithContext(aws.Context, *datazone.DeleteEnvironmentActionInput, ...request.Option) (*datazone.DeleteEnvironmentActionOutput, error)
+	DeleteEnvironmentActionRequest(*datazone.DeleteEnvironmentActionInput) (*request.Request, *datazone.DeleteEnvironmentActionOutput)
 
 	DeleteEnvironmentBlueprintConfiguration(*datazone.DeleteEnvironmentBlueprintConfigurationInput) (*datazone.DeleteEnvironmentBlueprintConfigurationOutput, error)
 	DeleteEnvironmentBlueprintConfigurationWithContext(aws.Context, *datazone.DeleteEnvironmentBlueprintConfigurationInput, ...request.Option) (*datazone.DeleteEnvironmentBlueprintConfigurationOutput, error)
@@ -208,9 +232,21 @@ type DataZoneAPI interface {
 	DeleteSubscriptionTargetWithContext(aws.Context, *datazone.DeleteSubscriptionTargetInput, ...request.Option) (*datazone.DeleteSubscriptionTargetOutput, error)
 	DeleteSubscriptionTargetRequest(*datazone.DeleteSubscriptionTargetInput) (*request.Request, *datazone.DeleteSubscriptionTargetOutput)
 
+	DeleteTimeSeriesDataPoints(*datazone.DeleteTimeSeriesDataPointsInput) (*datazone.DeleteTimeSeriesDataPointsOutput, error)
+	DeleteTimeSeriesDataPointsWithContext(aws.Context, *datazone.DeleteTimeSeriesDataPointsInput, ...request.Option) (*datazone.DeleteTimeSeriesDataPointsOutput, error)
+	DeleteTimeSeriesDataPointsRequest(*datazone.DeleteTimeSeriesDataPointsInput) (*request.Request, *datazone.DeleteTimeSeriesDataPointsOutput)
+
+	DisassociateEnvironmentRole(*datazone.DisassociateEnvironmentRoleInput) (*datazone.DisassociateEnvironmentRoleOutput, error)
+	DisassociateEnvironmentRoleWithContext(aws.Context, *datazone.DisassociateEnvironmentRoleInput, ...request.Option) (*datazone.DisassociateEnvironmentRoleOutput, error)
+	DisassociateEnvironmentRoleRequest(*datazone.DisassociateEnvironmentRoleInput) (*request.Request, *datazone.DisassociateEnvironmentRoleOutput)
+
 	GetAsset(*datazone.GetAssetInput) (*datazone.GetAssetOutput, error)
 	GetAssetWithContext(aws.Context, *datazone.GetAssetInput, ...request.Option) (*datazone.GetAssetOutput, error)
 	GetAssetRequest(*datazone.GetAssetInput) (*request.Request, *datazone.GetAssetOutput)
+
+	GetAssetFilter(*datazone.GetAssetFilterInput) (*datazone.GetAssetFilterOutput, error)
+	GetAssetFilterWithContext(aws.Context, *datazone.GetAssetFilterInput, ...request.Option) (*datazone.GetAssetFilterOutput, error)
+	GetAssetFilterRequest(*datazone.GetAssetFilterInput) (*request.Request, *datazone.GetAssetFilterOutput)
 
 	GetAssetType(*datazone.GetAssetTypeInput) (*datazone.GetAssetTypeOutput, error)
 	GetAssetTypeWithContext(aws.Context, *datazone.GetAssetTypeInput, ...request.Option) (*datazone.GetAssetTypeOutput, error)
@@ -232,6 +268,10 @@ type DataZoneAPI interface {
 	GetEnvironmentWithContext(aws.Context, *datazone.GetEnvironmentInput, ...request.Option) (*datazone.GetEnvironmentOutput, error)
 	GetEnvironmentRequest(*datazone.GetEnvironmentInput) (*request.Request, *datazone.GetEnvironmentOutput)
 
+	GetEnvironmentAction(*datazone.GetEnvironmentActionInput) (*datazone.GetEnvironmentActionOutput, error)
+	GetEnvironmentActionWithContext(aws.Context, *datazone.GetEnvironmentActionInput, ...request.Option) (*datazone.GetEnvironmentActionOutput, error)
+	GetEnvironmentActionRequest(*datazone.GetEnvironmentActionInput) (*request.Request, *datazone.GetEnvironmentActionOutput)
+
 	GetEnvironmentBlueprint(*datazone.GetEnvironmentBlueprintInput) (*datazone.GetEnvironmentBlueprintOutput, error)
 	GetEnvironmentBlueprintWithContext(aws.Context, *datazone.GetEnvironmentBlueprintInput, ...request.Option) (*datazone.GetEnvironmentBlueprintOutput, error)
 	GetEnvironmentBlueprintRequest(*datazone.GetEnvironmentBlueprintInput) (*request.Request, *datazone.GetEnvironmentBlueprintOutput)
@@ -239,6 +279,10 @@ type DataZoneAPI interface {
 	GetEnvironmentBlueprintConfiguration(*datazone.GetEnvironmentBlueprintConfigurationInput) (*datazone.GetEnvironmentBlueprintConfigurationOutput, error)
 	GetEnvironmentBlueprintConfigurationWithContext(aws.Context, *datazone.GetEnvironmentBlueprintConfigurationInput, ...request.Option) (*datazone.GetEnvironmentBlueprintConfigurationOutput, error)
 	GetEnvironmentBlueprintConfigurationRequest(*datazone.GetEnvironmentBlueprintConfigurationInput) (*request.Request, *datazone.GetEnvironmentBlueprintConfigurationOutput)
+
+	GetEnvironmentCredentials(*datazone.GetEnvironmentCredentialsInput) (*datazone.GetEnvironmentCredentialsOutput, error)
+	GetEnvironmentCredentialsWithContext(aws.Context, *datazone.GetEnvironmentCredentialsInput, ...request.Option) (*datazone.GetEnvironmentCredentialsOutput, error)
+	GetEnvironmentCredentialsRequest(*datazone.GetEnvironmentCredentialsInput) (*request.Request, *datazone.GetEnvironmentCredentialsOutput)
 
 	GetEnvironmentProfile(*datazone.GetEnvironmentProfileInput) (*datazone.GetEnvironmentProfileOutput, error)
 	GetEnvironmentProfileWithContext(aws.Context, *datazone.GetEnvironmentProfileInput, ...request.Option) (*datazone.GetEnvironmentProfileOutput, error)
@@ -264,9 +308,17 @@ type DataZoneAPI interface {
 	GetIamPortalLoginUrlWithContext(aws.Context, *datazone.GetIamPortalLoginUrlInput, ...request.Option) (*datazone.GetIamPortalLoginUrlOutput, error)
 	GetIamPortalLoginUrlRequest(*datazone.GetIamPortalLoginUrlInput) (*request.Request, *datazone.GetIamPortalLoginUrlOutput)
 
+	GetLineageNode(*datazone.GetLineageNodeInput) (*datazone.GetLineageNodeOutput, error)
+	GetLineageNodeWithContext(aws.Context, *datazone.GetLineageNodeInput, ...request.Option) (*datazone.GetLineageNodeOutput, error)
+	GetLineageNodeRequest(*datazone.GetLineageNodeInput) (*request.Request, *datazone.GetLineageNodeOutput)
+
 	GetListing(*datazone.GetListingInput) (*datazone.GetListingOutput, error)
 	GetListingWithContext(aws.Context, *datazone.GetListingInput, ...request.Option) (*datazone.GetListingOutput, error)
 	GetListingRequest(*datazone.GetListingInput) (*request.Request, *datazone.GetListingOutput)
+
+	GetMetadataGenerationRun(*datazone.GetMetadataGenerationRunInput) (*datazone.GetMetadataGenerationRunOutput, error)
+	GetMetadataGenerationRunWithContext(aws.Context, *datazone.GetMetadataGenerationRunInput, ...request.Option) (*datazone.GetMetadataGenerationRunOutput, error)
+	GetMetadataGenerationRunRequest(*datazone.GetMetadataGenerationRunInput) (*request.Request, *datazone.GetMetadataGenerationRunOutput)
 
 	GetProject(*datazone.GetProjectInput) (*datazone.GetProjectOutput, error)
 	GetProjectWithContext(aws.Context, *datazone.GetProjectInput, ...request.Option) (*datazone.GetProjectOutput, error)
@@ -288,9 +340,20 @@ type DataZoneAPI interface {
 	GetSubscriptionTargetWithContext(aws.Context, *datazone.GetSubscriptionTargetInput, ...request.Option) (*datazone.GetSubscriptionTargetOutput, error)
 	GetSubscriptionTargetRequest(*datazone.GetSubscriptionTargetInput) (*request.Request, *datazone.GetSubscriptionTargetOutput)
 
+	GetTimeSeriesDataPoint(*datazone.GetTimeSeriesDataPointInput) (*datazone.GetTimeSeriesDataPointOutput, error)
+	GetTimeSeriesDataPointWithContext(aws.Context, *datazone.GetTimeSeriesDataPointInput, ...request.Option) (*datazone.GetTimeSeriesDataPointOutput, error)
+	GetTimeSeriesDataPointRequest(*datazone.GetTimeSeriesDataPointInput) (*request.Request, *datazone.GetTimeSeriesDataPointOutput)
+
 	GetUserProfile(*datazone.GetUserProfileInput) (*datazone.GetUserProfileOutput, error)
 	GetUserProfileWithContext(aws.Context, *datazone.GetUserProfileInput, ...request.Option) (*datazone.GetUserProfileOutput, error)
 	GetUserProfileRequest(*datazone.GetUserProfileInput) (*request.Request, *datazone.GetUserProfileOutput)
+
+	ListAssetFilters(*datazone.ListAssetFiltersInput) (*datazone.ListAssetFiltersOutput, error)
+	ListAssetFiltersWithContext(aws.Context, *datazone.ListAssetFiltersInput, ...request.Option) (*datazone.ListAssetFiltersOutput, error)
+	ListAssetFiltersRequest(*datazone.ListAssetFiltersInput) (*request.Request, *datazone.ListAssetFiltersOutput)
+
+	ListAssetFiltersPages(*datazone.ListAssetFiltersInput, func(*datazone.ListAssetFiltersOutput, bool) bool) error
+	ListAssetFiltersPagesWithContext(aws.Context, *datazone.ListAssetFiltersInput, func(*datazone.ListAssetFiltersOutput, bool) bool, ...request.Option) error
 
 	ListAssetRevisions(*datazone.ListAssetRevisionsInput) (*datazone.ListAssetRevisionsOutput, error)
 	ListAssetRevisionsWithContext(aws.Context, *datazone.ListAssetRevisionsInput, ...request.Option) (*datazone.ListAssetRevisionsOutput, error)
@@ -327,6 +390,13 @@ type DataZoneAPI interface {
 	ListDomainsPages(*datazone.ListDomainsInput, func(*datazone.ListDomainsOutput, bool) bool) error
 	ListDomainsPagesWithContext(aws.Context, *datazone.ListDomainsInput, func(*datazone.ListDomainsOutput, bool) bool, ...request.Option) error
 
+	ListEnvironmentActions(*datazone.ListEnvironmentActionsInput) (*datazone.ListEnvironmentActionsOutput, error)
+	ListEnvironmentActionsWithContext(aws.Context, *datazone.ListEnvironmentActionsInput, ...request.Option) (*datazone.ListEnvironmentActionsOutput, error)
+	ListEnvironmentActionsRequest(*datazone.ListEnvironmentActionsInput) (*request.Request, *datazone.ListEnvironmentActionsOutput)
+
+	ListEnvironmentActionsPages(*datazone.ListEnvironmentActionsInput, func(*datazone.ListEnvironmentActionsOutput, bool) bool) error
+	ListEnvironmentActionsPagesWithContext(aws.Context, *datazone.ListEnvironmentActionsInput, func(*datazone.ListEnvironmentActionsOutput, bool) bool, ...request.Option) error
+
 	ListEnvironmentBlueprintConfigurations(*datazone.ListEnvironmentBlueprintConfigurationsInput) (*datazone.ListEnvironmentBlueprintConfigurationsOutput, error)
 	ListEnvironmentBlueprintConfigurationsWithContext(aws.Context, *datazone.ListEnvironmentBlueprintConfigurationsInput, ...request.Option) (*datazone.ListEnvironmentBlueprintConfigurationsOutput, error)
 	ListEnvironmentBlueprintConfigurationsRequest(*datazone.ListEnvironmentBlueprintConfigurationsInput) (*request.Request, *datazone.ListEnvironmentBlueprintConfigurationsOutput)
@@ -354,6 +424,20 @@ type DataZoneAPI interface {
 
 	ListEnvironmentsPages(*datazone.ListEnvironmentsInput, func(*datazone.ListEnvironmentsOutput, bool) bool) error
 	ListEnvironmentsPagesWithContext(aws.Context, *datazone.ListEnvironmentsInput, func(*datazone.ListEnvironmentsOutput, bool) bool, ...request.Option) error
+
+	ListLineageNodeHistory(*datazone.ListLineageNodeHistoryInput) (*datazone.ListLineageNodeHistoryOutput, error)
+	ListLineageNodeHistoryWithContext(aws.Context, *datazone.ListLineageNodeHistoryInput, ...request.Option) (*datazone.ListLineageNodeHistoryOutput, error)
+	ListLineageNodeHistoryRequest(*datazone.ListLineageNodeHistoryInput) (*request.Request, *datazone.ListLineageNodeHistoryOutput)
+
+	ListLineageNodeHistoryPages(*datazone.ListLineageNodeHistoryInput, func(*datazone.ListLineageNodeHistoryOutput, bool) bool) error
+	ListLineageNodeHistoryPagesWithContext(aws.Context, *datazone.ListLineageNodeHistoryInput, func(*datazone.ListLineageNodeHistoryOutput, bool) bool, ...request.Option) error
+
+	ListMetadataGenerationRuns(*datazone.ListMetadataGenerationRunsInput) (*datazone.ListMetadataGenerationRunsOutput, error)
+	ListMetadataGenerationRunsWithContext(aws.Context, *datazone.ListMetadataGenerationRunsInput, ...request.Option) (*datazone.ListMetadataGenerationRunsOutput, error)
+	ListMetadataGenerationRunsRequest(*datazone.ListMetadataGenerationRunsInput) (*request.Request, *datazone.ListMetadataGenerationRunsOutput)
+
+	ListMetadataGenerationRunsPages(*datazone.ListMetadataGenerationRunsInput, func(*datazone.ListMetadataGenerationRunsOutput, bool) bool) error
+	ListMetadataGenerationRunsPagesWithContext(aws.Context, *datazone.ListMetadataGenerationRunsInput, func(*datazone.ListMetadataGenerationRunsOutput, bool) bool, ...request.Option) error
 
 	ListNotifications(*datazone.ListNotificationsInput) (*datazone.ListNotificationsOutput, error)
 	ListNotificationsWithContext(aws.Context, *datazone.ListNotificationsInput, ...request.Option) (*datazone.ListNotificationsOutput, error)
@@ -407,6 +491,21 @@ type DataZoneAPI interface {
 	ListTagsForResource(*datazone.ListTagsForResourceInput) (*datazone.ListTagsForResourceOutput, error)
 	ListTagsForResourceWithContext(aws.Context, *datazone.ListTagsForResourceInput, ...request.Option) (*datazone.ListTagsForResourceOutput, error)
 	ListTagsForResourceRequest(*datazone.ListTagsForResourceInput) (*request.Request, *datazone.ListTagsForResourceOutput)
+
+	ListTimeSeriesDataPoints(*datazone.ListTimeSeriesDataPointsInput) (*datazone.ListTimeSeriesDataPointsOutput, error)
+	ListTimeSeriesDataPointsWithContext(aws.Context, *datazone.ListTimeSeriesDataPointsInput, ...request.Option) (*datazone.ListTimeSeriesDataPointsOutput, error)
+	ListTimeSeriesDataPointsRequest(*datazone.ListTimeSeriesDataPointsInput) (*request.Request, *datazone.ListTimeSeriesDataPointsOutput)
+
+	ListTimeSeriesDataPointsPages(*datazone.ListTimeSeriesDataPointsInput, func(*datazone.ListTimeSeriesDataPointsOutput, bool) bool) error
+	ListTimeSeriesDataPointsPagesWithContext(aws.Context, *datazone.ListTimeSeriesDataPointsInput, func(*datazone.ListTimeSeriesDataPointsOutput, bool) bool, ...request.Option) error
+
+	PostLineageEvent(*datazone.PostLineageEventInput) (*datazone.PostLineageEventOutput, error)
+	PostLineageEventWithContext(aws.Context, *datazone.PostLineageEventInput, ...request.Option) (*datazone.PostLineageEventOutput, error)
+	PostLineageEventRequest(*datazone.PostLineageEventInput) (*request.Request, *datazone.PostLineageEventOutput)
+
+	PostTimeSeriesDataPoints(*datazone.PostTimeSeriesDataPointsInput) (*datazone.PostTimeSeriesDataPointsOutput, error)
+	PostTimeSeriesDataPointsWithContext(aws.Context, *datazone.PostTimeSeriesDataPointsInput, ...request.Option) (*datazone.PostTimeSeriesDataPointsOutput, error)
+	PostTimeSeriesDataPointsRequest(*datazone.PostTimeSeriesDataPointsInput) (*request.Request, *datazone.PostTimeSeriesDataPointsOutput)
 
 	PutEnvironmentBlueprintConfiguration(*datazone.PutEnvironmentBlueprintConfigurationInput) (*datazone.PutEnvironmentBlueprintConfigurationOutput, error)
 	PutEnvironmentBlueprintConfigurationWithContext(aws.Context, *datazone.PutEnvironmentBlueprintConfigurationInput, ...request.Option) (*datazone.PutEnvironmentBlueprintConfigurationOutput, error)
@@ -463,6 +562,10 @@ type DataZoneAPI interface {
 	StartDataSourceRunWithContext(aws.Context, *datazone.StartDataSourceRunInput, ...request.Option) (*datazone.StartDataSourceRunOutput, error)
 	StartDataSourceRunRequest(*datazone.StartDataSourceRunInput) (*request.Request, *datazone.StartDataSourceRunOutput)
 
+	StartMetadataGenerationRun(*datazone.StartMetadataGenerationRunInput) (*datazone.StartMetadataGenerationRunOutput, error)
+	StartMetadataGenerationRunWithContext(aws.Context, *datazone.StartMetadataGenerationRunInput, ...request.Option) (*datazone.StartMetadataGenerationRunOutput, error)
+	StartMetadataGenerationRunRequest(*datazone.StartMetadataGenerationRunInput) (*request.Request, *datazone.StartMetadataGenerationRunOutput)
+
 	TagResource(*datazone.TagResourceInput) (*datazone.TagResourceOutput, error)
 	TagResourceWithContext(aws.Context, *datazone.TagResourceInput, ...request.Option) (*datazone.TagResourceOutput, error)
 	TagResourceRequest(*datazone.TagResourceInput) (*request.Request, *datazone.TagResourceOutput)
@@ -470,6 +573,10 @@ type DataZoneAPI interface {
 	UntagResource(*datazone.UntagResourceInput) (*datazone.UntagResourceOutput, error)
 	UntagResourceWithContext(aws.Context, *datazone.UntagResourceInput, ...request.Option) (*datazone.UntagResourceOutput, error)
 	UntagResourceRequest(*datazone.UntagResourceInput) (*request.Request, *datazone.UntagResourceOutput)
+
+	UpdateAssetFilter(*datazone.UpdateAssetFilterInput) (*datazone.UpdateAssetFilterOutput, error)
+	UpdateAssetFilterWithContext(aws.Context, *datazone.UpdateAssetFilterInput, ...request.Option) (*datazone.UpdateAssetFilterOutput, error)
+	UpdateAssetFilterRequest(*datazone.UpdateAssetFilterInput) (*request.Request, *datazone.UpdateAssetFilterOutput)
 
 	UpdateDataSource(*datazone.UpdateDataSourceInput) (*datazone.UpdateDataSourceOutput, error)
 	UpdateDataSourceWithContext(aws.Context, *datazone.UpdateDataSourceInput, ...request.Option) (*datazone.UpdateDataSourceOutput, error)
@@ -482,6 +589,10 @@ type DataZoneAPI interface {
 	UpdateEnvironment(*datazone.UpdateEnvironmentInput) (*datazone.UpdateEnvironmentOutput, error)
 	UpdateEnvironmentWithContext(aws.Context, *datazone.UpdateEnvironmentInput, ...request.Option) (*datazone.UpdateEnvironmentOutput, error)
 	UpdateEnvironmentRequest(*datazone.UpdateEnvironmentInput) (*request.Request, *datazone.UpdateEnvironmentOutput)
+
+	UpdateEnvironmentAction(*datazone.UpdateEnvironmentActionInput) (*datazone.UpdateEnvironmentActionOutput, error)
+	UpdateEnvironmentActionWithContext(aws.Context, *datazone.UpdateEnvironmentActionInput, ...request.Option) (*datazone.UpdateEnvironmentActionOutput, error)
+	UpdateEnvironmentActionRequest(*datazone.UpdateEnvironmentActionInput) (*request.Request, *datazone.UpdateEnvironmentActionOutput)
 
 	UpdateEnvironmentProfile(*datazone.UpdateEnvironmentProfileInput) (*datazone.UpdateEnvironmentProfileOutput, error)
 	UpdateEnvironmentProfileWithContext(aws.Context, *datazone.UpdateEnvironmentProfileInput, ...request.Option) (*datazone.UpdateEnvironmentProfileOutput, error)

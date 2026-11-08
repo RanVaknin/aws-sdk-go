@@ -20,6 +20,10 @@
 // a FUOTA task and schedule a session to update the firmware of individual
 // devices or an entire group of devices in a multicast group.
 //
+// To connect to the AWS IoT Wireless Service, use the Service endpoints as
+// described in IoT Wireless Service endpoints (https://docs.aws.amazon.com/general/latest/gr/iot-lorawan.html#iot-wireless_region)
+// in the AWS General Reference.
+//
 // See https://docs.aws.amazon.com/goto/WebAPI/iotwireless-2020-11-22 for more information on this service.
 //
 // See iotwireless package documentation for more information.
@@ -40,4 +44,7 @@
 // See the AWS IoT Wireless client IoTWireless for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/iotwireless/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package iotwireless

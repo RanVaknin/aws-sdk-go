@@ -14,11 +14,12 @@
 // recommendations to help contact center agents resolve customer issues quickly
 // and accurately.
 //
-// Amazon Q automatically detects customer intent during calls and chats using
-// conversational analytics and natural language understanding (NLU). It then
-// provides agents with immediate, real-time generative responses and suggested
-// actions, and links to relevant documents and articles. Agents can also query
-// Amazon Q directly using natural language or keywords to answer customer requests.
+// Amazon Q in Connect automatically detects customer intent during calls and
+// chats using conversational analytics and natural language understanding (NLU).
+// It then provides agents with immediate, real-time generative responses and
+// suggested actions, and links to relevant documents and articles. Agents can
+// also query Amazon Q in Connect directly using natural language or keywords
+// to answer customer requests.
 //
 // Use the Amazon Q in Connect APIs to create an assistant and a knowledge base,
 // for example, or manage content by uploading custom files.
@@ -47,4 +48,7 @@
 // See the Amazon Q Connect client QConnect for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/qconnect/#New
+//
+// Deprecated: aws-sdk-go is deprecated. Use aws-sdk-go-v2.
+// See https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-go-v1-on-july-31-2025/.
 package qconnect

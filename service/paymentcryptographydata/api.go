@@ -54,8 +54,9 @@ func (c *PaymentCryptographyData) DecryptDataRequest(input *DecryptDataInput) (r
 
 // DecryptData API operation for Payment Cryptography Data Plane.
 //
-// Decrypts ciphertext data to plaintext using symmetric, asymmetric, or DUKPT
-// data encryption key. For more information, see Decrypt data (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/decrypt-data.html)
+// Decrypts ciphertext data to plaintext using a symmetric (TDES, AES), asymmetric
+// (RSA), or derived (DUKPT or EMV) encryption key scheme. For more information,
+// see Decrypt data (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/decrypt-data.html)
 // in the Amazon Web Services Payment Cryptography User Guide.
 //
 // You can use an encryption key generated within Amazon Web Services Payment
@@ -69,10 +70,14 @@ func (c *PaymentCryptographyData) DecryptDataRequest(input *DecryptDataInput) (r
 // (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html).
 //
 // For symmetric and DUKPT decryption, Amazon Web Services Payment Cryptography
-// supports TDES and AES algorithms. For asymmetric decryption, Amazon Web Services
-// Payment Cryptography supports RSA. When you use DUKPT, for TDES algorithm,
-// the ciphertext data length must be a multiple of 16 bytes. For AES algorithm,
-// the ciphertext data length must be a multiple of 32 bytes.
+// supports TDES and AES algorithms. For EMV decryption, Amazon Web Services
+// Payment Cryptography supports TDES algorithms. For asymmetric decryption,
+// Amazon Web Services Payment Cryptography supports RSA.
+//
+// When you use TDES or TDES DUKPT, the ciphertext data length must be a multiple
+// of 8 bytes. For AES or AES DUKPT, the ciphertext data length must be a multiple
+// of 16 bytes. For RSA, it sould be equal to the key size unless padding is
+// enabled.
 //
 // For information about valid keys for this operation, see Understanding key
 // attributes (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html)
@@ -180,8 +185,9 @@ func (c *PaymentCryptographyData) EncryptDataRequest(input *EncryptDataInput) (r
 
 // EncryptData API operation for Payment Cryptography Data Plane.
 //
-// Encrypts plaintext data to ciphertext using symmetric, asymmetric, or DUKPT
-// data encryption key. For more information, see Encrypt data (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/encrypt-data.html)
+// Encrypts plaintext data to ciphertext using a symmetric (TDES, AES), asymmetric
+// (RSA), or derived (DUKPT or EMV) encryption key scheme. For more information,
+// see Encrypt data (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/encrypt-data.html)
 // in the Amazon Web Services Payment Cryptography User Guide.
 //
 // You can generate an encryption key within Amazon Web Services Payment Cryptography
@@ -190,13 +196,23 @@ func (c *PaymentCryptographyData) EncryptDataRequest(input *EncryptDataInput) (r
 // For this operation, the key must have KeyModesOfUse set to Encrypt. In asymmetric
 // encryption, plaintext is encrypted using public component. You can import
 // the public component of an asymmetric key pair created outside Amazon Web
-// Services Payment Cryptography by calling ImportKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html)).
+// Services Payment Cryptography by calling ImportKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html).
 //
-// for symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography
-// supports TDES and AES algorithms. For asymmetric encryption, Amazon Web Services
-// Payment Cryptography supports RSA. To encrypt using DUKPT, you must already
-// have a DUKPT key in your account with KeyModesOfUse set to DeriveKey, or
-// you can generate a new DUKPT key by calling CreateKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html).
+// For symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography
+// supports TDES and AES algorithms. For EMV encryption, Amazon Web Services
+// Payment Cryptography supports TDES algorithms.For asymmetric encryption,
+// Amazon Web Services Payment Cryptography supports RSA.
+//
+// When you use TDES or TDES DUKPT, the plaintext data length must be a multiple
+// of 8 bytes. For AES or AES DUKPT, the plaintext data length must be a multiple
+// of 16 bytes. For RSA, it sould be equal to the key size unless padding is
+// enabled.
+//
+// To encrypt using DUKPT, you must already have a BDK (Base Derivation Key)
+// key in your account with KeyModesOfUse set to DeriveKey, or you can generate
+// a new DUKPT key by calling CreateKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html).
+// To encrypt using EMV, you must already have an IMK (Issuer Master Key) key
+// in your account with KeyModesOfUse set to DeriveKey.
 //
 // For information about valid keys for this operation, see Understanding key
 // attributes (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html)
@@ -427,14 +443,18 @@ func (c *PaymentCryptographyData) GenerateMacRequest(input *GenerateMacInput) (r
 // Generates a Message Authentication Code (MAC) cryptogram within Amazon Web
 // Services Payment Cryptography.
 //
-// You can use this operation when keys won't be shared but mutual data is present
-// on both ends for validation. In this case, known data values are used to
-// generate a MAC on both ends for comparision without sending or receiving
-// data in ciphertext or plaintext. You can use this operation to generate a
-// DUPKT, HMAC or EMV MAC by setting generation attributes and algorithm to
-// the associated values. The MAC generation encryption key must have valid
-// values for KeyUsage such as TR31_M7_HMAC_KEY for HMAC generation, and they
-// key must have KeyModesOfUse set to Generate and Verify.
+// You can use this operation to authenticate card-related data by using known
+// data values to generate MAC for data validation between the sending and receiving
+// parties. This operation uses message data, a secret encryption key and MAC
+// algorithm to generate a unique MAC value for transmission. The receiving
+// party of the MAC must use the same message data, secret encryption key and
+// MAC algorithm to reproduce another MAC value for comparision.
+//
+// You can use this operation to generate a DUPKT, CMAC, HMAC or EMV MAC by
+// setting generation attributes and algorithm to the associated values. The
+// MAC generation encryption key must have valid values for KeyUsage such as
+// TR31_M7_HMAC_KEY for HMAC generation, and they key must have KeyModesOfUse
+// set to Generate and Verify.
 //
 // For information about valid keys for this operation, see Understanding key
 // attributes (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html)
@@ -655,21 +675,16 @@ func (c *PaymentCryptographyData) ReEncryptDataRequest(input *ReEncryptDataInput
 
 // ReEncryptData API operation for Payment Cryptography Data Plane.
 //
-// Re-encrypt ciphertext using DUKPT, Symmetric and Asymmetric Data Encryption
-// Keys.
+// Re-encrypt ciphertext using DUKPT or Symmetric data encryption keys.
 //
 // You can either generate an encryption key within Amazon Web Services Payment
 // Cryptography by calling CreateKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html)
 // or import your own encryption key by calling ImportKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html).
 // The KeyArn for use with this operation must be in a compatible key state
-// with KeyModesOfUse set to Encrypt. In asymmetric encryption, ciphertext is
-// encrypted using public component (imported by calling ImportKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html))
-// of the asymmetric key pair created outside of Amazon Web Services Payment
-// Cryptography.
+// with KeyModesOfUse set to Encrypt.
 //
 // For symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography
-// supports TDES and AES algorithms. For asymmetric encryption, Amazon Web Services
-// Payment Cryptography supports RSA. To encrypt using DUKPT, a DUKPT key must
+// supports TDES and AES algorithms. To encrypt using DUKPT, a DUKPT key must
 // already exist within your account with KeyModesOfUse set to DeriveKey or
 // a new DUKPT can be generated by calling CreateKey (https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html).
 //
@@ -791,10 +806,7 @@ func (c *PaymentCryptographyData) TranslatePinDataRequest(input *TranslatePinDat
 // Cryptography. The encryption key transformation can be from PEK (Pin Encryption
 // Key) to BDK (Base Derivation Key) for DUKPT or from BDK for DUKPT to PEK.
 // Amazon Web Services Payment Cryptography supports TDES and AES key derivation
-// type for DUKPT tranlations. You can use this operation for P2PE (Point to
-// Point Encryption) use cases where the encryption keys should change but the
-// processing system either does not need to, or is not permitted to, decrypt
-// the data.
+// type for DUKPT translations.
 //
 // The allowed combinations of PIN block format translations are guided by PCI.
 // It is important to note that not all encrypted PIN block formats (example,
@@ -807,8 +819,9 @@ func (c *PaymentCryptographyData) TranslatePinDataRequest(input *TranslatePinDat
 // and Key types for specific data operations (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html)
 // in the Amazon Web Services Payment Cryptography User Guide.
 //
-// At this time, Amazon Web Services Payment Cryptography does not support translations
-// to PIN format 4.
+// Amazon Web Services Payment Cryptography currently supports ISO PIN block
+// 4 translation for PIN block built using legacy PAN length. That is, PAN is
+// the right most 12 digits excluding the check digits.
 //
 // Cross-account use: This operation can't be used across different Amazon Web
 // Services accounts.
@@ -1157,12 +1170,11 @@ func (c *PaymentCryptographyData) VerifyMacRequest(input *VerifyMacInput) (req *
 //
 // Verifies a Message Authentication Code (MAC).
 //
-// You can use this operation when keys won't be shared but mutual data is present
-// on both ends for validation. In this case, known data values are used to
-// generate a MAC on both ends for verification without sending or receiving
-// data in ciphertext or plaintext. You can use this operation to verify a DUPKT,
-// HMAC or EMV MAC by setting generation attributes and algorithm to the associated
-// values. Use the same encryption key for MAC verification as you use for GenerateMac.
+// You can use this operation to verify MAC for message data authentication
+// such as . In this operation, you must use the same message data, secret encryption
+// key and MAC algorithm that was used to generate MAC. You can use this operation
+// to verify a DUPKT, CMAC, HMAC or EMV MAC by setting generation attributes
+// and algorithm to the associated values.
 //
 // For information about valid keys for this operation, see Understanding key
 // attributes (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html)
@@ -1415,8 +1427,12 @@ type AmexCardSecurityCodeVersion1 struct {
 
 	// The expiry date of a payment card.
 	//
+	// CardExpiryDate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AmexCardSecurityCodeVersion1's
+	// String and GoString methods.
+	//
 	// CardExpiryDate is a required field
-	CardExpiryDate *string `min:"4" type:"string" required:"true"`
+	CardExpiryDate *string `min:"4" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -1466,14 +1482,22 @@ type AmexCardSecurityCodeVersion2 struct {
 
 	// The expiry date of a payment card.
 	//
+	// CardExpiryDate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AmexCardSecurityCodeVersion2's
+	// String and GoString methods.
+	//
 	// CardExpiryDate is a required field
-	CardExpiryDate *string `min:"4" type:"string" required:"true"`
+	CardExpiryDate *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The service code of the AMEX payment card. This is different from the Card
 	// Security Code (CSC).
 	//
+	// ServiceCode is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AmexCardSecurityCodeVersion2's
+	// String and GoString methods.
+	//
 	// ServiceCode is a required field
-	ServiceCode *string `min:"3" type:"string" required:"true"`
+	ServiceCode *string `min:"3" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -1948,14 +1972,22 @@ type CardVerificationValue1 struct {
 
 	// The expiry date of a payment card.
 	//
+	// CardExpiryDate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CardVerificationValue1's
+	// String and GoString methods.
+	//
 	// CardExpiryDate is a required field
-	CardExpiryDate *string `min:"4" type:"string" required:"true"`
+	CardExpiryDate *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The service code of the payment card. This is different from Card Security
 	// Code (CSC).
 	//
+	// ServiceCode is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CardVerificationValue1's
+	// String and GoString methods.
+	//
 	// ServiceCode is a required field
-	ServiceCode *string `min:"3" type:"string" required:"true"`
+	ServiceCode *string `min:"3" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -2017,8 +2049,12 @@ type CardVerificationValue2 struct {
 
 	// The expiry date of a payment card.
 	//
+	// CardExpiryDate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CardVerificationValue2's
+	// String and GoString methods.
+	//
 	// CardExpiryDate is a required field
-	CardExpiryDate *string `min:"4" type:"string" required:"true"`
+	CardExpiryDate *string `min:"4" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -2192,7 +2228,11 @@ type CryptogramVerificationArpcMethod2 struct {
 
 	// The proprietary authentication data used by issuer for communication during
 	// online transaction using an EMV chip card.
-	ProprietaryAuthenticationData *string `min:"1" type:"string"`
+	//
+	// ProprietaryAuthenticationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CryptogramVerificationArpcMethod2's
+	// String and GoString methods.
+	ProprietaryAuthenticationData *string `min:"1" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -2264,8 +2304,15 @@ type DecryptDataInput struct {
 	// The keyARN of the encryption key that Amazon Web Services Payment Cryptography
 	// uses for ciphertext decryption.
 	//
+	// When a WrappedKeyBlock is provided, this value will be the identifier to
+	// the key wrapping key. Otherwise, it is the key identifier used to perform
+	// the operation.
+	//
 	// KeyIdentifier is a required field
 	KeyIdentifier *string `location:"uri" locationName:"KeyIdentifier" min:"7" type:"string" required:"true"`
+
+	// The WrappedKeyBlock containing the encryption key for ciphertext decryption.
+	WrappedKey *WrappedKey `type:"structure"`
 }
 
 // String returns the string representation.
@@ -2309,6 +2356,11 @@ func (s *DecryptDataInput) Validate() error {
 			invalidParams.AddNested("DecryptionAttributes", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.WrappedKey != nil {
+		if err := s.WrappedKey.Validate(); err != nil {
+			invalidParams.AddNested("WrappedKey", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -2334,6 +2386,12 @@ func (s *DecryptDataInput) SetKeyIdentifier(v string) *DecryptDataInput {
 	return s
 }
 
+// SetWrappedKey sets the WrappedKey field's value.
+func (s *DecryptDataInput) SetWrappedKey(v *WrappedKey) *DecryptDataInput {
+	s.WrappedKey = v
+	return s
+}
+
 type DecryptDataOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -2345,15 +2403,15 @@ type DecryptDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
 
-	// The decrypted plaintext data.
+	// The decrypted plaintext data in hexBinary format.
 	//
 	// PlainText is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by DecryptDataOutput's
@@ -2411,8 +2469,12 @@ type DiscoverDynamicCardVerificationCode struct {
 
 	// The expiry date of a payment card.
 	//
+	// CardExpiryDate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DiscoverDynamicCardVerificationCode's
+	// String and GoString methods.
+	//
 	// CardExpiryDate is a required field
-	CardExpiryDate *string `min:"4" type:"string" required:"true"`
+	CardExpiryDate *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// A random number that is generated by the issuer.
 	//
@@ -2642,10 +2704,8 @@ type DukptEncryptionAttributes struct {
 	// data encryption, or both.
 	DukptKeyVariant *string `type:"string" enum:"DukptKeyVariant"`
 
-	// An input to cryptographic primitive used to provide the intial state. Typically
-	// the InitializationVector must have a random or psuedo-random value, but sometimes
-	// it only needs to be unpredictable or unique. If you don't provide a value,
-	// Amazon Web Services Payment Cryptography generates a random value.
+	// An input used to provide the intial state. If no value is provided, Amazon
+	// Web Services Payment Cryptography defaults it to zero.
 	//
 	// InitializationVector is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by DukptEncryptionAttributes's
@@ -2659,12 +2719,7 @@ type DukptEncryptionAttributes struct {
 	// KeySerialNumber is a required field
 	KeySerialNumber *string `min:"10" type:"string" required:"true"`
 
-	// The block cipher mode of operation. Block ciphers are designed to encrypt
-	// a block of data of fixed size, for example, 128 bits. The size of the input
-	// block is usually same as the size of the encrypted output block, while the
-	// key length can be different. A mode of operation describes how to repeatedly
-	// apply a cipher's single-block operation to securely transform amounts of
-	// data larger than a block.
+	// The block cipher method to use for encryption.
 	//
 	// The default is CBC.
 	Mode *string `type:"string" enum:"DukptEncryptionMode"`
@@ -2757,8 +2812,12 @@ type DynamicCardVerificationCode struct {
 	// This includes the cardholder name, PAN, expiration date, bank ID (BIN) and
 	// several other numbers the issuing bank uses to validate the data received.
 	//
+	// TrackData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DynamicCardVerificationCode's
+	// String and GoString methods.
+	//
 	// TrackData is a required field
-	TrackData *string `min:"2" type:"string" required:"true"`
+	TrackData *string `min:"2" type:"string" required:"true" sensitive:"true"`
 
 	// A random number generated by the issuer.
 	//
@@ -2854,8 +2913,12 @@ type DynamicCardVerificationValue struct {
 
 	// The expiry date of a payment card.
 	//
+	// CardExpiryDate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DynamicCardVerificationValue's
+	// String and GoString methods.
+	//
 	// CardExpiryDate is a required field
-	CardExpiryDate *string `min:"4" type:"string" required:"true"`
+	CardExpiryDate *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// A number that identifies and differentiates payment cards with the same Primary
 	// Account Number (PAN).
@@ -2866,8 +2929,12 @@ type DynamicCardVerificationValue struct {
 	// The service code of the payment card. This is different from Card Security
 	// Code (CSC).
 	//
+	// ServiceCode is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DynamicCardVerificationValue's
+	// String and GoString methods.
+	//
 	// ServiceCode is a required field
-	ServiceCode *string `min:"3" type:"string" required:"true"`
+	ServiceCode *string `min:"3" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -2946,6 +3013,143 @@ func (s *DynamicCardVerificationValue) SetServiceCode(v string) *DynamicCardVeri
 	return s
 }
 
+// Parameters for plaintext encryption using EMV keys.
+type EmvEncryptionAttributes struct {
+	_ struct{} `type:"structure"`
+
+	// An input used to provide the intial state. If no value is provided, Amazon
+	// Web Services Payment Cryptography defaults it to zero.
+	//
+	// InitializationVector is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by EmvEncryptionAttributes's
+	// String and GoString methods.
+	InitializationVector *string `min:"16" type:"string" sensitive:"true"`
+
+	// The EMV derivation mode to use for ICC master key derivation as per EMV version
+	// 4.3 book 2.
+	//
+	// MajorKeyDerivationMode is a required field
+	MajorKeyDerivationMode *string `type:"string" required:"true" enum:"EmvMajorKeyDerivationMode"`
+
+	// The block cipher method to use for encryption.
+	Mode *string `type:"string" enum:"EmvEncryptionMode"`
+
+	// A number that identifies and differentiates payment cards with the same Primary
+	// Account Number (PAN).
+	//
+	// PanSequenceNumber is a required field
+	PanSequenceNumber *string `min:"2" type:"string" required:"true"`
+
+	// The Primary Account Number (PAN), a unique identifier for a payment credit
+	// or debit card and associates the card to a specific account holder.
+	//
+	// PrimaryAccountNumber is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by EmvEncryptionAttributes's
+	// String and GoString methods.
+	//
+	// PrimaryAccountNumber is a required field
+	PrimaryAccountNumber *string `min:"12" type:"string" required:"true" sensitive:"true"`
+
+	// The derivation value used to derive the ICC session key. It is typically
+	// the application transaction counter value padded with zeros or previous ARQC
+	// value padded with zeros as per EMV version 4.3 book 2.
+	//
+	// SessionDerivationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by EmvEncryptionAttributes's
+	// String and GoString methods.
+	//
+	// SessionDerivationData is a required field
+	SessionDerivationData *string `min:"16" type:"string" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EmvEncryptionAttributes) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EmvEncryptionAttributes) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EmvEncryptionAttributes) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EmvEncryptionAttributes"}
+	if s.InitializationVector != nil && len(*s.InitializationVector) < 16 {
+		invalidParams.Add(request.NewErrParamMinLen("InitializationVector", 16))
+	}
+	if s.MajorKeyDerivationMode == nil {
+		invalidParams.Add(request.NewErrParamRequired("MajorKeyDerivationMode"))
+	}
+	if s.PanSequenceNumber == nil {
+		invalidParams.Add(request.NewErrParamRequired("PanSequenceNumber"))
+	}
+	if s.PanSequenceNumber != nil && len(*s.PanSequenceNumber) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("PanSequenceNumber", 2))
+	}
+	if s.PrimaryAccountNumber == nil {
+		invalidParams.Add(request.NewErrParamRequired("PrimaryAccountNumber"))
+	}
+	if s.PrimaryAccountNumber != nil && len(*s.PrimaryAccountNumber) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("PrimaryAccountNumber", 12))
+	}
+	if s.SessionDerivationData == nil {
+		invalidParams.Add(request.NewErrParamRequired("SessionDerivationData"))
+	}
+	if s.SessionDerivationData != nil && len(*s.SessionDerivationData) < 16 {
+		invalidParams.Add(request.NewErrParamMinLen("SessionDerivationData", 16))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInitializationVector sets the InitializationVector field's value.
+func (s *EmvEncryptionAttributes) SetInitializationVector(v string) *EmvEncryptionAttributes {
+	s.InitializationVector = &v
+	return s
+}
+
+// SetMajorKeyDerivationMode sets the MajorKeyDerivationMode field's value.
+func (s *EmvEncryptionAttributes) SetMajorKeyDerivationMode(v string) *EmvEncryptionAttributes {
+	s.MajorKeyDerivationMode = &v
+	return s
+}
+
+// SetMode sets the Mode field's value.
+func (s *EmvEncryptionAttributes) SetMode(v string) *EmvEncryptionAttributes {
+	s.Mode = &v
+	return s
+}
+
+// SetPanSequenceNumber sets the PanSequenceNumber field's value.
+func (s *EmvEncryptionAttributes) SetPanSequenceNumber(v string) *EmvEncryptionAttributes {
+	s.PanSequenceNumber = &v
+	return s
+}
+
+// SetPrimaryAccountNumber sets the PrimaryAccountNumber field's value.
+func (s *EmvEncryptionAttributes) SetPrimaryAccountNumber(v string) *EmvEncryptionAttributes {
+	s.PrimaryAccountNumber = &v
+	return s
+}
+
+// SetSessionDerivationData sets the SessionDerivationData field's value.
+func (s *EmvEncryptionAttributes) SetSessionDerivationData(v string) *EmvEncryptionAttributes {
+	s.SessionDerivationData = &v
+	return s
+}
+
 type EncryptDataInput struct {
 	_ struct{} `type:"structure"`
 
@@ -2957,10 +3161,20 @@ type EncryptDataInput struct {
 	// The keyARN of the encryption key that Amazon Web Services Payment Cryptography
 	// uses for plaintext encryption.
 	//
+	// When a WrappedKeyBlock is provided, this value will be the identifier to
+	// the key wrapping key. Otherwise, it is the key identifier used to perform
+	// the operation.
+	//
 	// KeyIdentifier is a required field
 	KeyIdentifier *string `location:"uri" locationName:"KeyIdentifier" min:"7" type:"string" required:"true"`
 
 	// The plaintext to be encrypted.
+	//
+	// For encryption using asymmetric keys, plaintext data length is constrained
+	// by encryption key strength that you define in KeyAlgorithm and padding type
+	// that you define in AsymmetricEncryptionAttributes. For more information,
+	// see Encrypt data (https://docs.aws.amazon.com/payment-cryptography/latest/userguide/encrypt-data.html)
+	// in the Amazon Web Services Payment Cryptography User Guide.
 	//
 	// PlainText is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by EncryptDataInput's
@@ -2968,6 +3182,9 @@ type EncryptDataInput struct {
 	//
 	// PlainText is a required field
 	PlainText *string `min:"16" type:"string" required:"true" sensitive:"true"`
+
+	// The WrappedKeyBlock containing the encryption key for plaintext encryption.
+	WrappedKey *WrappedKey `type:"structure"`
 }
 
 // String returns the string representation.
@@ -3011,6 +3228,11 @@ func (s *EncryptDataInput) Validate() error {
 			invalidParams.AddNested("EncryptionAttributes", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.WrappedKey != nil {
+		if err := s.WrappedKey.Validate(); err != nil {
+			invalidParams.AddNested("WrappedKey", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -3036,6 +3258,12 @@ func (s *EncryptDataInput) SetPlainText(v string) *EncryptDataInput {
 	return s
 }
 
+// SetWrappedKey sets the WrappedKey field's value.
+func (s *EncryptDataInput) SetWrappedKey(v *WrappedKey) *EncryptDataInput {
+	s.WrappedKey = v
+	return s
+}
+
 type EncryptDataOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -3056,10 +3284,10 @@ type EncryptDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	KeyCheckValue *string `min:"4" type:"string"`
 }
 
@@ -3109,6 +3337,9 @@ type EncryptionDecryptionAttributes struct {
 	// Parameters that are required to encrypt plaintext data using DUKPT.
 	Dukpt *DukptEncryptionAttributes `type:"structure"`
 
+	// Parameters for plaintext encryption using EMV keys.
+	Emv *EmvEncryptionAttributes `type:"structure"`
+
 	// Parameters that are required to perform encryption and decryption using symmetric
 	// keys.
 	Symmetric *SymmetricEncryptionAttributes `type:"structure"`
@@ -3140,6 +3371,11 @@ func (s *EncryptionDecryptionAttributes) Validate() error {
 			invalidParams.AddNested("Dukpt", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.Emv != nil {
+		if err := s.Emv.Validate(); err != nil {
+			invalidParams.AddNested("Emv", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.Symmetric != nil {
 		if err := s.Symmetric.Validate(); err != nil {
 			invalidParams.AddNested("Symmetric", err.(request.ErrInvalidParams))
@@ -3161,6 +3397,12 @@ func (s *EncryptionDecryptionAttributes) SetAsymmetric(v *AsymmetricEncryptionAt
 // SetDukpt sets the Dukpt field's value.
 func (s *EncryptionDecryptionAttributes) SetDukpt(v *DukptEncryptionAttributes) *EncryptionDecryptionAttributes {
 	s.Dukpt = v
+	return s
+}
+
+// SetEmv sets the Emv field's value.
+func (s *EncryptionDecryptionAttributes) SetEmv(v *EmvEncryptionAttributes) *EncryptionDecryptionAttributes {
+	s.Emv = v
 	return s
 }
 
@@ -3285,10 +3527,10 @@ type GenerateCardValidationDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -3296,8 +3538,12 @@ type GenerateCardValidationDataOutput struct {
 	// The CVV or CSC value that Amazon Web Services Payment Cryptography generates
 	// for the card.
 	//
+	// ValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GenerateCardValidationDataOutput's
+	// String and GoString methods.
+	//
 	// ValidationData is a required field
-	ValidationData *string `min:"3" type:"string" required:"true"`
+	ValidationData *string `min:"3" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -3353,7 +3599,7 @@ type GenerateMacInput struct {
 	// The length of a MAC under generation.
 	MacLength *int64 `min:"4" type:"integer"`
 
-	// The data for which a MAC is under generation.
+	// The data for which a MAC is under generation. This value must be hexBinary.
 	//
 	// MessageData is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by GenerateMacInput's
@@ -3449,18 +3695,22 @@ type GenerateMacOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
 
 	// The MAC cryptogram generated within Amazon Web Services Payment Cryptography.
 	//
+	// Mac is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GenerateMacOutput's
+	// String and GoString methods.
+	//
 	// Mac is a required field
-	Mac *string `min:"4" type:"string" required:"true"`
+	Mac *string `min:"4" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -3650,8 +3900,12 @@ type GeneratePinDataOutput struct {
 	// PIN (Personal Identification Number), generated in accordance with ISO 9564
 	// standard.
 	//
+	// EncryptedPinBlock is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GeneratePinDataOutput's
+	// String and GoString methods.
+	//
 	// EncryptedPinBlock is a required field
-	EncryptedPinBlock *string `min:"16" type:"string" required:"true"`
+	EncryptedPinBlock *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The keyARN of the PEK that Amazon Web Services Payment Cryptography uses
 	// for encrypted pin block generation.
@@ -3661,10 +3915,10 @@ type GeneratePinDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// EncryptionKeyCheckValue is a required field
 	EncryptionKeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -3677,10 +3931,10 @@ type GeneratePinDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// GenerationKeyCheckValue is a required field
 	GenerationKeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -3754,13 +4008,21 @@ type Ibm3624NaturalPin struct {
 	// used to convert the algorithm intermediate result from hexadecimal characters
 	// to decimal.
 	//
+	// DecimalizationTable is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624NaturalPin's
+	// String and GoString methods.
+	//
 	// DecimalizationTable is a required field
-	DecimalizationTable *string `min:"16" type:"string" required:"true"`
+	DecimalizationTable *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The unique data for cardholder identification.
 	//
+	// PinValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624NaturalPin's
+	// String and GoString methods.
+	//
 	// PinValidationData is a required field
-	PinValidationData *string `min:"4" type:"string" required:"true"`
+	PinValidationData *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The padding character for validation data.
 	//
@@ -3841,18 +4103,30 @@ type Ibm3624PinFromOffset struct {
 	// used to convert the algorithm intermediate result from hexadecimal characters
 	// to decimal.
 	//
+	// DecimalizationTable is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinFromOffset's
+	// String and GoString methods.
+	//
 	// DecimalizationTable is a required field
-	DecimalizationTable *string `min:"16" type:"string" required:"true"`
+	DecimalizationTable *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The PIN offset value.
 	//
+	// PinOffset is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinFromOffset's
+	// String and GoString methods.
+	//
 	// PinOffset is a required field
-	PinOffset *string `min:"4" type:"string" required:"true"`
+	PinOffset *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The unique data for cardholder identification.
 	//
+	// PinValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinFromOffset's
+	// String and GoString methods.
+	//
 	// PinValidationData is a required field
-	PinValidationData *string `min:"4" type:"string" required:"true"`
+	PinValidationData *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The padding character for validation data.
 	//
@@ -3944,20 +4218,32 @@ type Ibm3624PinOffset struct {
 	// used to convert the algorithm intermediate result from hexadecimal characters
 	// to decimal.
 	//
+	// DecimalizationTable is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinOffset's
+	// String and GoString methods.
+	//
 	// DecimalizationTable is a required field
-	DecimalizationTable *string `min:"16" type:"string" required:"true"`
+	DecimalizationTable *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The encrypted PIN block data. According to ISO 9564 standard, a PIN Block
 	// is an encoded representation of a payment card Personal Account Number (PAN)
 	// and the cardholder Personal Identification Number (PIN).
 	//
+	// EncryptedPinBlock is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinOffset's
+	// String and GoString methods.
+	//
 	// EncryptedPinBlock is a required field
-	EncryptedPinBlock *string `min:"16" type:"string" required:"true"`
+	EncryptedPinBlock *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The unique data for cardholder identification.
 	//
+	// PinValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinOffset's
+	// String and GoString methods.
+	//
 	// PinValidationData is a required field
-	PinValidationData *string `min:"4" type:"string" required:"true"`
+	PinValidationData *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The padding character for validation data.
 	//
@@ -4050,18 +4336,30 @@ type Ibm3624PinVerification struct {
 	// used to convert the algorithm intermediate result from hexadecimal characters
 	// to decimal.
 	//
+	// DecimalizationTable is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinVerification's
+	// String and GoString methods.
+	//
 	// DecimalizationTable is a required field
-	DecimalizationTable *string `min:"16" type:"string" required:"true"`
+	DecimalizationTable *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The PIN offset value.
 	//
+	// PinOffset is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinVerification's
+	// String and GoString methods.
+	//
 	// PinOffset is a required field
-	PinOffset *string `min:"4" type:"string" required:"true"`
+	PinOffset *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The unique data for cardholder identification.
 	//
+	// PinValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624PinVerification's
+	// String and GoString methods.
+	//
 	// PinValidationData is a required field
-	PinValidationData *string `min:"4" type:"string" required:"true"`
+	PinValidationData *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The padding character for validation data.
 	//
@@ -4153,13 +4451,21 @@ type Ibm3624RandomPin struct {
 	// used to convert the algorithm intermediate result from hexadecimal characters
 	// to decimal.
 	//
+	// DecimalizationTable is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624RandomPin's
+	// String and GoString methods.
+	//
 	// DecimalizationTable is a required field
-	DecimalizationTable *string `min:"16" type:"string" required:"true"`
+	DecimalizationTable *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The unique data for cardholder identification.
 	//
+	// PinValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Ibm3624RandomPin's
+	// String and GoString methods.
+	//
 	// PinValidationData is a required field
-	PinValidationData *string `min:"4" type:"string" required:"true"`
+	PinValidationData *string `min:"4" type:"string" required:"true" sensitive:"true"`
 
 	// The padding character for validation data.
 	//
@@ -4513,7 +4819,7 @@ type MacAttributes struct {
 	DukptIso9797Algorithm1 *MacAlgorithmDukpt `type:"structure"`
 
 	// Parameters that are required for MAC generation or verification using DUKPT
-	// ISO 9797 algorithm2.
+	// ISO 9797 algorithm3.
 	DukptIso9797Algorithm3 *MacAlgorithmDukpt `type:"structure"`
 
 	// Parameters that are required for MAC generation or verification using EMV
@@ -4604,12 +4910,20 @@ type PinData struct {
 	_ struct{} `type:"structure"`
 
 	// The PIN offset value.
-	PinOffset *string `min:"4" type:"string"`
+	//
+	// PinOffset is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PinData's
+	// String and GoString methods.
+	PinOffset *string `min:"4" type:"string" sensitive:"true"`
 
 	// The unique data to identify a cardholder. In most cases, this is the same
 	// as cardholder's Primary Account Number (PAN). If a value is not provided,
 	// it defaults to PAN.
-	VerificationValue *string `min:"4" type:"string"`
+	//
+	// VerificationValue is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PinData's
+	// String and GoString methods.
+	VerificationValue *string `min:"4" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -4842,8 +5156,16 @@ type ReEncryptDataInput struct {
 
 	// The keyARN of the encryption key of incoming ciphertext data.
 	//
+	// When a WrappedKeyBlock is provided, this value will be the identifier to
+	// the key wrapping key. Otherwise, it is the key identifier used to perform
+	// the operation.
+	//
 	// IncomingKeyIdentifier is a required field
 	IncomingKeyIdentifier *string `location:"uri" locationName:"IncomingKeyIdentifier" min:"7" type:"string" required:"true"`
+
+	// The WrappedKeyBlock containing the encryption key of incoming ciphertext
+	// data.
+	IncomingWrappedKey *WrappedKey `type:"structure"`
 
 	// The attributes and values for outgoing ciphertext data after encryption by
 	// Amazon Web Services Payment Cryptography.
@@ -4856,6 +5178,10 @@ type ReEncryptDataInput struct {
 	//
 	// OutgoingKeyIdentifier is a required field
 	OutgoingKeyIdentifier *string `min:"7" type:"string" required:"true"`
+
+	// The WrappedKeyBlock containing the encryption key of outgoing ciphertext
+	// data after encryption by Amazon Web Services Payment Cryptography.
+	OutgoingWrappedKey *WrappedKey `type:"structure"`
 }
 
 // String returns the string representation.
@@ -4908,9 +5234,19 @@ func (s *ReEncryptDataInput) Validate() error {
 			invalidParams.AddNested("IncomingEncryptionAttributes", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.IncomingWrappedKey != nil {
+		if err := s.IncomingWrappedKey.Validate(); err != nil {
+			invalidParams.AddNested("IncomingWrappedKey", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.OutgoingEncryptionAttributes != nil {
 		if err := s.OutgoingEncryptionAttributes.Validate(); err != nil {
 			invalidParams.AddNested("OutgoingEncryptionAttributes", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OutgoingWrappedKey != nil {
+		if err := s.OutgoingWrappedKey.Validate(); err != nil {
+			invalidParams.AddNested("OutgoingWrappedKey", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -4938,6 +5274,12 @@ func (s *ReEncryptDataInput) SetIncomingKeyIdentifier(v string) *ReEncryptDataIn
 	return s
 }
 
+// SetIncomingWrappedKey sets the IncomingWrappedKey field's value.
+func (s *ReEncryptDataInput) SetIncomingWrappedKey(v *WrappedKey) *ReEncryptDataInput {
+	s.IncomingWrappedKey = v
+	return s
+}
+
 // SetOutgoingEncryptionAttributes sets the OutgoingEncryptionAttributes field's value.
 func (s *ReEncryptDataInput) SetOutgoingEncryptionAttributes(v *ReEncryptionAttributes) *ReEncryptDataInput {
 	s.OutgoingEncryptionAttributes = v
@@ -4947,6 +5289,12 @@ func (s *ReEncryptDataInput) SetOutgoingEncryptionAttributes(v *ReEncryptionAttr
 // SetOutgoingKeyIdentifier sets the OutgoingKeyIdentifier field's value.
 func (s *ReEncryptDataInput) SetOutgoingKeyIdentifier(v string) *ReEncryptDataInput {
 	s.OutgoingKeyIdentifier = &v
+	return s
+}
+
+// SetOutgoingWrappedKey sets the OutgoingWrappedKey field's value.
+func (s *ReEncryptDataInput) SetOutgoingWrappedKey(v *WrappedKey) *ReEncryptDataInput {
+	s.OutgoingWrappedKey = v
 	return s
 }
 
@@ -4970,10 +5318,10 @@ type ReEncryptDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -5327,7 +5675,11 @@ type SessionKeyDerivationValue struct {
 	_ struct{} `type:"structure"`
 
 	// The cryptogram provided by the terminal during transaction processing.
-	ApplicationCryptogram *string `min:"16" type:"string"`
+	//
+	// ApplicationCryptogram is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SessionKeyDerivationValue's
+	// String and GoString methods.
+	ApplicationCryptogram *string `min:"16" type:"string" sensitive:"true"`
 
 	// The transaction counter that is provided by the terminal during transaction
 	// processing.
@@ -5752,23 +6104,15 @@ func (s *SessionKeyVisa) SetPrimaryAccountNumber(v string) *SessionKeyVisa {
 type SymmetricEncryptionAttributes struct {
 	_ struct{} `type:"structure"`
 
-	// An input to cryptographic primitive used to provide the intial state. The
-	// InitializationVector is typically required have a random or psuedo-random
-	// value, but sometimes it only needs to be unpredictable or unique. If a value
-	// is not provided, Amazon Web Services Payment Cryptography generates a random
-	// value.
+	// An input used to provide the intial state. If no value is provided, Amazon
+	// Web Services Payment Cryptography defaults it to zero.
 	//
 	// InitializationVector is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by SymmetricEncryptionAttributes's
 	// String and GoString methods.
 	InitializationVector *string `min:"16" type:"string" sensitive:"true"`
 
-	// The block cipher mode of operation. Block ciphers are designed to encrypt
-	// a block of data of fixed size (for example, 128 bits). The size of the input
-	// block is usually same as the size of the encrypted output block, while the
-	// key length can be different. A mode of operation describes how to repeatedly
-	// apply a cipher's single-block operation to securely transform amounts of
-	// data larger than a block.
+	// The block cipher method to use for encryption.
 	//
 	// Mode is a required field
 	Mode *string `type:"string" required:"true" enum:"EncryptionMode"`
@@ -5907,20 +6251,28 @@ type TranslatePinDataInput struct {
 	EncryptedPinBlock *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The attributes and values to use for incoming DUKPT encryption key for PIN
-	// block tranlation.
+	// block translation.
 	IncomingDukptAttributes *DukptDerivationAttributes `type:"structure"`
 
 	// The keyARN of the encryption key under which incoming PIN block data is encrypted.
 	// This key type can be PEK or BDK.
 	//
+	// When a WrappedKeyBlock is provided, this value will be the identifier to
+	// the key wrapping key for PIN block. Otherwise, it is the key identifier used
+	// to perform the operation.
+	//
 	// IncomingKeyIdentifier is a required field
 	IncomingKeyIdentifier *string `min:"7" type:"string" required:"true"`
 
-	// The format of the incoming PIN block data for tranlation within Amazon Web
+	// The format of the incoming PIN block data for translation within Amazon Web
 	// Services Payment Cryptography.
 	//
 	// IncomingTranslationAttributes is a required field
 	IncomingTranslationAttributes *TranslationIsoFormats `type:"structure" required:"true"`
+
+	// The WrappedKeyBlock containing the encryption key under which incoming PIN
+	// block data is encrypted.
+	IncomingWrappedKey *WrappedKey `type:"structure"`
 
 	// The attributes and values to use for outgoing DUKPT encryption key after
 	// PIN block translation.
@@ -5932,11 +6284,15 @@ type TranslatePinDataInput struct {
 	// OutgoingKeyIdentifier is a required field
 	OutgoingKeyIdentifier *string `min:"7" type:"string" required:"true"`
 
-	// The format of the outgoing PIN block data after tranlation by Amazon Web
+	// The format of the outgoing PIN block data after translation by Amazon Web
 	// Services Payment Cryptography.
 	//
 	// OutgoingTranslationAttributes is a required field
 	OutgoingTranslationAttributes *TranslationIsoFormats `type:"structure" required:"true"`
+
+	// The WrappedKeyBlock containing the encryption key for encrypting outgoing
+	// PIN block data.
+	OutgoingWrappedKey *WrappedKey `type:"structure"`
 }
 
 // String returns the string representation.
@@ -5994,6 +6350,11 @@ func (s *TranslatePinDataInput) Validate() error {
 			invalidParams.AddNested("IncomingTranslationAttributes", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.IncomingWrappedKey != nil {
+		if err := s.IncomingWrappedKey.Validate(); err != nil {
+			invalidParams.AddNested("IncomingWrappedKey", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.OutgoingDukptAttributes != nil {
 		if err := s.OutgoingDukptAttributes.Validate(); err != nil {
 			invalidParams.AddNested("OutgoingDukptAttributes", err.(request.ErrInvalidParams))
@@ -6002,6 +6363,11 @@ func (s *TranslatePinDataInput) Validate() error {
 	if s.OutgoingTranslationAttributes != nil {
 		if err := s.OutgoingTranslationAttributes.Validate(); err != nil {
 			invalidParams.AddNested("OutgoingTranslationAttributes", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OutgoingWrappedKey != nil {
+		if err := s.OutgoingWrappedKey.Validate(); err != nil {
+			invalidParams.AddNested("OutgoingWrappedKey", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -6035,6 +6401,12 @@ func (s *TranslatePinDataInput) SetIncomingTranslationAttributes(v *TranslationI
 	return s
 }
 
+// SetIncomingWrappedKey sets the IncomingWrappedKey field's value.
+func (s *TranslatePinDataInput) SetIncomingWrappedKey(v *WrappedKey) *TranslatePinDataInput {
+	s.IncomingWrappedKey = v
+	return s
+}
+
 // SetOutgoingDukptAttributes sets the OutgoingDukptAttributes field's value.
 func (s *TranslatePinDataInput) SetOutgoingDukptAttributes(v *DukptDerivationAttributes) *TranslatePinDataInput {
 	s.OutgoingDukptAttributes = v
@@ -6053,6 +6425,12 @@ func (s *TranslatePinDataInput) SetOutgoingTranslationAttributes(v *TranslationI
 	return s
 }
 
+// SetOutgoingWrappedKey sets the OutgoingWrappedKey field's value.
+func (s *TranslatePinDataInput) SetOutgoingWrappedKey(v *WrappedKey) *TranslatePinDataInput {
+	s.OutgoingWrappedKey = v
+	return s
+}
+
 type TranslatePinDataOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -6064,18 +6442,22 @@ type TranslatePinDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
 
-	// The ougoing encrypted PIN block data after tranlation.
+	// The outgoing encrypted PIN block data after translation.
+	//
+	// PinBlock is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by TranslatePinDataOutput's
+	// String and GoString methods.
 	//
 	// PinBlock is a required field
-	PinBlock *string `min:"16" type:"string" required:"true"`
+	PinBlock *string `min:"16" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -6466,8 +6848,12 @@ type VerifyAuthRequestCryptogramInput struct {
 	// The auth request cryptogram imported into Amazon Web Services Payment Cryptography
 	// for ARQC verification using a major encryption key and transaction data.
 	//
+	// AuthRequestCryptogram is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VerifyAuthRequestCryptogramInput's
+	// String and GoString methods.
+	//
 	// AuthRequestCryptogram is a required field
-	AuthRequestCryptogram *string `min:"16" type:"string" required:"true"`
+	AuthRequestCryptogram *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The attributes and values for auth request cryptogram verification. These
 	// parameters are required in case using ARPC Method 1 or Method 2 for ARQC
@@ -6499,8 +6885,12 @@ type VerifyAuthRequestCryptogramInput struct {
 	// ARQC verification. The same transaction is used for ARQC generation outside
 	// of Amazon Web Services Payment Cryptography.
 	//
+	// TransactionData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VerifyAuthRequestCryptogramInput's
+	// String and GoString methods.
+	//
 	// TransactionData is a required field
-	TransactionData *string `min:"2" type:"string" required:"true"`
+	TransactionData *string `min:"2" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -6606,7 +6996,11 @@ type VerifyAuthRequestCryptogramOutput struct {
 
 	// The result for ARQC verification or ARPC generation within Amazon Web Services
 	// Payment Cryptography.
-	AuthResponseValue *string `min:"1" type:"string"`
+	//
+	// AuthResponseValue is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VerifyAuthRequestCryptogramOutput's
+	// String and GoString methods.
+	AuthResponseValue *string `min:"1" type:"string" sensitive:"true"`
 
 	// The keyARN of the major encryption key that Amazon Web Services Payment Cryptography
 	// uses for ARQC verification.
@@ -6616,10 +7010,10 @@ type VerifyAuthRequestCryptogramOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -6683,8 +7077,12 @@ type VerifyCardValidationDataInput struct {
 	// The CVV or CSC value for use for card data verification within Amazon Web
 	// Services Payment Cryptography.
 	//
+	// ValidationData is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VerifyCardValidationDataInput's
+	// String and GoString methods.
+	//
 	// ValidationData is a required field
-	ValidationData *string `min:"3" type:"string" required:"true"`
+	ValidationData *string `min:"3" type:"string" required:"true" sensitive:"true"`
 
 	// The algorithm to use for verification of card data within Amazon Web Services
 	// Payment Cryptography.
@@ -6782,10 +7180,10 @@ type VerifyCardValidationDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -6842,7 +7240,7 @@ type VerifyMacInput struct {
 	// The length of the MAC.
 	MacLength *int64 `min:"4" type:"integer"`
 
-	// The data on for which MAC is under verification.
+	// The data on for which MAC is under verification. This value must be hexBinary.
 	//
 	// MessageData is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by VerifyMacInput's
@@ -6956,10 +7354,10 @@ type VerifyMacOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// KeyCheckValue is a required field
 	KeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -7004,8 +7402,12 @@ type VerifyPinDataInput struct {
 	// The encrypted PIN block data that Amazon Web Services Payment Cryptography
 	// verifies.
 	//
+	// EncryptedPinBlock is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VerifyPinDataInput's
+	// String and GoString methods.
+	//
 	// EncryptedPinBlock is a required field
-	EncryptedPinBlock *string `min:"16" type:"string" required:"true"`
+	EncryptedPinBlock *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The keyARN of the encryption key under which the PIN block data is encrypted.
 	// This key type can be PEK or BDK.
@@ -7180,10 +7582,10 @@ type VerifyPinDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// EncryptionKeyCheckValue is a required field
 	EncryptionKeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -7196,10 +7598,10 @@ type VerifyPinDataOutput struct {
 
 	// The key check value (KCV) of the encryption key. The KCV is used to check
 	// if all parties holding a given key have the same key or to detect that a
-	// key has changed. Amazon Web Services Payment Cryptography calculates the
-	// KCV by using standard algorithms, typically by encrypting 8 or 16 bytes or
-	// "00" or "01" and then truncating the result to the first 3 bytes, or 6 hex
-	// digits, of the resulting cryptogram.
+	// key has changed.
+	//
+	// Amazon Web Services Payment Cryptography computes the KCV according to the
+	// CMAC specification.
 	//
 	// VerificationKeyCheckValue is a required field
 	VerificationKeyCheckValue *string `min:"4" type:"string" required:"true"`
@@ -7308,8 +7710,12 @@ type VisaPinVerification struct {
 	// Parameters that are required to generate or verify Visa PVV (PIN Verification
 	// Value).
 	//
+	// VerificationValue is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VisaPinVerification's
+	// String and GoString methods.
+	//
 	// VerificationValue is a required field
-	VerificationValue *string `min:"4" type:"string" required:"true"`
+	VerificationValue *string `min:"4" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -7368,8 +7774,12 @@ type VisaPinVerificationValue struct {
 
 	// The encrypted PIN block data to verify.
 	//
+	// EncryptedPinBlock is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by VisaPinVerificationValue's
+	// String and GoString methods.
+	//
 	// EncryptedPinBlock is a required field
-	EncryptedPinBlock *string `min:"16" type:"string" required:"true"`
+	EncryptedPinBlock *string `min:"16" type:"string" required:"true" sensitive:"true"`
 
 	// The value for PIN verification index. It is used in the Visa PIN algorithm
 	// to calculate the PVV (PIN Verification Value).
@@ -7424,6 +7834,123 @@ func (s *VisaPinVerificationValue) SetEncryptedPinBlock(v string) *VisaPinVerifi
 // SetPinVerificationKeyIndex sets the PinVerificationKeyIndex field's value.
 func (s *VisaPinVerificationValue) SetPinVerificationKeyIndex(v int64) *VisaPinVerificationValue {
 	s.PinVerificationKeyIndex = &v
+	return s
+}
+
+// Parameter information of a WrappedKeyBlock for encryption key exchange.
+type WrappedKey struct {
+	_ struct{} `type:"structure"`
+
+	// The algorithm that Amazon Web Services Payment Cryptography uses to calculate
+	// the key check value (KCV). It is used to validate the key integrity.
+	//
+	// For TDES keys, the KCV is computed by encrypting 8 bytes, each with value
+	// of zero, with the key to be checked and retaining the 3 highest order bytes
+	// of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm
+	// where the input data is 16 bytes of zero and retaining the 3 highest order
+	// bytes of the encrypted result.
+	KeyCheckValueAlgorithm *string `type:"string" enum:"KeyCheckValueAlgorithm"`
+
+	// Parameter information of a WrappedKeyBlock for encryption key exchange.
+	//
+	// WrappedKeyMaterial is a required field
+	WrappedKeyMaterial *WrappedKeyMaterial `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s WrappedKey) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s WrappedKey) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *WrappedKey) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "WrappedKey"}
+	if s.WrappedKeyMaterial == nil {
+		invalidParams.Add(request.NewErrParamRequired("WrappedKeyMaterial"))
+	}
+	if s.WrappedKeyMaterial != nil {
+		if err := s.WrappedKeyMaterial.Validate(); err != nil {
+			invalidParams.AddNested("WrappedKeyMaterial", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetKeyCheckValueAlgorithm sets the KeyCheckValueAlgorithm field's value.
+func (s *WrappedKey) SetKeyCheckValueAlgorithm(v string) *WrappedKey {
+	s.KeyCheckValueAlgorithm = &v
+	return s
+}
+
+// SetWrappedKeyMaterial sets the WrappedKeyMaterial field's value.
+func (s *WrappedKey) SetWrappedKeyMaterial(v *WrappedKeyMaterial) *WrappedKey {
+	s.WrappedKeyMaterial = v
+	return s
+}
+
+// Parameter information of a WrappedKeyBlock for encryption key exchange.
+type WrappedKeyMaterial struct {
+	_ struct{} `type:"structure"`
+
+	// The TR-31 wrapped key block.
+	//
+	// Tr31KeyBlock is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by WrappedKeyMaterial's
+	// String and GoString methods.
+	Tr31KeyBlock *string `min:"56" type:"string" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s WrappedKeyMaterial) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s WrappedKeyMaterial) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *WrappedKeyMaterial) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "WrappedKeyMaterial"}
+	if s.Tr31KeyBlock != nil && len(*s.Tr31KeyBlock) < 56 {
+		invalidParams.Add(request.NewErrParamMinLen("Tr31KeyBlock", 56))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTr31KeyBlock sets the Tr31KeyBlock field's value.
+func (s *WrappedKeyMaterial) SetTr31KeyBlock(v string) *WrappedKeyMaterial {
+	s.Tr31KeyBlock = &v
 	return s
 }
 
@@ -7492,6 +8019,38 @@ func DukptKeyVariant_Values() []string {
 }
 
 const (
+	// EmvEncryptionModeEcb is a EmvEncryptionMode enum value
+	EmvEncryptionModeEcb = "ECB"
+
+	// EmvEncryptionModeCbc is a EmvEncryptionMode enum value
+	EmvEncryptionModeCbc = "CBC"
+)
+
+// EmvEncryptionMode_Values returns all elements of the EmvEncryptionMode enum
+func EmvEncryptionMode_Values() []string {
+	return []string{
+		EmvEncryptionModeEcb,
+		EmvEncryptionModeCbc,
+	}
+}
+
+const (
+	// EmvMajorKeyDerivationModeEmvOptionA is a EmvMajorKeyDerivationMode enum value
+	EmvMajorKeyDerivationModeEmvOptionA = "EMV_OPTION_A"
+
+	// EmvMajorKeyDerivationModeEmvOptionB is a EmvMajorKeyDerivationMode enum value
+	EmvMajorKeyDerivationModeEmvOptionB = "EMV_OPTION_B"
+)
+
+// EmvMajorKeyDerivationMode_Values returns all elements of the EmvMajorKeyDerivationMode enum
+func EmvMajorKeyDerivationMode_Values() []string {
+	return []string{
+		EmvMajorKeyDerivationModeEmvOptionA,
+		EmvMajorKeyDerivationModeEmvOptionB,
+	}
+}
+
+const (
 	// EncryptionModeEcb is a EncryptionMode enum value
 	EncryptionModeEcb = "ECB"
 
@@ -7528,6 +8087,22 @@ func EncryptionMode_Values() []string {
 		EncryptionModeCfb64,
 		EncryptionModeCfb128,
 		EncryptionModeOfb,
+	}
+}
+
+const (
+	// KeyCheckValueAlgorithmCmac is a KeyCheckValueAlgorithm enum value
+	KeyCheckValueAlgorithmCmac = "CMAC"
+
+	// KeyCheckValueAlgorithmAnsiX924 is a KeyCheckValueAlgorithm enum value
+	KeyCheckValueAlgorithmAnsiX924 = "ANSI_X9_24"
+)
+
+// KeyCheckValueAlgorithm_Values returns all elements of the KeyCheckValueAlgorithm enum
+func KeyCheckValueAlgorithm_Values() []string {
+	return []string{
+		KeyCheckValueAlgorithmCmac,
+		KeyCheckValueAlgorithmAnsiX924,
 	}
 }
 
